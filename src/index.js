@@ -1,28 +1,30 @@
+// Імпортуємо додаток Express
+import app from './app.js';
 
-import express from 'express';
-import morgan from 'morgan';
-import cors from 'cors';
-import dotenv from 'dotenv';
+// Імпортуємо функцію для підключення до бази
+import { connectDB } from './db/connection.js';
 
-// Завантажуємо змінні середовища з файлу .env
-dotenv.config();
-
-
-const app = express();
-
-// Порт на якому буде працювати сервер
+// Витягуємо порт із змінних середовища або використовуємо 3000 за замовчуванням
 const PORT = process.env.PORT || 3000;
 
-app.use(morgan('dev'));   // Логування запитів
-app.use(cors());          // Дозволяємо CORS
-app.use(express.json());  // Для обробки JSON у тілі запитів
+// Функція для запуску сервера
+const startServer = async () => {
+  try {
+    // Підключення до бази даних
+    await connectDB();
+    console.log('Підключено до бази даних MongoDB');
 
-// Головний роут (перевірка роботи сервера)
-app.get('/', (req, res) => {
-  res.send('Сервер працює з Morgan, Cors і dotenv!');
-});
+    // Запуск сервера
+    app.listen(PORT, () => {
+      console.log(`Сервер працює на http://localhost:${PORT}`);
+    });
 
-// Запуск сервера
-app.listen(PORT, () => {
-  console.log(`Сервер запущено на порту ${PORT}`);
-});
+  } catch (error) {
+    // Якщо помилка — виводимо її і зупиняємо процес
+    console.error('Помилка запуску сервера:', error.message);
+    process.exit(1); // Завершуємо процес із кодом 1 (помилка)
+  }
+};
+
+// Викликаємо функцію запуску сервера
+startServer();
