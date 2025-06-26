@@ -1,7 +1,13 @@
-export const registerUserController = (req, res) => {
-  console.log('ckldckldclkdl');
+import { registerUserService } from '../services/authService.js';
 
-  res.end();
+export const registerUserController = async (req, res) => {
+  const user = await registerUserService(req.body);
+
+  res.status(201).json({
+    status: 201,
+    message: 'Successfully registered a user!',
+    data: user,
+  });
 };
 
 export const loginUserController = () => {};

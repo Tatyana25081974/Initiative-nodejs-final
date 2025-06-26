@@ -1,0 +1,33 @@
+description: Successfully registered a user
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 201
+        message:
+          type: string
+          example: Successfully registered a user!
+        data:
+          type: object
+          properties:
+            name:
+              type: string
+              example: Arya Stark
+            email:
+              type: string
+              format: email
+              example: arya@gmail.com
+            _id:
+              type: string
+              example: 68485158b4197a8ecf3f6ccf
+            createdAt:
+              type: string
+              format: date-time
+              example: 2025-06-10T15:38:00.219Z
+            updatedAt:
+              type: string
+              format: date-time
+              example: 2025-06-10T15:38:00.219Z
