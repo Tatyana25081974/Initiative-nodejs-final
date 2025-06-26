@@ -5,7 +5,7 @@ import {
   logoutUserController,
   refreshUserSessionController,
   registerUserController,
-} from '../controllers/auth.js';
+} from '../controllers/authController.js';
 import { validateBody } from '../middlewares/validateBody.js';
 import { loginUserSchema, registerUserSchema } from '../validation/auth.js';
 
