@@ -6,6 +6,19 @@ import { FIFTEEN_MINUTES, ONE_DAY } from '../constants/index.js';
 import { SessionsCollection } from '../db/models/sessionModel.js';
 import { UsersCollection } from '../db/models/userModel.js';
 
+// ✅ Логіка реєстрації
+export const registerUserService = async (payload) => {
+  const user = await UsersCollection.findOne({ email: payload.email });
+
+  if (user) throw createHttpError(409, 'Email in use');
+
+  const encryptedPassword = await bcrypt.hash(payload.password, 10);
+
+  return await UsersCollection.create({
+    ...payload,
+    password: encryptedPassword,
+  });
+};
 // ✅ Логіка логіну
 export const loginUser = async (payload) => {
   const user = await UsersCollection.findOne({ email: payload.email });
@@ -29,20 +42,6 @@ export const loginUser = async (payload) => {
     refreshToken,
     accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
     refreshTokenValidUntil: new Date(Date.now() + ONE_DAY),
-  });
-};
-
-// ✅ Логіка реєстрації
-export const registerUserService = async (payload) => {
-  const user = await UsersCollection.findOne({ email: payload.email });
-
-  if (user) throw createHttpError(409, 'Email in use');
-
-  const encryptedPassword = await bcrypt.hash(payload.password, 10);
-
-  return await UsersCollection.create({
-    ...payload,
-    password: encryptedPassword,
   });
 };
 
