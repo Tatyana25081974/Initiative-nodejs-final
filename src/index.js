@@ -2,7 +2,7 @@
 import app from './app.js';
 
 // Імпортуємо функцію для підключення до бази
-import { connectDB } from './db/connection.js';
+import { initMongoConnection } from './db/initMongoConnection.js';
 
 // Витягуємо порт із змінних середовища або використовуємо 3000 за замовчуванням
 const PORT = process.env.PORT || 3000;
@@ -11,14 +11,13 @@ const PORT = process.env.PORT || 3000;
 const startServer = async () => {
   try {
     // Підключення до бази даних
-    await connectDB();
+    await initMongoConnection();
     console.log('Підключено до бази даних MongoDB');
 
     // Запуск сервера
     app.listen(PORT, () => {
       console.log(`Сервер працює на http://localhost:${PORT}`);
     });
-
   } catch (error) {
     // Якщо помилка — виводимо її і зупиняємо процес
     console.error('Помилка запуску сервера:', error.message);
