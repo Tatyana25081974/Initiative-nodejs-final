@@ -1,6 +1,8 @@
 import bcrypt from 'bcrypt';
 import createHttpError from 'http-errors';
+
 import { UsersCollection } from '../db/models/userModel.js';
+import { SessionsCollection } from '../db/models/sessionModel.js';
 
 export const registerUserService = async (payload) => {
   const user = await UsersCollection.findOne({
@@ -15,4 +17,8 @@ export const registerUserService = async (payload) => {
     ...payload,
     password: encryptedPassword,
   });
+};
+
+export const logoutUser = async (sessionId) => {
+  await SessionsCollection.deleteOne({ _id: sessionId });
 };
