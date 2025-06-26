@@ -13,11 +13,9 @@ dotenv.config();
 const app = express();
 
 // Підключаємо middleware
-app.use(morgan('dev'));    // Логування запитів у консоль
-app.use(cors());           // Дозвіл крос-доменних запитів
-app.use(express.json());   // Парсинг JSON із тіла запиту
-
-// Тут пізніше підключимо всі роутери
+app.use(morgan('dev')); // Логування запитів у консоль
+app.use(cors()); // Дозвіл крос-доменних запитів
+app.use(express.json()); // Парсинг JSON із тіла запиту
 
 // Тестовий маршрут для перевірки роботи сервера
 app.get('/api/health', (req, res) => {
