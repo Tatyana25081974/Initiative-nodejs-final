@@ -5,13 +5,11 @@ import recepiesRouter from './recepies.js';
 import categoriesRouter from './categories.js';
 import ingredientsRouter from './ingredients.js';
 
-import { authenticate } from '../middlewares/authenticate.js';
-
 const router = Router();
 
 router.use('/api/auth', authRouter);
-router.use('/api/recepies', authenticate, recepiesRouter);
-router.use('/api/categories', authenticate, categoriesRouter);
-router.use('/api/ingredients', authenticate, ingredientsRouter);
+router.use('/api/recepies', recepiesRouter);
+router.use('/api/categories', categoriesRouter);
+router.use('/api/ingredients', ingredientsRouter);
 
 export default router;
