@@ -7,7 +7,10 @@ import {
   registerUserController,
 } from '../controllers/authController.js';
 import { validateBody } from '../middlewares/validateBody.js';
-import { loginUserSchema, registerUserSchema } from '../validation/auth.js';
+import {
+  loginUserSchema,
+  registerUserSchema,
+} from '../validations/authValidation.js';
 
 import cookieParser from 'cookie-parser';
 
@@ -18,7 +21,7 @@ const cookieParserMiddleware = cookieParser();
 router.post(
   '/register',
   jsonParser,
-  validateBody(registerUserSchema),
+  // validateBody(registerUserSchema),
   ctrlWrapper(registerUserController),
 );
 

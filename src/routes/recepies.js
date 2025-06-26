@@ -3,19 +3,19 @@ import { json, Router } from 'express';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import {
   getRecepiesController,
-  getRecepieByIdController,
-  deleteRecepieController,
-  createRecepieController,
-  getMineRecepiesController,
-  postAddFavoriteController,
-  postDeleteFavoriteController,
-  getFavoriteRecipesController,
-} from '../controllers/recipes.js';
+  // getRecepieByIdController,
+  // deleteRecepieController,
+  // createRecepieController,
+  // getMineRecepiesController,
+  // postAddFavoriteController,
+  // postDeleteFavoriteController,
+  // getFavoriteRecipesController,
+} from '../controllers/recipesController.js';
 
-import { validateBody } from '../middlewares/validateBody.js';
-import { createRecepieSchema } from '../validation/recipes.js';
+// import { validateBody } from '../middlewares/validateBody.js';
+// import { createRecipeSchema } from '../validations/recipeValidation.js';
 
-import { isValidId } from '../middlewares/isValidID.js';
+// import { isValidId } from '../middlewares/isValidID.js';
 
 // import { upload } from '../middlewares/multer.js';
 
@@ -28,32 +28,40 @@ const jsonParser = json();
 // * Перенесений в індекс раути
 // router.use(authenticate);
 
-router.get('/mineRecepies', ctrlWrapper(getMineRecepiesController));
-router.get('/favoriteRecipes', ctrlWrapper(getFavoriteRecipesController));
+// router.get('/mineRecepies', ctrlWrapper(getMineRecepiesController));
+// router.get('/favoriteRecipes', ctrlWrapper(getFavoriteRecipesController));
 
 router.get('/', ctrlWrapper(getRecepiesController));
 
-router.get('/:recepieId', isValidId, ctrlWrapper(getRecepieByIdController));
+// router.get(
+//   '/:recepieId',
+//   isValidId,
+//   ctrlWrapper(getRecepieByIdController),
+// );
 
-router.delete('/:recepieId', isValidId, ctrlWrapper(deleteRecepieController));
+// router.delete(
+//   '/:recepieId',
+//   isValidId,
+//   ctrlWrapper(deleteRecepieController),
+// );
 
-router.post(
-  '/',
-  jsonParser,
-  validateBody(createRecepieSchema),
-  ctrlWrapper(createRecepieController),
-);
+// router.post(
+//   '/',
+//   jsonParser,
+//   validateBody(createRecipeSchema),
+//   ctrlWrapper(createRecepieController),
+// );
 
-router.post(
-  '/addFavorite/:recepieId',
-  isValidId,
-  ctrlWrapper(postAddFavoriteController),
-);
+// router.post(
+//   '/addFavorite/:recepieId',
+//   isValidId,
+//   ctrlWrapper(postAddFavoriteController),
+// );
 
-router.post(
-  '/deleteFavorite/:recepieId',
-  isValidId,
-  ctrlWrapper(postDeleteFavoriteController),
-);
+// router.post(
+//   '/deleteFavorite/:recepieId',
+//   isValidId,
+//   ctrlWrapper(postDeleteFavoriteController),
+// );
 
 export default router;
