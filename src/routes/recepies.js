@@ -13,7 +13,7 @@ import {
 } from '../controllers/recipes.js';
 
 import { validateBody } from '../middlewares/validateBody.js';
-import { createRecepieSchema } from '../validation/contacts.js';
+import { createRecepieSchema } from '../validation/recipes.js';
 
 import { isValidId } from '../middlewares/isValidId.js';
 
@@ -28,6 +28,9 @@ const jsonParser = json();
 // * Перенесений в індекс раути
 // router.use(authenticate);
 
+router.get('/mineRecepies', ctrlWrapper(getMineRecepiesController));
+router.get('/favoriteRecipes', ctrlWrapper(getFavoriteRecipesController));
+
 router.get('/', ctrlWrapper(getRecepiesController));
 
 router.get('/:recepieId', isValidId, ctrlWrapper(getRecepieByIdController));
@@ -41,8 +44,6 @@ router.post(
   ctrlWrapper(createRecepieController),
 );
 
-router.get('/mineRecepies', ctrlWrapper(getMineRecepiesController));
-
 router.post(
   '/addFavorite/:recepieId',
   isValidId,
@@ -54,7 +55,5 @@ router.post(
   isValidId,
   ctrlWrapper(postDeleteFavoriteController),
 );
-
-router.get('/favoriteRecipes', ctrlWrapper(getFavoriteRecipesController));
 
 export default router;
