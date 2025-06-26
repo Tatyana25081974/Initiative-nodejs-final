@@ -1,4 +1,5 @@
 import Joi from 'joi';
+
 export const createRecipeSchema = Joi.object({
   name: Joi.string().max(64).required(),
   description: Joi.string().max(200).required(),
@@ -23,10 +24,8 @@ export const createRecipeSchema = Joi.object({
       'Soup',
     )
     .required(),
-
   ingredients: Joi.string().min(1).max(50).required(),
   ingredientsAmount: Joi.string().min(2).max(16).required(),
   instruction: Joi.string().max(1200).required(),
-
   recipeImg: Joi.string().uri().required(),
 });

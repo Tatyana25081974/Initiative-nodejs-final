@@ -1,12 +1,10 @@
 import { initMongoConnection } from './db/initMongoConnection.js';
+import { setupServer } from './server.js';
 
 const startServer = async () => {
-  try {
-    await initMongoConnection();
-    console.log('Підключено до бази даних MongoDB');
-  } catch (error) {
-    console.error('Помилка запуску сервера:', error.message);
-  }
+  await initMongoConnection();
+
+  setupServer();
 };
 
-startServer();
+void startServer();
