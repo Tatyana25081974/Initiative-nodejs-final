@@ -81,7 +81,7 @@ const recipeSchema = new Schema(
         },
       },
     ],
-    owner: {
+    ownerId: {
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: true,

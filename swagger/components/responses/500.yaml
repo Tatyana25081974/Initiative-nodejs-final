@@ -1,0 +1,19 @@
+description: Internal server error # Загальний опис — помилка на сервері
+content:
+  application/json: # Тип відповіді — JSON
+    schema:
+      type: object # Відповідь — об'єкт
+      required: # Обов'язкові поля у відповіді
+        - status
+        - message
+        - error
+      properties: # Поля об'єкта відповіді
+        status:
+          type: integer # Числове значення статусу
+          example: 500 # Код помилки — 500 Internal Server Error
+        message:
+          type: string # Текстове повідомлення
+          example: Something went wrong on the server # Текст помилки
+        error:
+          type: string
+          example: InternalServerError

@@ -15,7 +15,7 @@ import {
 import { validateBody } from '../middlewares/validateBody.js';
 import { createRecepieSchema } from '../validation/recipes.js';
 
-import { isValidId } from '../middlewares/isValidId.js';
+import { isValidId } from '../middlewares/isValidID.js';
 
 // import { upload } from '../middlewares/multer.js';
 

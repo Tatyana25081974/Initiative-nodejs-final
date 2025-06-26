@@ -1,0 +1,26 @@
+# redocly.yaml
+
+# Документація щодо конфігурації: https://redocly.com/docs/cli/configuration/
+
+apis:
+  sample@v1:
+    root: docs/openapi.yaml # Основний файл OpenAPI, який слугує точкою входу для API-документації
+
+extends:
+  - recommended # Використовує набір рекомендованих правил перевірки документації від Redocly
+
+rules:
+  no-unused-components: error # Генерує помилку, якщо в документації є невикористані компоненти
+
+theme:
+  openapi:
+    htmlTemplate: ./docs/index.html # Кастомний HTML-шаблон для документації (перевизначає стандартний вигляд)
+    theme:
+      colors:
+        primary:
+          main: '#32329f' # Основний колір теми (наприклад, для кнопок чи заголовків)
+    generateCodeSamples:
+      languages: # Генерація прикладів коду для зазначених мов
+        - lang: curl
+        - lang: Node.js
+        - lang: JavaScript

@@ -1,0 +1,24 @@
+description: Unauthorized error # Загальний опис відповіді 401 (неавторизований запит)
+content:
+  application/json: # Тип вмісту відповіді — JSON
+    schema:
+      type: object # Відповідь — це об’єкт
+      required:
+        - status # Поле "status" є обов’язковим
+        - message # Поле "message" є обов’язковим
+        - data # Поле "data" є обов’язковим
+      properties:
+        status:
+          type: integer # Тип — число
+          example: 401 # Значення за замовчуванням — 401 (помилка авторизації)
+        message:
+          type: string # Тип — рядок
+          example: UnauthorizedError # Приклад повідомлення про помилку
+        data:
+          type: object # Вкладений об’єкт з додатковою інформацією
+          required:
+            - message # Усередині "data" також є обов’язкове поле "message"
+          properties:
+            message:
+              type: string
+              example: 'Access token expired' # Детальне повідомлення про причину помилки

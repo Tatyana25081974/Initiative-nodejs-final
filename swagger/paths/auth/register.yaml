@@ -1,0 +1,56 @@
+tags:
+  - Auth
+summary: Register a new user
+operationId: registerUser
+description: Endpoint for registering a new user # Розгорнутий опис, пояснює що робить цей маршрут
+security: []
+requestBody: # Опис тіла запиту, яке потрібно надіслати
+  required: true
+  content:
+    application/json: #  запит надсилається у форматі JSON
+      schema:
+        type: object
+        required:
+          - name
+          - email
+          - password
+        properties:
+          name:
+            type: string
+            example: Jane Doe
+          email:
+            type: string
+            example: jane@example.com
+          password:
+            type: string
+            example: mySecurePass123
+
+responses:
+  '201': # Статус-код 201 — Created (успішне створення)
+    description: User successfully registered
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: User created successfully!
+            data:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  example: 65ca67e7ae7f10c88b598384 # ID нового користувача
+
+  '400':
+    $ref: '../../components/responses/400.yaml'
+
+  '409': # Статус-код 409 — конфлікт (наприклад, email вже існує)
+    $ref: '../../components/responses/409.yaml'
+
+  '500': # Статус-код 500 — помилка сервера
+    $ref: '../../components/responses/500.yaml'

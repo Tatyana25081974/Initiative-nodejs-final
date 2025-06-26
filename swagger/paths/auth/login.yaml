@@ -1,0 +1,60 @@
+tags:
+  - Auth
+summary: Login user
+operationId: loginUser
+description: Authenticates a user
+security: []
+
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - email
+          - password
+        properties:
+          email:
+            type: string
+            example: jane@example.com
+          password:
+            type: string
+            example: mySecurePass123
+
+responses:
+  '200':
+    description: Successful login
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Login successful
+            data:
+              type: object
+              properties:
+                accessToken:
+                  type: string
+                  example: eyJhbGciOiJIUz...
+                user:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    email:
+                      type: string
+
+  '400':
+    $ref: '../../components/responses/400.yaml'
+
+  '401':
+    $ref: '../../components/responses/401.yaml'
+
+  '500':
+    $ref: '../../components/responses/500.yaml'
