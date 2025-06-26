@@ -7,6 +7,7 @@ import router from './routes/index.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
+import recipesRouter from './routes/recipes.js';
 
 const PORT = Number(getEnvVar('PORT', '3000'));
 
@@ -17,6 +18,8 @@ export const setupServer = () => {
   app.use(cors()); // Дозволяємо CORS
 
   app.use('/api-docs', swaggerDocs());
+
+  app.use('/api', recipesRouter); // Підключаємо маршрути рецептів
 
   app.get('/', (req, res) => {
     res.send('Сервер працює з Morgan, Cors і dotenv!');

@@ -9,6 +9,18 @@ import {
   postDeleteFavorite,
 } from '../services/recipes.js';
 
+import { getOwnRecipes } from '../services/recipesService.js';
+
+export const getOwnRecipesController = async (req, res) => {
+  try {
+    const ownerId = req.user.id; // Отримуємо ownerId з authenticate middleware
+    const recipes = await getOwnRecipes(ownerId);
+    res.json({ status: 'success', data: recipes });
+  } catch (error) {
+    res.status(500).json({ status: 'error', message: error.message });
+  }
+};
+
 export const getRecipesController = (req, res, next) => {
   getRecipes();
 };
