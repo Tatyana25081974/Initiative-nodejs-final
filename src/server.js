@@ -26,8 +26,8 @@ export const setupServer = () => {
   });
 
   app.use(router);
-  app.use(errorHandler);
   app.use(notFoundHandler);
+  app.use(errorHandler);
 
   // Запуск сервера
   app.listen(PORT, () => {
