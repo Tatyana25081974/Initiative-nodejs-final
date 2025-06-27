@@ -52,3 +52,4 @@ export const getFavoriteRecipesController = (req, res, next) => {
 export const postAddFavoriteController = (req, res, next) => {
   postDeleteFavorite();
 };
+export const getRecepiesController = () => {};
