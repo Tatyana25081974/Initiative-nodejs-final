@@ -1,13 +1,5 @@
-import {
-  createRecipe,
-  deleteRecipe,
-  getFavoriteRecipes,
-  getMineRecipes,
-  getRecipeById,
-  getRecipes,
-  postAddFavorite,
-  postDeleteFavorite,
-} from '../services/recipes.js';
+import { getRecipes } from '../services/recipesService.js';
+import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 
 import { getOwnRecipes } from '../services/recipesService.js';
 
@@ -25,29 +17,17 @@ export const getRecipesController = (req, res, next) => {
   getRecipes();
 };
 
-export const getRecipeByIdController = (req, res, next) => {
-  getRecipeById();
-};
+export const getRecipeByIdController = () => {};
 
-export const deleteRecipeController = (req, res, next) => {
-  deleteRecipe();
-};
+export const deleteRecipeController = () => {};
 
-export const createRecipeController = (req, res, next) => {
-  createRecipe();
-};
+export const createRecipeController = () => {};
 
-export const getMineRecipesController = (req, res, next) => {
-  getMineRecipes();
-};
+export const getMineRecipesController = () => {};
 
-export const postDeleteFavoriteController = (req, res, next) => {
-  getFavoriteRecipes();
-};
+export const getFavoriteRecipesController = () => {};
 
-export const getFavoriteRecipesController = (req, res, next) => {
-  postAddFavorite();
-};
+export const postAddFavoriteController = () => {};
 
 export const postAddFavoriteController = (req, res, next) => {
   postDeleteFavorite();
