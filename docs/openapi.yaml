@@ -1,18 +1,19 @@
-openapi: 3.1.0 # Вказує версію специфікації OpenAPI, яка використовується (3.1.0 — найновіша стабільна)
+openapi: 3.1.0
 
 info:
-  version: 1.0.0 # Версія API
-  title: Tasteorama APP # Назва API
+  version: 1.0.0
+  title: Tasteorama APP
   license:
-    name: Apache 2.0 # Назва ліцензії
-    url: http://www.apache.org/licenses/LICENSE-2.0.html # Посилання на текст ліцензії
-  description: API for managing user recipes:creating, viewing, updating, and deleting. # Опис API: призначення, функціональність, цільова аудиторія тощо
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  description: API for managing user recipes: creating, viewing, updating, and deleting.
 
 tags:
   - name: Tasteorama
     description: Operations with recipes.
   - name: Auth
     description: Auth operations.
+
 servers:
   - url: http://127.0.0.1:3000
     description: Локальний сервер для розробки
@@ -22,14 +23,25 @@ servers:
 paths:
   /api/auth/register:
     post:
-      $ref: ../swagger/paths/auth/register.yaml
+      $ref: './paths/auth/register.yaml'
 
   /api/auth/login:
     post:
-      $ref: ../swagger/paths/auth/login.yaml
+      $ref: './paths/auth/login.yaml'
+
+  /api/recipes/addFavorite/{recipeId}:
+    post:
+      $ref: './paths/recipes/addFavorite.yaml'
+
+  /api/recipes/favoriteRecipes:
+    get:
+      $ref: './paths/recipes/favoriteRecipes.yaml'
 
 components:
   securitySchemes:
     bearerAuth:
-      type: http # Тип автентифікації — HTTP
-      scheme: bearer # Схема — Bearer Tok
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+
