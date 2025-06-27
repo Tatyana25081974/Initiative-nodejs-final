@@ -10,7 +10,9 @@ export const getRecipeById = () => {};
 
 export const deleteRecipe = () => {};
 
-export const createRecipe = () => {};
+export const createRecipe = async (payload) => {
+  return await Recipe.create(payload);
+};
 
 export const getMineRecipes = () => {};
 
