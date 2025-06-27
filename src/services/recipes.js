@@ -1,3 +1,5 @@
+import { UsersCollection } from '../db/models/userModel.js';
+
 export const getRecipes = () => {};
 
 export const getRecipeById = () => {};
@@ -12,4 +14,11 @@ export const getFavoriteRecipes = () => {};
 
 export const postAddFavorite = () => {};
 
-export const postDeleteFavorite = () => {};
+export const removeFavoriteRecipe = async (userId, recipeId) => {
+  const result = await UsersCollection.updateOne(
+    { _id: userId },
+    { $pull: { favorites: recipeId } },
+  );
+
+  return result.modifiedCount;
+};

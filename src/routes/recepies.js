@@ -9,7 +9,7 @@ import {
   getMineRecipesController,
   getFavoriteRecipesController,
   postAddFavoriteController,
-  postDeleteFavoriteController,
+  deleteFavoriteRecipe,
 } from '../controllers/recipesController.js';
 
 import { validateBody } from '../middlewares/validateBody.js';
@@ -54,11 +54,11 @@ router.post(
   ctrlWrapper(postAddFavoriteController),
 );
 
-router.post(
+router.delete(
   '/deleteFavorite/:recipeId',
   authenticate,
   isValidId,
-  ctrlWrapper(postDeleteFavoriteController),
+  ctrlWrapper(deleteFavoriteRecipe),
 );
 
 export default router;
