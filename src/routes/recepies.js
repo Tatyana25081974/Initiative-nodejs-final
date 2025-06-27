@@ -2,66 +2,63 @@ import { json, Router } from 'express';
 
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import {
-  getRecepiesController,
-  // getRecepieByIdController,
-  // deleteRecepieController,
-  // createRecepieController,
-  // getMineRecepiesController,
-  // postAddFavoriteController,
-  // postDeleteFavoriteController,
-  // getFavoriteRecipesController,
+  getRecipesController,
+  getRecipeByIdController,
+  deleteRecipeController,
+  createRecipeController,
+  getMineRecipesController,
+  getFavoriteRecipesController,
+  postAddFavoriteController,
+  postDeleteFavoriteController,
 } from '../controllers/recipesController.js';
 
-// import { validateBody } from '../middlewares/validateBody.js';
-// import { createRecipeSchema } from '../validations/recipeValidation.js';
+import { validateBody } from '../middlewares/validateBody.js';
+import { createRecipeSchema } from '../validations/recipeValidation.js';
 
-// import { isValidId } from '../middlewares/isValidID.js';
+import { isValidId } from '../middlewares/isValidID.js';
 
 // import { upload } from '../middlewares/multer.js';
 
-// * Перенесений в індекс раути
-// import { authenticate } from '../middlewares/authenticate.js';
+import { authenticate } from '../middlewares/authenticate.js';
 
 const router = Router();
 const jsonParser = json();
 
-// * Перенесений в індекс раути
-// router.use(authenticate);
+router.get('/', ctrlWrapper(getRecipesController));
 
-// router.get('/mineRecepies', ctrlWrapper(getMineRecepiesController));
-// router.get('/favoriteRecipes', ctrlWrapper(getFavoriteRecipesController));
+router.get('/:recipeId', isValidId, ctrlWrapper(getRecipeByIdController));
 
-router.get('/', ctrlWrapper(getRecepiesController));
+router.delete(
+  '/:recipeId',
+  authenticate,
+  isValidId,
+  ctrlWrapper(deleteRecipeController),
+);
 
-// router.get(
-//   '/:recepieId',
-//   isValidId,
-//   ctrlWrapper(getRecepieByIdController),
-// );
+router.post(
+  '/',
+  authenticate,
+  jsonParser,
+  validateBody(createRecipeSchema),
+  ctrlWrapper(createRecipeController),
+);
 
-// router.delete(
-//   '/:recepieId',
-//   isValidId,
-//   ctrlWrapper(deleteRecepieController),
-// );
+router.get('/mineRecipes', ctrlWrapper(getMineRecipesController));
 
-// router.post(
-//   '/',
-//   jsonParser,
-//   validateBody(createRecipeSchema),
-//   ctrlWrapper(createRecepieController),
-// );
+router.get('/favoriteRecipes', ctrlWrapper(getFavoriteRecipesController));
 
-// router.post(
-//   '/addFavorite/:recepieId',
-//   isValidId,
-//   ctrlWrapper(postAddFavoriteController),
-// );
+router.post(
+  '/addFavorite/:recipeId',
+  authenticate,
+  isValidId,
+  ctrlWrapper(postAddFavoriteController),
+);
 
-// router.post(
-//   '/deleteFavorite/:recepieId',
-//   isValidId,
-//   ctrlWrapper(postDeleteFavoriteController),
-// );
+router.post(
+  '/deleteFavorite/:recipeId',
+  authenticate,
+  isValidId,
+  ctrlWrapper(postDeleteFavoriteController),
+);
 
 export default router;
