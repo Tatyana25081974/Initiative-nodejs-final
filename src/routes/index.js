@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import authRouter from './auth.js';
-import recipesRouter from './recepies.js';
+import recipesRouter from './recipes.js';
 import categoriesRouter from './categories.js';
 import ingredientsRouter from './ingredients.js';
 
