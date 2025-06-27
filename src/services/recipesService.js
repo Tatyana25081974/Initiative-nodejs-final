@@ -7,8 +7,13 @@ export const getFavoriteRecipes = async (userId) => {
     favorites: userId,
   });
 
+  if (!recipes.length) {
+    throw createHttpError(404, 'No favorite recipes found');
+  }
+
   return recipes;
 };
+
 //Додати рецепт в улюблені
 
 export const addToFavorites = async (userId, recipeId) => {

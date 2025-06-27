@@ -36,6 +36,9 @@ paths:
   /api/recipes/favoriteRecipes:
     get:
       $ref: './paths/recipes/favoriteRecipes.yaml'
+  /api/recipes/own/{recipeId}:
+    delete:
+      $ref: './paths/recipes/deleteOwnRecipe.yaml'
 
 components:
   securitySchemes:
