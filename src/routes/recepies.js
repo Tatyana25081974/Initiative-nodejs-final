@@ -7,10 +7,13 @@ import {
   // deleteRecepieController,
   // createRecepieController,
   // getMineRecepiesController,
-  // postAddFavoriteController,
+  postAddFavoriteController,
   // postDeleteFavoriteController,
   // getFavoriteRecipesController,
 } from '../controllers/recipesController.js';
+import { isFavoritValidation } from '../validations/isFavoritValidation.js';
+import { isValidId } from '../middlewares/isValidID.js';
+import { validateBody } from '../middlewares/validateBody.js';
 
 // import { validateBody } from '../middlewares/validateBody.js';
 // import { createRecipeSchema } from '../validations/recipeValidation.js';
@@ -52,11 +55,11 @@ router.get('/', ctrlWrapper(getRecepiesController));
 //   ctrlWrapper(createRecepieController),
 // );
 
-// router.post(
-//   '/addFavorite/:recepieId',
-//   isValidId,
-//   ctrlWrapper(postAddFavoriteController),
-// );
+router.post(
+  '/addFavorite',
+  validateBody(isFavoritValidation),
+  ctrlWrapper(postAddFavoriteController),
+);
 
 // router.post(
 //   '/deleteFavorite/:recepieId',

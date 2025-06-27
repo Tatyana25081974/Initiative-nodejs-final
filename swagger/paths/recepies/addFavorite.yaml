@@ -1,0 +1,43 @@
+/post/addFavorite:
+post:
+  tags:
+    - Recipes
+  summary: Add recipe to favorite
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - _id
+            - isFavorite
+          properties:
+            _id:
+              type: string
+              example: 64c6ddc6fca92c0ef0d8a6a3
+              description: Id recipe
+            isFavorite:
+              type: boolean
+              example: true
+              description: If add to favorit - return true
+  responses:
+    '200':
+      description: success add recipe
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: Recipe added to favorite
+              data:
+                $ref: '#/components/schemas/Recipe'
+    '400':
+      description: invalid data
+    '404':
+      description: recipe not found
