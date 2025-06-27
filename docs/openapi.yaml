@@ -13,6 +13,8 @@ tags:
     description: Operations with recipes.
   - name: Auth
     description: Auth operations.
+  - name: Categories
+    description: Get a list of food categories
 servers:
   - url: http://127.0.0.1:3000
     description: Локальний сервер для розробки
@@ -27,6 +29,10 @@ paths:
   /api/auth/login:
     post:
       $ref: ../swagger/paths/auth/login.yaml
+
+  /api/categories:
+    get:
+      $ref: ../swagger/paths/categories/get.yaml
 
 components:
   securitySchemes:

@@ -1,10 +1,4 @@
-import { Recipe } from '../db/models/recipeModel.js';
-
-export const getRecipes = async (page, perPage) => {
-  const recipes = Recipe.findOne({});
-
-  return recipes;
-};
+export const getRecipes = () => {};
 
 export const getRecipeById = () => {};
 

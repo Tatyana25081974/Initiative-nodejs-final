@@ -1,17 +1,4 @@
-import { getRecipes } from '../services/recipesService.js';
-import { parsePaginationParams } from '../utils/parsePaginationParams.js';
-
-export const getRecipesController = async (req, res) => {
-  const { page, perPage } = parsePaginationParams(req.query);
-
-  const data = await getRecipes(page, perPage);
-
-  res.status(200).json({
-    status: 200,
-    message: 'Successfully found contacts!',
-    data,
-  });
-};
+export const getRecipesController = () => {};
 
 export const getRecipeByIdController = () => {};
 
