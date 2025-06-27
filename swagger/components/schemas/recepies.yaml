@@ -75,7 +75,7 @@ properties:
         quantity:
           type: string
           example: '500g'
-    favorites:
-      type: array
-      items:
-        type: string
+    # favorites:
+    #   type: array
+    #   items:
+    #     type: string
