@@ -45,3 +45,5 @@ export const authenticate = async (req, res, next) => {
 
   next(); //Викликається наступна функція за допомогою next, що дозволяє продовжити обробку запиту.
 };
+
+

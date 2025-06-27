@@ -7,6 +7,7 @@ import router from './routes/index.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
+import { usersRouter } from './routes/user.js';
 
 const PORT = Number(getEnvVar('PORT', '3000'));
 
@@ -22,12 +23,15 @@ export const setupServer = () => {
     res.send('Сервер працює з Morgan, Cors і dotenv!');
   });
 
+  app.use('/api/users', usersRouter);
+
   app.use(router);
   app.use(errorHandler);
   app.use(notFoundHandler);
 
   // Запуск сервера
   app.listen(PORT, () => {
-    console.log(`Сервер запущено на порту ${PORT}`);
+    // console.log(`Сервер запущено на порту ${PORT}`);
+    console.log(`Server running on port ${process.env.PORT}`);
   });
 };
