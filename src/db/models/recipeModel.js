@@ -2,7 +2,8 @@ import { Schema, model } from 'mongoose';
 
 const recipeSchema = new Schema(
   {
-    name: {
+    title: {
+      //було name, в БД title
       type: String,
       required: true,
       maxlength: 64,
@@ -42,6 +43,7 @@ const recipeSchema = new Schema(
       description: 'Short description of the dish',
     },
     cookingTime: {
+      //time в БД!
       type: Number,
       required: true,
       min: 1,
@@ -49,6 +51,7 @@ const recipeSchema = new Schema(
       description: 'Estimated cooking time in minutes',
     },
     calories: {
+      // в БД значення відсутне
       type: Number,
       min: 1,
       max: 10000,
@@ -61,6 +64,7 @@ const recipeSchema = new Schema(
       description: 'Step-by-step cooking instructions',
     },
     recipeImg: {
+      //в БД thumb
       type: String,
       description: 'URL to the image of the dish',
     },
@@ -82,6 +86,7 @@ const recipeSchema = new Schema(
       },
     ],
     ownerId: {
+      // в БД owner
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: true,
