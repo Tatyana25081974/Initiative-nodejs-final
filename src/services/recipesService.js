@@ -1,18 +1,24 @@
-import Recipe from '../models/recipeModel.js';
+import { Recipe } from '../db/models/recipeModel.js'; // Стандартизовано за стилем main
 
 export const getOwnRecipes = async (ownerId) => {
   try {
     const recipes = await Recipe.find({ ownerId }).lean();
     return recipes;
-  } catch (error) {
-    throw new Error('Failed to fetch recipes');
+  } catch (err) {
+    throw new Error('Failed to fetch recipes: ' + err.message);
   }
-};import { Recipe } from '../db/models/recipeModel.js';
+};
 
 export const getRecipes = async (page, perPage) => {
-  const recipes = Recipe.findOne({});
-
-  return recipes;
+  try {
+    const recipes = await Recipe.find({})
+      .skip((page - 1) * perPage)
+      .limit(perPage)
+      .lean();
+    return recipes;
+  } catch (err) {
+    throw new Error('Failed to fetch recipes: ' + err.message);
+  }
 };
 
 export const getRecipeById = () => {};

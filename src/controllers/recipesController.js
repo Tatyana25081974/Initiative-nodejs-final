@@ -1,7 +1,5 @@
-import { getRecipes } from '../services/recipesService.js';
+import { getRecipes, getOwnRecipes } from '../services/recipesService.js';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
-
-import { getOwnRecipes } from '../services/recipesService.js';
 
 export const getOwnRecipesController = async (req, res) => {
   try {
@@ -13,8 +11,14 @@ export const getOwnRecipesController = async (req, res) => {
   }
 };
 
-export const getRecipesController = (req, res, next) => {
-  getRecipes();
+export const getRecipesController = async (req, res) => {
+  const { page, perPage } = parsePaginationParams(req.query);
+  const data = await getRecipes(page, perPage);
+  res.status(200).json({
+    status: 200,
+    message: 'Successfully found contacts!',
+    data,
+  });
 };
 
 export const getRecipeByIdController = () => {};
@@ -29,7 +33,4 @@ export const getFavoriteRecipesController = () => {};
 
 export const postAddFavoriteController = () => {};
 
-export const postAddFavoriteController = (req, res, next) => {
-  postDeleteFavorite();
-};
-export const getRecepiesController = () => {};
+export const postDeleteFavoriteController = () => {};
