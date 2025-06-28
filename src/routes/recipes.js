@@ -39,6 +39,7 @@ router.post(
   '/',
   authenticate,
   jsonParser,
+  // upload.single('photo'),
   validateBody(createRecipeSchema),
   ctrlWrapper(createRecipeController),
 );
