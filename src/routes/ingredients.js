@@ -1,8 +1,9 @@
-import { Router } from 'express';
+import { json, Router } from 'express';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { ingredientsController } from '../controllers/ingredientsController.js';
 
 const router = Router();
+const jsonParser = json();
 
 /**
  * @swagger
@@ -39,6 +40,6 @@ const router = Router();
  *         description: Внутрішня помилка сервера
  */
 
-router.get('/', ctrlWrapper(ingredientsController));
+router.get('/', jsonParser, ctrlWrapper(ingredientsController));
 
 export default router;
