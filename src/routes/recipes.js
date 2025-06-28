@@ -10,6 +10,7 @@ import {
   getFavoriteRecipesController,
   postAddFavoriteController,
   postDeleteFavoriteController,
+  getOwnRecipesController,
 } from '../controllers/recipesController.js';
 
 import { validateBody } from '../middlewares/validateBody.js';
@@ -23,6 +24,8 @@ import { authenticate } from '../middlewares/authenticate.js';
 
 const router = Router();
 const jsonParser = json();
+
+router.get('/recipes', authenticate, getOwnRecipesController);
 
 router.get('/', ctrlWrapper(getRecipesController));
 
