@@ -23,6 +23,16 @@ export const getMineRecipesController = () => {};
 
 export const getFavoriteRecipesController = () => {};
 
-export const postAddFavoriteController = () => {};
+export const postAddFavoriteController = async (req, res) => {
+  const { recipeId } = req.body;
+  const userId = req.user._id;
+  const favoriteRecipes = await postAddFavorite(userId, recipeId);
+
+  res.json({
+    status: 200,
+    message: 'Recipe added to favorites',
+    data: { favoriteRecipes },
+  });
+};
 
 export const postDeleteFavoriteController = () => {};
