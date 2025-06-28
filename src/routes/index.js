@@ -12,6 +12,6 @@ const router = Router();
 router.use('/api/auth', authRouter);
 router.use('/api/recepies', authenticate, recepiesRouter);
 router.use('/api/categories', authenticate, categoriesRouter);
-router.use('/api/ingredients', authenticate, ingredientsRouter);
+router.use('/api/ingredients', ingredientsRouter);
 
 export default router;
