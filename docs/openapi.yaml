@@ -20,6 +20,10 @@ servers:
     description: Продакшн-сервер на Render
 
 paths:
+  /api/recipes:
+    get:
+      $ref: ../swagger/paths/recepies/get-recipes.yaml
+
   /api/auth/register:
     post:
       $ref: ../swagger/paths/auth/register.yaml
