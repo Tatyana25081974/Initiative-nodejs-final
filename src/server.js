@@ -37,3 +37,6 @@ export const setupServer = () => {
     console.log(`Сервер запущено на порту ${PORT}`);
   });
 };
+
+// Виклик функції для запуску сервера
+setupServer();
