@@ -1,18 +1,18 @@
-openapi: 3.1.0 # Вказує версію специфікації OpenAPI, яка використовується (3.1.0 — найновіша стабільна)
-
+openapi: 3.0.3
 info:
-  version: 1.0.0 # Версія API
-  title: Tasteorama APP # Назва API
+  title: Tasteorama APP
+  version: 1.0.0
+  description: API for managing user recipes — creating, viewing, updating, and deleting.
   license:
-    name: Apache 2.0 # Назва ліцензії
-    url: http://www.apache.org/licenses/LICENSE-2.0.html # Посилання на текст ліцензії
-  description: API for managing user recipes:creating, viewing, updating, and deleting. # Опис API: призначення, функціональність, цільова аудиторія тощо
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
 
 tags:
   - name: Tasteorama
     description: Operations with recipes.
   - name: Auth
-    description: Auth operations.
+    description: Authentication-related operations.
+
 servers:
   - url: http://127.0.0.1:3000
     description: Локальний сервер для розробки
@@ -22,14 +22,199 @@ servers:
 paths:
   /api/auth/register:
     post:
-      $ref: ../swagger/paths/auth/register.yaml
+      summary: Register a new user
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger/components/schemas/user.yaml'
+      responses:
+        '201':
+          $ref: '../swagger/components/responses/201_register.yaml'
+        '400':
+          $ref: '../swagger/components/responses/400.yaml'
+        '409':
+          $ref: '../swagger/components/responses/409.yaml'
 
   /api/auth/login:
     post:
-      $ref: ../swagger/paths/auth/login.yaml
+      summary: Login user
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger/components/schemas/user.yaml'
+      responses:
+        '201':
+          $ref: '../swagger/components/responses/201_register.yaml'
+        '400':
+          $ref: '../swagger/components/responses/400.yaml'
+        '401':
+          $ref: '../swagger/components/responses/401.yaml'
+
+  /api/recipes:
+    get:
+      summary: Get user's recipes
+      tags: [Tasteorama]
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+        - in: query
+          name: perPage
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: User recipes list
+          content:
+            application/json:
+              schema:
+                $ref: '../swagger/components/schemas/recipes.yaml'
+        '401':
+          $ref: '../swagger/components/responses/401.yaml'
+      security:
+        - bearerAuth: []
+
+  /api/allRecipes:
+    get:
+      summary: Get all available recipes
+      tags: [Tasteorama]
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+        - in: query
+          name: perPage
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: All recipes list
+          content:
+            application/json:
+              schema:
+                $ref: '../swagger/components/schemas/recipes.yaml'
+        '401':
+          $ref: '../swagger/components/responses/401.yaml'
+      security:
+        - bearerAuth: []
+
+  /api/recipes/{recipeId}:
+    get:
+      summary: Get recipe by ID
+      tags: [Tasteorama]
+      parameters:
+        - name: recipeId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          $ref: '../swagger/components/responses/201_register.yaml'
+        '401':
+          $ref: '../swagger/components/responses/401.yaml'
+        '404':
+          $ref: '../swagger/components/responses/404.yaml'
+      security:
+        - bearerAuth: []
+
+    delete:
+      summary: Delete recipe by ID
+      tags: [Tasteorama]
+      parameters:
+        - name: recipeId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          $ref: '../swagger/components/responses/201_register.yaml'
+        '401':
+          $ref: '../swagger/components/responses/401.yaml'
+        '404':
+          $ref: '../swagger/components/responses/404.yaml'
+      security:
+        - bearerAuth: []
+
+  /api/mineRecipes:
+    get:
+      summary: Get user's own recipes
+      tags: [Tasteorama]
+      responses:
+        '201':
+          $ref: '../swagger/components/responses/201_register.yaml'
+        '401':
+          $ref: '../swagger/components/responses/401.yaml'
+      security:
+        - bearerAuth: []
+
+  /api/favoriteRecipes:
+    get:
+      summary: Get user's favorite recipes
+      tags: [Tasteorama]
+      responses:
+        '201':
+          $ref: '../swagger/components/responses/201_register.yaml'
+        '401':
+          $ref: '../swagger/components/responses/401.yaml'
+      security:
+        - bearerAuth: []
+
+  /api/addFavorite/{recipeId}:
+    post:
+      summary: Add recipe to favorites
+      tags: [Tasteorama]
+      parameters:
+        - name: recipeId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          $ref: '../swagger/components/responses/201_register.yaml'
+        '401':
+          $ref: '../swagger/components/responses/401.yaml'
+        '404':
+          $ref: '../swagger/components/responses/404.yaml'
+      security:
+        - bearerAuth: []
+
+  /api/deleteFavorite/{recipeId}:
+    post:
+      summary: Remove recipe from favorites
+      tags: [Tasteorama]
+      parameters:
+        - name: recipeId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          $ref: '../swagger/components/responses/201_register.yaml'
+        '401':
+          $ref: '../swagger/components/responses/401.yaml'
+        '404':
+          $ref: '../swagger/components/responses/404.yaml'
+      security:
+        - bearerAuth: []
 
 components:
   securitySchemes:
     bearerAuth:
-      type: http # Тип автентифікації — HTTP
-      scheme: bearer # Схема — Bearer Tok
+      type: http
+      scheme: bearer
