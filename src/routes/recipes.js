@@ -17,7 +17,7 @@ import { createRecipeSchema } from '../validations/recipeValidation.js';
 
 import { isValidId } from '../middlewares/isValidID.js';
 
-// import { upload } from '../middlewares/multer.js';
+import { upload } from '../middlewares/multer.js';
 
 import { authenticate } from '../middlewares/authenticate.js';
 
@@ -39,7 +39,7 @@ router.post(
   '/',
   authenticate,
   jsonParser,
-  // upload.single('photo'),
+  upload.single('recipeImg'),
   validateBody(createRecipeSchema),
   ctrlWrapper(createRecipeController),
 );
