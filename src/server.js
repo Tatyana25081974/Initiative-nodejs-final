@@ -12,7 +12,7 @@ import cookieParser from 'cookie-parser';
 
 const PORT = Number(getEnvVar('PORT', '3000'));
 
-export const setupServer = () => {
+export const setupServer = async () => {
   const app = express();
 
   app.use(express.json());
@@ -20,7 +20,8 @@ export const setupServer = () => {
   app.use(morgan('dev')); // Логування запитів
   app.use(cors()); // Дозволяємо CORS
 
-  app.use('/api-docs', swaggerDocs());
+  // Налаштовуємо Swagger UI, передавши app
+  await swaggerDocs(app);
 
   app.use('/api', recipesRouter); // Підключаємо маршрути рецептів
 
