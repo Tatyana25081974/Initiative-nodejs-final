@@ -1,5 +1,7 @@
 import { Recipe } from '../db/models/recipeModel.js'; // Стандартизовано за стилем main
 
+import { UsersCollection } from '../db/models/userModel.js';
+
 export const getOwnRecipes = async (ownerId) => {
   try {
     const recipes = await Recipe.find({ ownerId }).lean();
@@ -33,4 +35,11 @@ export const getFavoriteRecipes = () => {};
 
 export const postAddFavorite = () => {};
 
-export const postDeleteFavorite = () => {};
+export const postDeleteFavorite = async (userId, recipeId) => {
+  const result = await UsersCollection.updateOne(
+    { _id: userId },
+    { $pull: { favorites: recipeId } },
+  );
+
+  return result.modifiedCount;
+};
