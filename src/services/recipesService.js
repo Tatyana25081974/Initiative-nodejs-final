@@ -4,7 +4,9 @@ import { UsersCollection } from '../db/models/userModel.js';
 
 export const getRecipes = () => {};
 
-export const getRecipeById = () => {};
+export const getRecipeById = async (recipeId) => {
+  return await Recipe.findOne({ _id: recipeId });
+};
 
 export const deleteRecipe = () => {};
 
