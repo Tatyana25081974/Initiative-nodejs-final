@@ -21,7 +21,6 @@ const createSession = () => {
 // ✅ Логіка реєстрації
 export const registerUserService = async (payload) => {
   const { body, sessionId } = payload;
-  console.log(body);
 
   const existingUser = await UsersCollection.findOne({
     email: body.email,
