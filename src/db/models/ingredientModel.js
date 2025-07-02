@@ -8,7 +8,7 @@ const ingredientSchema = new Schema(
   },
   {
     versionKey: false,
-    timestamps: true,
+    timestamps: false,
   },
 );
 
