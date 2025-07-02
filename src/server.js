@@ -7,12 +7,13 @@ import router from './routes/index.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
+import recipesRouter from './routes/recipes.js';
 import cookieParser from 'cookie-parser';
 import { UPLOAD_DIR } from './constants/index.js';
 
 const PORT = Number(getEnvVar('PORT', '3000'));
 
-export const setupServer = () => {
+export const setupServer = async () => {
   const app = express();
 
   app.use(express.json());
@@ -20,7 +21,10 @@ export const setupServer = () => {
   app.use(morgan('dev')); // Логування запитів
   app.use(cors()); // Дозволяємо CORS
 
-  app.use('/api-docs', swaggerDocs());
+  // Налаштовуємо Swagger UI, передавши app
+  await swaggerDocs(app);
+
+  app.use('/api', recipesRouter); // Підключаємо маршрути рецептів
 
   app.get('/', (req, res) => {
     res.send('Сервер працює з Morgan, Cors і dotenv!');
@@ -36,3 +40,6 @@ export const setupServer = () => {
     console.log(`Сервер запущено на порту ${PORT}`);
   });
 };
+
+// Виклик функції для запуску сервера
+setupServer();
