@@ -1,6 +1,6 @@
-export const getRecipes = () => {};
-
 import { UsersCollection } from '../db/models/userModel.js';
+
+export const getRecipes = () => {};
 
 export const getRecipeById = () => {};
 

@@ -1,6 +1,6 @@
-export const getRecipesController = () => {};
-
 import { postDeleteFavorite } from '../services/recipesService.js';
+
+export const getRecipesController = () => {};
 
 export const getRecipeByIdController = () => {};
 
