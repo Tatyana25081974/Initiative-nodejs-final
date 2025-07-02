@@ -14,12 +14,10 @@ properties:
     description: The ID of the recepies
     type: string
     example: 65ca67e7ae7f10c88b598384
-
   name:
     description: The name of the recepies
     type: string
     example: 'Pasta Carbonara'
-
   category:
     description: The category of the recepies
     type: string
@@ -28,38 +26,31 @@ properties:
     description: The area of the recepies
     type: string
     example: 'Italian'
-
   description:
     description: The description of the recepies
     type: string
     example: 'A classic Italian pasta dish'
-
-  cookingTime:
+  cookiesTime:
     description: The cooking time of the recepies
     type: number
     example: 30
-
-  calories:
+  cals:
     description: The calories of the recepies
     type: number
     example: 500
-
   instructions:
     description: The instructions of the recepies
     type: string
     example: 'Cook the pasta according to the package instructions.'
-
   recipeImg:
     description: The image of the recepies
     type: string
     format: url
     example: 'https://res.cloudinary.com/uqwgdu/image/upload/image.png'
-
   ownerId:
     description: The ID of the user who owns the recepies
     type: string
     example: 65ca67e7ae7f10c88b598384
-
   ingredients:
     description: The ingredients of the recepies
     type: array
@@ -75,7 +66,3 @@ properties:
         quantity:
           type: string
           example: '500g'
-    favorites:
-      type: array
-      items:
-        type: string
