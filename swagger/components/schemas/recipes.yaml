@@ -66,10 +66,3 @@ properties:
         quantity:
           type: string
           example: '500g'
-<<<<<<< HEAD:swagger/components/schemas/recepies.yaml
-    # favorites:
-    #   type: array
-    #   items:
-    #     type: string
-=======
->>>>>>> main:swagger/components/schemas/recipes.yaml
