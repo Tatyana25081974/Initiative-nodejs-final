@@ -1,4 +1,11 @@
-import { json, Router } from 'express';
+import { Router, json } from 'express';
+
+import { authenticate } from '../middlewares/authenticate.js';
+import { isValidId } from '../middlewares/isValidID.js';
+import { upload } from '../middlewares/multer.js';
+
+import { validateBody } from '../middlewares/validateBody.js';
+import { createRecipeSchema } from '../validations/recipeValidation.js';
 
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import {
@@ -6,20 +13,11 @@ import {
   getRecipeByIdController,
   deleteRecipeController,
   createRecipeController,
-  getMineRecipesController,
   getFavoriteRecipesController,
   postAddFavoriteController,
   postDeleteFavoriteController,
+  getOwnRecipesController,
 } from '../controllers/recipesController.js';
-
-import { validateBody } from '../middlewares/validateBody.js';
-import { createRecipeSchema } from '../validations/recipeValidation.js';
-
-import { isValidId } from '../middlewares/isValidID.js';
-
-// import { upload } from '../middlewares/multer.js';
-
-import { authenticate } from '../middlewares/authenticate.js';
 
 const router = Router();
 const jsonParser = json();
@@ -39,11 +37,16 @@ router.post(
   '/',
   authenticate,
   jsonParser,
+  upload.single('recipeImg'),
   validateBody(createRecipeSchema),
   ctrlWrapper(createRecipeController),
 );
 
-router.get('/mineRecipes', ctrlWrapper(getMineRecipesController));
+router.get(
+  '/ownRecipes',
+  authenticate,
+  ctrlWrapper(getOwnRecipesController),
+);
 
 router.get('/favoriteRecipes', ctrlWrapper(getFavoriteRecipesController));
 

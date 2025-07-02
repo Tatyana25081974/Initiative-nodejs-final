@@ -3,16 +3,41 @@ import {
   registerUserService,
   loginUser,
   logoutUser,
+  refreshUsersSession,
 } from '../services/authService.js';
+
+const setupSession = (res, session) => {
+  res.cookie('refreshToken', session.refreshToken, {
+    httpOnly: true,
+    expires: new Date(Date.now() + ONE_DAY),
+  });
+  res.cookie('sessionId', session._id, {
+    httpOnly: true,
+    expires: new Date(Date.now() + ONE_DAY),
+  });
+};
 
 // ✅ Реєстрація
 export const registerUserController = async (req, res) => {
-  const user = await registerUserService(req.body);
+  let sessionId = null;
+  if (req.cookies.sessionId) {
+    sessionId = req.cookies.sessionId;
+  }
+
+  const { session, user } = await registerUserService({
+    body: req.body,
+    sessionId,
+  });
+
+  setupSession(res, session);
 
   res.status(201).json({
     status: 201,
     message: 'Successfully registered a user!',
-    data: user,
+    data: {
+      accessToken: session.accessToken,
+      user: user,
+    },
   });
 };
 
@@ -20,15 +45,16 @@ export const registerUserController = async (req, res) => {
 export const loginUserController = async (req, res) => {
   const session = await loginUser(req.body);
 
-  res.cookie('refreshToken', session.refreshToken, {
-    httpOnly: true,
-    expires: new Date(Date.now() + ONE_DAY),
-  });
+  setupSession(res, session);
+  // res.cookie('refreshToken', session.refreshToken, {
+  //   httpOnly: true,
+  //   expires: new Date(Date.now() + ONE_DAY),
+  // });
 
-  res.cookie('sessionId', session._id, {
-    httpOnly: true,
-    expires: new Date(Date.now() + ONE_DAY),
-  });
+  // res.cookie('sessionId', session._id, {
+  //   httpOnly: true,
+  //   expires: new Date(Date.now() + ONE_DAY),
+  // });
 
   res.json({
     status: 200,
@@ -52,4 +78,21 @@ export const logoutUserController = async (req, res) => {
 };
 
 // ✅ Refresh session — заглушка
-export const refreshUserSessionController = () => {};
+export const refreshUserSessionController = async (req, res) => {
+  const { sessionId, refreshToken } = req.cookies;
+
+  const session = await refreshUsersSession({
+    sessionId: sessionId,
+    refreshToken: refreshToken,
+  });
+
+  setupSession(res, session);
+
+  res.json({
+    status: 200,
+    message: 'Successfully refreshed a session!',
+    data: {
+      accessToken: session.accessToken,
+    },
+  });
+};
