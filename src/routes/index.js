@@ -1,5 +1,7 @@
 import { Router } from 'express';
 
+import { authenticate } from '../middlewares/authenticate.js';
+
 import authRouter from './auth.js';
 import usersRouter from './user.js';
 import recipesRouter from './recipes.js';
