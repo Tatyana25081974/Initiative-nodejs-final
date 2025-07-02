@@ -1,6 +1,5 @@
 import { Recipe } from '../db/models/recipeModel.js';
 import { UsersCollection } from '../db/models/userModel.js';
-import createHttpError from 'http-errors';
 
 export const getRecipes = () => {};
 
@@ -20,11 +19,11 @@ export const getOwnRecipes = async (ownerId) => {
 
 export const getFavoriteRecipes = () => {};
 
-export const postAddFavorite = (userId, recipeId) => {
+export const postAddFavorite = async (userId, recipeId) => {
   return await UsersCollection.updateOne(
-      { _id: userId },
-      { $addToSet: { favoriteRecipes: recipeId } },
-    );
+    { _id: userId },
+    { $addToSet: { favoriteRecipes: recipeId } },
+  );
 };
 
 export const postDeleteFavorite = async (userId, recipeId) => {
