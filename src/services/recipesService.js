@@ -2,9 +2,6 @@ import { Recipe } from '../db/models/recipeModel.js';
 import { UsersCollection } from '../db/models/userModel.js';
 import createHttpError from 'http-errors';
 
-
-import { UsersCollection } from '../db/models/userModel.js';
-
 export const getRecipes = () => {};
 
 export const getRecipeById = () => {};

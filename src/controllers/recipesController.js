@@ -7,7 +7,6 @@ import {
   getOwnRecipes,
   postDeleteFavorite,
 } from '../services/recipesService.js';
-import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 
 import { getEnvVar } from '../utils/getEnvVar.js';
 
