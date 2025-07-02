@@ -22,7 +22,7 @@ export const getFavoriteRecipes = () => {};
 export const postAddFavorite = async (userId, recipeId) => {
   return await UsersCollection.updateOne(
     { _id: userId },
-    { $addToSet: { favoriteRecipes: recipeId } },
+    { $addToSet: { favorites: recipeId } },
   );
 };
 
