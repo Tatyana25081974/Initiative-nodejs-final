@@ -14,6 +14,9 @@ import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { validateBody } from '../middlewares/validateBody.js';
 import { createRecipeSchema } from '../validations/recipeValidation.js';
 import { isValidId } from '../middlewares/isValidID.js';
+
+import { upload } from '../middlewares/multer.js';
+
 import { authenticate } from '../middlewares/authenticate.js';
 
 const router = Router();
@@ -76,6 +79,7 @@ router.post(
   '/',
   authenticate,
   jsonParser,
+  upload.single('recipeImg'),
   validateBody(createRecipeSchema),
   ctrlWrapper(createRecipeController),
 );

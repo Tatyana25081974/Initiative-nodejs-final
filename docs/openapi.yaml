@@ -11,7 +11,9 @@ tags:
   - name: Tasteorama
     description: Operations with recipes.
   - name: Auth
-    description: Authentication-related operations.
+    description: Auth operations.
+  - name: Categories
+    description: Get a list of food categories
 
 servers:
   - url: http://127.0.0.1:3000
@@ -212,6 +214,10 @@ paths:
           $ref: '../swagger/components/responses/404.yaml'
       security:
         - bearerAuth: []
+
+  /api/categories:
+    get:
+      $ref: ../swagger/paths/categories/get.yaml
 
 components:
   securitySchemes:

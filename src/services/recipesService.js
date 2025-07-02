@@ -1,3 +1,4 @@
+
 import { Recipe } from '../db/models/recipeModel.js'; // Стандартизовано за стилем main
 
 import { UsersCollection } from '../db/models/userModel.js';
@@ -11,23 +12,15 @@ export const getOwnRecipes = async (ownerId) => {
   }
 };
 
-export const getRecipes = async (page, perPage) => {
-  try {
-    const recipes = await Recipe.find({})
-      .skip((page - 1) * perPage)
-      .limit(perPage)
-      .lean();
-    return recipes;
-  } catch (err) {
-    throw new Error('Failed to fetch recipes: ' + err.message);
-  }
-};
+export const getRecipes = () => {};
 
 export const getRecipeById = () => {};
 
 export const deleteRecipe = () => {};
 
-export const createRecipe = () => {};
+export const createRecipe = async (payload) => {
+  return await Recipe.create(payload);
+};
 
 export const getMineRecipes = () => {};
 
