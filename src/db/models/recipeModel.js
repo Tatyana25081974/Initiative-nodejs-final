@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose';
 
 const recipeSchema = new Schema(
   {
-    name: {
+    title: {
       type: String,
       required: true,
       maxlength: 64,
@@ -34,6 +34,7 @@ const recipeSchema = new Schema(
     area: {
       type: String,
       description: 'Geographic origin of the recipe',
+      default: null,
     },
     description: {
       type: String,
@@ -41,7 +42,7 @@ const recipeSchema = new Schema(
       required: true,
       description: 'Short description of the dish',
     },
-    cookingTime: {
+    cookiesTime: {
       type: Number,
       required: true,
       min: 1,
@@ -68,7 +69,7 @@ const recipeSchema = new Schema(
       {
         ingredient: {
           type: Schema.Types.ObjectId,
-          ref: 'Ingredient',
+          ref: 'ingredient',
           required: true,
           description: 'Reference to an ingredient',
         },

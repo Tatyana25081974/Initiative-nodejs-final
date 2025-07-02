@@ -1,4 +1,4 @@
-import { Recipe } from '../db/models/recipeModel.js'; // Стандартизовано за стилем main
+import { Recipe } from '../db/models/recipeModel.js';
 
 import { UsersCollection } from '../db/models/userModel.js';
 
