@@ -1,9 +1,10 @@
 import createHttpError from 'http-errors';
 
 import {
-  postAddFavorite,
+  getRecipeById,
   createRecipe,
   getOwnRecipes,
+  postAddFavorite,
   postDeleteFavorite,
 } from '../services/recipesService.js';
 
@@ -14,7 +15,21 @@ import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
 
 export const getRecipesController = () => {};
 
-export const getRecipeByIdController = () => {};
+export const getRecipeByIdController = async (req, res) => {
+  const { recipeId } = req.params;
+
+  const recipe = await getRecipeById(recipeId);
+
+  if (!recipe) {
+    throw createHttpError(404, 'Recipe not found!');
+  }
+
+  res.status(200).json({
+    status: 200,
+    message: `Successfully found recipe with id ${recipeId}!`,
+    data: recipe,
+  });
+};
 
 export const deleteRecipeController = () => {};
 
