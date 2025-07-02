@@ -1,4 +1,9 @@
-import { getRecipes } from '../services/recipesService.js';
+import createHttpError from 'http-errors';
+import { UsersCollection } from '../db/models/userModel.js';
+import {
+  getRecipes,
+  postAddFavorite,
+} from '../services/recipesService.js';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 
 export const getRecipesController = async (req, res) => {
@@ -24,15 +29,27 @@ export const getMineRecipesController = () => {};
 export const getFavoriteRecipesController = () => {};
 
 export const postAddFavoriteController = async (req, res) => {
-  const { recipeId } = req.body;
-  const userId = req.user._id;
-  const favoriteRecipes = await postAddFavorite(userId, recipeId);
+  try {
+    const { recipeId } = req.body;
+    const userId = req.user._id;
+    const result = await UsersCollection.updateOne(
+      { _id: userId },
+      { $addToSet: { favoriteRecipes: recipeId } },
+    );
+    if (result.matchedCount === 0) {
+      throw createHttpError(404, 'User not Found');
+    }
+    const wasAdded = result.modifiedCount > 0;
 
-  res.json({
-    status: 200,
-    message: 'Recipe added to favorites',
-    data: { favoriteRecipes },
-  });
+    res.json({
+      status: 200,
+      message: wasAdded
+        ? 'Recipe added to favorites'
+        : 'Recipe was already in favorites',
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const postDeleteFavoriteController = () => {};

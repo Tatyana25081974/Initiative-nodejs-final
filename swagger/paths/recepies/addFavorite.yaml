@@ -1,7 +1,7 @@
 post:
   tags:
     - Recipes
-  summary: Add recipe to favorite
+  summary: Add recipe to favorites
   description: Authenticated user adds a recipe to their list of favorite recipes.
   operationId: addFavoriteRecipe
   parameters:
@@ -27,14 +27,6 @@ post:
               message:
                 type: string
                 example: Recipe added to favorites
-              data:
-                type: object
-                properties:
-                  favoriteRecipes:
-                    type: array
-                    items:
-                      type: string
-                      example: 60d21b4667d0d8992e610c85
     '401':
       description: Unauthorized (missing or invalid token)
     '404':
