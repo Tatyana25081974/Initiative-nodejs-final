@@ -8,8 +8,8 @@ import ingredientsRouter from './ingredients.js';
 
 const router = Router();
 
-router.use('/api/auth', authRouter);
-router.use('/api/users', usersRouter);
+router.use('/api/auth', authenticate, authRouter);
+router.use('/api/users', authenticate, usersRouter);
 router.use('/api/recipes', recipesRouter);
 router.use('/api/categories', categoriesRouter);
 router.use('/api/ingredients', ingredientsRouter);
