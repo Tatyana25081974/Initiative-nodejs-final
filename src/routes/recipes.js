@@ -1,18 +1,63 @@
-import { Router } from 'express';
+import { Router, json } from 'express';
+
+import { authenticate } from '../middlewares/authenticate.js';
+import { isValidId } from '../middlewares/isValidID.js';
+import { upload } from '../middlewares/multer.js';
+
+import { validateBody } from '../middlewares/validateBody.js';
+import { createRecipeSchema } from '../validations/recipeValidation.js';
 
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import {
+  getRecipesController,
+  getRecipeByIdController,
+  createRecipeController,
+  getFavoriteRecipesController,
   postAddFavoriteController,
+  postDeleteFavoriteController,
+  getOwnRecipesController,
   deleteOwnRecipeController,
-  getFavoriteRecipesController, // <-- додали
 } from '../controllers/recipesController.js';
 
-import { isValidId } from '../middlewares/isValidID.js';
-import { authenticate } from '../middlewares/authenticate.js';
-
 const router = Router();
+const jsonParser = json();
 
-// ✅ Додати рецепт до улюблених
+router.get('/', ctrlWrapper(getRecipesController));
+
+router.get(
+  '/id/:recipeId',
+  isValidId,
+  ctrlWrapper(getRecipeByIdController),
+);
+
+router.delete(
+  '/id/:recipeId',
+  authenticate,
+  isValidId,
+  ctrlWrapper(deleteOwnRecipeController),
+);
+
+router.post(
+  '/',
+  authenticate,
+  jsonParser,
+  upload.single('recipeImg'),
+  validateBody(createRecipeSchema),
+  ctrlWrapper(createRecipeController),
+);
+
+router.get(
+  '/ownRecipes',
+  authenticate,
+  ctrlWrapper(getOwnRecipesController),
+);
+
+router.get(
+  '/favoriteRecipes',
+  authenticate,
+  ctrlWrapper(getFavoriteRecipesController),
+);
+
 router.post(
   '/addFavorite/:recipeId',
   authenticate,
@@ -20,19 +65,11 @@ router.post(
   ctrlWrapper(postAddFavoriteController),
 );
 
-// ✅ Отримати список улюблених рецептів
-router.get(
-  '/favoriteRecipes',
-  authenticate,
-  ctrlWrapper(getFavoriteRecipesController),
-);
-
-// ✅ Видалити власний рецепт
-router.delete(
-  '/own/:recipeId',
+router.post(
+  '/deleteFavorite/:recipeId',
   authenticate,
   isValidId,
-  ctrlWrapper(deleteOwnRecipeController),
+  ctrlWrapper(postDeleteFavoriteController),
 );
 
 export default router;

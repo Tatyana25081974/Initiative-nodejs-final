@@ -1,39 +1,14 @@
-import { Recipe } from '../db/models/recipeModel.js';
 import createHttpError from 'http-errors';
 
-//Отримати список улюблених рецептів для авторизованого користувача
-export const getFavoriteRecipes = async (userId) => {
-  const recipes = await Recipe.find({
-    favorites: userId,
-  });
+import { Recipe } from '../db/models/recipeModel.js';
+import { UsersCollection } from '../db/models/userModel.js';
 
-  if (!recipes.length) {
-    throw createHttpError(404, 'No favorite recipes found');
-  }
+export const getRecipes = () => {};
 
-  return recipes;
+export const getRecipeById = async (recipeId) => {
+  return await Recipe.findOne({ _id: recipeId });
 };
 
-//Додати рецепт в улюблені
-
-export const addToFavorites = async (userId, recipeId) => {
-  const recipe = await Recipe.findById(recipeId);
-
-  if (!recipe) {
-    throw createHttpError(404, 'Recipe not found');
-  }
-
-  const isAlreadyFavorite = recipe.favorites.includes(userId);
-
-  if (isAlreadyFavorite) {
-    throw createHttpError(409, 'Recipe already in favorites');
-  }
-
-  recipe.favorites.push(userId);
-  await recipe.save();
-
-  return recipe;
-};
 export const deleteOwnRecipe = async (recipeId, userId) => {
   const recipe = await Recipe.findById(recipeId);
 
@@ -41,9 +16,41 @@ export const deleteOwnRecipe = async (recipeId, userId) => {
     throw createHttpError(404, 'Recipe not found');
   }
 
-  if (!recipe.ownerId.equals(userId)) {
+  if (!recipe.owner.equals(userId)) {
     throw createHttpError(403, 'You can delete only your own recipes');
   }
 
   await Recipe.deleteOne({ _id: recipeId });
+};
+
+export const createRecipe = async (payload) => {
+  return await Recipe.create(payload);
+};
+
+export const getOwnRecipes = async (ownerId) => {
+  return await Recipe.find({ owner: ownerId });
+};
+
+export const getFavoriteRecipes = async (_id) => {
+  const user = await UsersCollection.findOne({ _id }).populate(
+    'favorites',
+  );
+
+  return user.favorites;
+};
+
+export const postAddFavorite = async (userId, recipeId) => {
+  return await UsersCollection.updateOne(
+    { _id: userId },
+    { $addToSet: { favorites: recipeId } },
+  );
+};
+
+export const postDeleteFavorite = async (userId, recipeId) => {
+  const result = await UsersCollection.updateOne(
+    { _id: userId },
+    { $pull: { favorites: recipeId } },
+  );
+
+  return result.modifiedCount;
 };
