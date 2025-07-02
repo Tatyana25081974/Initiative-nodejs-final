@@ -18,7 +18,12 @@ export const getOwnRecipes = async (ownerId) => {
 
 export const getFavoriteRecipes = () => {};
 
-export const postAddFavorite = () => {};
+export const postAddFavorite = (userId, recipeId) => {
+  return await UsersCollection.updateOne(
+      { _id: userId },
+      { $addToSet: { favoriteRecipes: recipeId } },
+    );
+};
 
 export const postDeleteFavorite = async (userId, recipeId) => {
   const result = await UsersCollection.updateOne(
