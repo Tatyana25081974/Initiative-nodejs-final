@@ -1,24 +1,13 @@
 import {
-  getRecipes,
   createRecipe,
   getOwnRecipes,
+  postDeleteFavorite,
 } from '../services/recipesService.js';
 
-import { parsePaginationParams } from '../utils/parsePaginationParams.js';
+import { getEnvVar } from '../utils/getEnvVar.js';
+
 import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
-import { getEnvVar } from '../utils/getEnvVar.js';
-import { postDeleteFavorite } from '../services/recipesService.js';
-
-export const getOwnRecipesController = async (req, res) => {
-  try {
-    const ownerId = req.user.id; // Отримуємо ownerId з authenticate middleware
-    const recipes = await getOwnRecipes(ownerId);
-    res.json({ status: 'success', data: recipes });
-  } catch (error) {
-    res.status(500).json({ status: 'error', message: error.message });
-  }
-};
 
 export const getRecipesController = () => {};
 
@@ -60,7 +49,15 @@ export const createRecipeController = async (req, res, next) => {
   }
 };
 
-export const getMineRecipesController = () => {};
+export const getOwnRecipesController = async (req, res) => {
+  const ownerId = req.user._id;
+  const recipes = await getOwnRecipes(ownerId);
+  res.status(200).json({
+    status: 200,
+    message: 'Successfully found own recipes',
+    data: recipes,
+  });
+};
 
 export const getFavoriteRecipesController = () => {};
 
