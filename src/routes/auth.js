@@ -21,6 +21,7 @@ const cookieParserMiddleware = cookieParser();
 router.post(
   '/register',
   jsonParser,
+  cookieParserMiddleware,
   validateBody(registerUserSchema),
   ctrlWrapper(registerUserController),
 );

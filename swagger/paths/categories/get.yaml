@@ -1,0 +1,14 @@
+tags:
+  - Categories
+security: []
+summary: Get all categories
+operationId: getCategories
+responses:
+  '200':
+    description: Successfully found categories
+    content:
+      application/json:
+        schema:
+          $ref: ../../components/schemas/categories.yaml
+  '404':
+    $ref: ../../components/responses/404.yaml

@@ -75,6 +75,7 @@ export const createRecipeController = async (req, res, next) => {
     next(error);
   }
 };
+
 export const getOwnRecipesController = async (req, res) => {
   const ownerId = req.user._id;
   const recipes = await getOwnRecipes(ownerId);

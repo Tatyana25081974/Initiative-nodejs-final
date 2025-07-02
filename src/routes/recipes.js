@@ -11,12 +11,12 @@ import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import {
   getRecipesController,
   getRecipeByIdController,
+  deleteOwnRecipeController,
   createRecipeController,
   getFavoriteRecipesController,
   postAddFavoriteController,
   postDeleteFavoriteController,
   getOwnRecipesController,
-  deleteOwnRecipeController,
 } from '../controllers/recipesController.js';
 
 const router = Router();
