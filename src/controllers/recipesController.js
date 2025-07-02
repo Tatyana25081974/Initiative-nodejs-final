@@ -80,8 +80,9 @@ export const getOwnRecipesController = async (req, res) => {
 export const getFavoriteRecipesController = () => {};
 
 export const postAddFavoriteController = async (req, res) => {
-  const { recipeId } = req.body;
   const userId = req.user._id;
+  const { recipeId } = req.params;
+
   const result = await postAddFavorite(userId, recipeId);
 
   if (result.matchedCount === 0) {
