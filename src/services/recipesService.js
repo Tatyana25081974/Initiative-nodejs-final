@@ -1,6 +1,6 @@
-import { Recipe } from '../db/models/recipeModel.js'; // Стандартизовано за стилем main
-
+import { Recipe } from '../db/models/recipeModel.js';
 import { UsersCollection } from '../db/models/userModel.js';
+import createHttpError from 'http-errors';
 
 export const getRecipes = () => {};
 
@@ -20,7 +20,12 @@ export const getOwnRecipes = async (ownerId) => {
 
 export const getFavoriteRecipes = () => {};
 
-export const postAddFavorite = () => {};
+export const postAddFavorite = (userId, recipeId) => {
+  return await UsersCollection.updateOne(
+      { _id: userId },
+      { $addToSet: { favoriteRecipes: recipeId } },
+    );
+};
 
 export const postDeleteFavorite = async (userId, recipeId) => {
   const result = await UsersCollection.updateOne(

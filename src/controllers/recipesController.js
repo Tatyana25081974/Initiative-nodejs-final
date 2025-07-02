@@ -4,6 +4,7 @@ import {
   getRecipeById,
   createRecipe,
   getOwnRecipes,
+  postAddFavorite,
   postDeleteFavorite,
 } from '../services/recipesService.js';
 
@@ -78,19 +79,31 @@ export const getOwnRecipesController = async (req, res) => {
 
 export const getFavoriteRecipesController = () => {};
 
-export const postAddFavoriteController = () => {};
+export const postAddFavoriteController = async (req, res) => {
+  const { recipeId } = req.body;
+  const userId = req.user._id;
+  const result = await postAddFavorite(userId, recipeId);
+
+  if (result.matchedCount === 0) {
+    throw createHttpError(404, 'User not Found');
+  }
+  const wasAdded = result.modifiedCount > 0;
+
+  res.json({
+    status: 200,
+    message: wasAdded
+      ? 'Recipe added to favorites'
+      : 'Recipe was already in favorites',
+  });
+};
 
 export const postDeleteFavoriteController = async (req, res, next) => {
-  try {
-    const userId = req.user._id;
-    const { recipeId } = req.params;
+  const userId = req.user._id;
+  const { recipeId } = req.params;
 
-    await postDeleteFavorite(userId, recipeId);
+  await postDeleteFavorite(userId, recipeId);
 
-    res
-      .status(200)
-      .json({ status: 200, message: 'Recipe removed from favorites' });
-  } catch (error) {
-    next(error);
-  }
+  res
+    .status(200)
+    .json({ status: 200, message: 'Recipe removed from favorites' });
 };
