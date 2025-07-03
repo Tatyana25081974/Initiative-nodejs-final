@@ -54,19 +54,15 @@ export const createRecipeController = async (req, res) => {
       : await saveFileToUploadDir(photo);
   }
 
-  const { title, description, time, cals, category, instructions } =
-    req.body;
-
-  // Безпечне парсення ingredients
-  let ingredients;
-  try {
-    ingredients = JSON.parse(req.body.ingredients);
-  } catch {
-    throw createHttpError(
-      400,
-      'Invalid JSON format in "ingredients" field',
-    );
-  }
+  const {
+    title,
+    description,
+    time,
+    cals,
+    category,
+    instructions,
+    ingredients,
+  } = req.body;
 
   const newRecipe = await createRecipe({
     title,
