@@ -92,8 +92,4 @@ export const createRecipeSchema = Joi.object({
     'string.max': 'Instructions must be at most 1200 characters',
     'any.required': 'Instructions are required',
   }),
-
-  thumb: Joi.string().uri().optional().messages({
-    'string.uri': 'Thumb must be a valid URL',
-  }),
 });
