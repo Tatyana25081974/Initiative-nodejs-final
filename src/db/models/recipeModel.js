@@ -3,10 +3,6 @@ import { Schema, model } from 'mongoose';
 const recipeSchema = new Schema(
   {
     title: {
-<<<<<<< HEAD
-      //було name, в БД title
-=======
->>>>>>> main
       type: String,
       required: true,
       maxlength: 64,
@@ -18,23 +14,13 @@ const recipeSchema = new Schema(
       maxlength: 200,
       required: true,
     },
-<<<<<<< HEAD
-    cookingTime: {
-      //time в БД!
-=======
     time: {
->>>>>>> main
       type: Number,
       required: true,
       min: 1,
       max: 360,
     },
-<<<<<<< HEAD
-    calories: {
-      // в БД значення відсутне
-=======
     cals: {
->>>>>>> main
       type: Number,
       min: 1,
       max: 10000,
@@ -48,12 +34,7 @@ const recipeSchema = new Schema(
       required: true,
       maxlength: 1200,
     },
-<<<<<<< HEAD
-    recipeImg: {
-      //в БД thumb
-=======
     thumb: {
->>>>>>> main
       type: String,
     },
     ingredients: {
@@ -83,14 +64,8 @@ const recipeSchema = new Schema(
         },
         message: 'Recipe must contain between 2 and 16 ingredients.',
       },
-<<<<<<< HEAD
-    ],
-    ownerId: {
-      // в БД owner
-=======
     },
     owner: {
->>>>>>> main
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: true,
