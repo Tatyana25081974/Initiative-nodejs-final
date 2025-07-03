@@ -33,6 +33,18 @@ paths:
     post:
       $ref: ../swagger/paths/auth/login.yaml
 
+  /api/recipes/addFavorite/{recipeId}:
+    post:
+      $ref: ../swagger/paths/recipes/addFavorite.yaml
+
+  /api/recipes/favoriteRecipes:
+    get:
+      $ref: ../swagger/paths/recipes/favoriteRecipes.yaml
+      
+  /api/recipes/own/{recipeId}:
+    delete:
+      $ref: ../swagger/paths/recipes/deleteOwnRecipe.yaml
+
   /api/categories:
     get:
       $ref: ../swagger/paths/categories/get.yaml

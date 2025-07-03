@@ -11,7 +11,7 @@ import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import {
   getRecipesController,
   getRecipeByIdController,
-  deleteRecipeController,
+  deleteOwnRecipeController,
   createRecipeController,
   getFavoriteRecipesController,
   postAddFavoriteController,
@@ -24,13 +24,17 @@ const jsonParser = json();
 
 router.get('/', ctrlWrapper(getRecipesController));
 
-router.get('/:recipeId', isValidId, ctrlWrapper(getRecipeByIdController));
+router.get(
+  '/id/:recipeId',
+  isValidId,
+  ctrlWrapper(getRecipeByIdController),
+);
 
 router.delete(
-  '/:recipeId',
+  '/id/:recipeId',
   authenticate,
   isValidId,
-  ctrlWrapper(deleteRecipeController),
+  ctrlWrapper(deleteOwnRecipeController),
 );
 
 router.post(
@@ -48,7 +52,11 @@ router.get(
   ctrlWrapper(getOwnRecipesController),
 );
 
-router.get('/favoriteRecipes', ctrlWrapper(getFavoriteRecipesController));
+router.get(
+  '/favoriteRecipes',
+  authenticate,
+  ctrlWrapper(getFavoriteRecipesController),
+);
 
 router.post(
   '/addFavorite/:recipeId',

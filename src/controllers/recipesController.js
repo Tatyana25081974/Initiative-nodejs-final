@@ -6,6 +6,8 @@ import {
   getOwnRecipes,
   postAddFavorite,
   postDeleteFavorite,
+  getFavoriteRecipes,
+  deleteOwnRecipe,
 } from '../services/recipesService.js';
 
 import { getEnvVar } from '../utils/getEnvVar.js';
@@ -31,7 +33,14 @@ export const getRecipeByIdController = async (req, res) => {
   });
 };
 
-export const deleteRecipeController = () => {};
+export const deleteOwnRecipeController = async (req, res) => {
+  const { recipeId } = req.params;
+  const userId = req.user._id;
+
+  await deleteOwnRecipe(recipeId, userId);
+
+  res.status(204).send();
+};
 
 export const createRecipeController = async (req, res, next) => {
   try {
@@ -77,7 +86,15 @@ export const getOwnRecipesController = async (req, res) => {
   });
 };
 
-export const getFavoriteRecipesController = () => {};
+export const getFavoriteRecipesController = async (req, res) => {
+  const { _id } = req.user;
+  const recipes = await getFavoriteRecipes(_id);
+  res.status(200).json({
+    status: 200,
+    message: 'Successfully fetched favorite recipes',
+    data: recipes,
+  });
+};
 
 export const postAddFavoriteController = async (req, res) => {
   const userId = req.user._id;
