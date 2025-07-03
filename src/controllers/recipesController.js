@@ -1,6 +1,11 @@
+import { parsePaginationParams } from '../utils/parsePaginationParams.js';
+import { parseSortParams } from '../utils/parseSortParams.js';
+import { parseFilterParams } from '../utils/parseFilterParams.js';
+
 import createHttpError from 'http-errors';
 
 import {
+  getRecipes,
   getRecipeById,
   createRecipe,
   getOwnRecipes,
@@ -15,7 +20,30 @@ import { getEnvVar } from '../utils/getEnvVar.js';
 import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
 
-export const getRecipesController = () => {};
+export const getRecipesController = async (req, res) => {
+  const { page, perPage } = parsePaginationParams(req.query);
+
+  const { sortBy, sortOrder } = parseSortParams(req.query);
+  const filter = parseFilterParams(req.query);
+
+  const recipes = await getRecipes({
+    page,
+    perPage,
+    sortBy,
+    sortOrder,
+    filter,
+  });
+
+  if (!recipes) {
+    res.status(404).json({ status: 404, message: 'Not found!' });
+    return;
+  }
+  res.status(200).json({
+    status: 200,
+    message: 'Successfully found recipes!',
+    data: recipes,
+  });
+};
 
 export const getRecipeByIdController = async (req, res) => {
   const { recipeId } = req.params;

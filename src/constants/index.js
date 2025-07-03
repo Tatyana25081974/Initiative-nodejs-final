@@ -9,6 +9,11 @@ export const SWAGGER_PATH = path.join(
 export const FIFTEEN_MINUTES = 15 * 60 * 1000;
 export const ONE_DAY = 24 * 60 * 60 * 1000;
 
+export const SORT_ORDER = {
+  ASC: 'asc',
+  DESC: 'desc',
+};
+
 export const TEMPLATES_DIR = path.join(process.cwd(), 'src', 'templates');
 
 export const TEMP_UPLOAD_DIR = path.join(process.cwd(), 'temp');
