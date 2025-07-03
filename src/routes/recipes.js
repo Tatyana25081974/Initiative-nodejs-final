@@ -1,10 +1,12 @@
-import { Router, json } from 'express';
+import { Router } from 'express';
 
 import { authenticate } from '../middlewares/authenticate.js';
 import { isValidId } from '../middlewares/isValidID.js';
 import { upload } from '../middlewares/multer.js';
 
 import { validateBody } from '../middlewares/validateBody.js';
+
+import { parseIngredientsMiddleware } from '../middlewares/parseIngredientsMiddleware.js';
 import { createRecipeSchema } from '../validations/recipeValidation.js';
 
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
@@ -20,7 +22,6 @@ import {
 } from '../controllers/recipesController.js';
 
 const router = Router();
-const jsonParser = json();
 
 router.get('/', ctrlWrapper(getRecipesController));
 
@@ -40,8 +41,8 @@ router.delete(
 router.post(
   '/',
   authenticate,
-  jsonParser,
-  upload.single('recipeImg'),
+  upload.single('thumb'),
+  parseIngredientsMiddleware,
   validateBody(createRecipeSchema),
   ctrlWrapper(createRecipeController),
 );
