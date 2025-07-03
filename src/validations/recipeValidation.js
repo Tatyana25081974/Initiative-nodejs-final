@@ -1,15 +1,26 @@
 import Joi from 'joi';
 import mongoose from 'mongoose';
 
-// Схема для одного інгредієнта
-// const singleIngredientSchema = Joi.object({
-//   id: Joi.string().length(24).required(),
-//   measure: Joi.string().max(32).required(),
-// });
+const allowedCategories = [
+  'Seafood',
+  'Lamb',
+  'Starter',
+  'Chicken',
+  'Beef',
+  'Dessert',
+  'Vegan',
+  'Pork',
+  'Vegetarian',
+  'Miscellaneous',
+  'Pasta',
+  'Breakfast',
+  'Side',
+  'Goat',
+  'Soup',
+];
 
-// Основна схема
 export const createRecipeSchema = Joi.object({
-  title: Joi.string().required().max(64).required().messages({
+  title: Joi.string().max(64).required().messages({
     'string.base': 'Title must be a string',
     'string.max': 'Title must be at most 64 characters',
     'any.required': 'Title is required',
@@ -22,10 +33,10 @@ export const createRecipeSchema = Joi.object({
   }),
 
   time: Joi.number().min(1).max(360).required().messages({
-    'number.base': 'Cooking time must be a number',
-    'number.min': 'Cooking time must be at least 1 minute',
-    'number.max': 'Cooking time must be no more than 360 minutes',
-    'any.required': 'Cooking time is required',
+    'number.base': 'Time must be a number',
+    'number.min': 'Time must be at least 1 minute',
+    'number.max': 'Time must be no more than 360 minutes',
+    'any.required': 'Time is required',
   }),
 
   cals: Joi.number().min(1).max(10000).optional().allow(null).messages({
@@ -34,10 +45,14 @@ export const createRecipeSchema = Joi.object({
     'number.max': 'Calories must be no more than 10000',
   }),
 
-  category: Joi.string().required().messages({
-    'string.base': 'Category must be a string',
-    'any.required': 'Category is required',
-  }),
+  category: Joi.string()
+    .valid(...allowedCategories)
+    .required()
+    .messages({
+      'string.base': 'Category must be a string',
+      'any.only': `Category must be one of: ${allowedCategories.join(', ')}`,
+      'any.required': 'Category is required',
+    }),
 
   ingredients: Joi.array()
     .items(
@@ -49,51 +64,36 @@ export const createRecipeSchema = Joi.object({
             }
             return value;
           }, 'ObjectId validation')
-          .required(),
-        measure: Joi.string().required(),
-      }),
+          .required()
+          .messages({
+            'any.invalid': 'Invalid ingredient ID',
+            'any.required': 'Ingredient ID is required',
+          }),
+        measure: Joi.string().min(2).max(16).required().messages({
+          'string.base': 'Measure must be a string',
+          'string.min': 'Measure must be at least 2 characters',
+          'string.max': 'Measure must be no more than 16 characters',
+          'any.required': 'Measure is required',
+        }),
+      })
     )
     .min(2)
     .max(16)
-    .required(),
+    .required()
+    .messages({
+      'array.base': 'Ingredients must be an array',
+      'array.min': 'At least 2 ingredients required',
+      'array.max': 'No more than 16 ingredients allowed',
+      'any.required': 'Ingredients are required',
+    }),
 
-  instruction: Joi.string().max(1200).required().messages({
-    'string.base': 'Instruction must be a string',
-    'string.max': 'Instruction must be at most 1200 characters',
-    'any.required': 'Instruction is required',
+  instructions: Joi.string().max(1200).required().messages({
+    'string.base': 'Instructions must be a string',
+    'string.max': 'Instructions must be at most 1200 characters',
+    'any.required': 'Instructions are required',
+  }),
+
+  thumb: Joi.string().uri().optional().messages({
+    'string.uri': 'Thumb must be a valid URL',
   }),
 });
-
-//======================
-
-// import Joi from 'joi';
-
-// export const createRecipeSchema = Joi.object({
-//   name: Joi.string().max(64).required(),
-//   description: Joi.string().max(200).required(),
-//   cookingTime: Joi.number().min(1).max(360).required(),
-//   calories: Joi.number().min(1).max(10000),
-//   category: Joi.string()
-//     .valid(
-//       'Seafood',
-//       'Lamb',
-//       'Starter',
-//       'Chicken',
-//       'Beef',
-//       'Dessert',
-//       'Vegan',
-//       'Pork',
-//       'Vegetarian',
-//       'Miscellaneous',
-//       'Pasta',
-//       'Breakfast',
-//       'Side',
-//       'Goat',
-//       'Soup',
-//     )
-//     .required(),
-//   ingredients: Joi.string().min(1).max(50).required(),
-//   ingredientsAmount: Joi.string().min(2).max(16).required(),
-//   instruction: Joi.string().max(1200).required(),
-//   recipeImg: Joi.string().uri().required(),
-// });
