@@ -9,91 +9,63 @@ const recipeSchema = new Schema(
       trim: true,
       description: 'Title of the recipe',
     },
-    category: {
-      type: String,
-      required: true,
-      enum: [
-        'Seafood',
-        'Lamb',
-        'Starter',
-        'Chicken',
-        'Beef',
-        'Dessert',
-        'Vegan',
-        'Pork',
-        'Vegetarian',
-        'Miscellaneous',
-        'Pasta',
-        'Breakfast',
-        'Side',
-        'Goat',
-        'Soup',
-      ],
-      description: 'Category of the recipe',
-    },
-    area: {
-      type: String,
-      description: 'Geographic origin of the recipe',
-    },
-    description: {
+    decr: {
       type: String,
       maxlength: 200,
       required: true,
-      description: 'Short description of the dish',
     },
-    cookingTime: {
+    cookiesTime: {
       type: Number,
       required: true,
       min: 1,
       max: 360,
-      description: 'Estimated cooking time in minutes',
     },
-    calories: {
+    cals: {
       type: Number,
       min: 1,
       max: 10000,
-      description: 'Calories of the recipe',
+    },
+    category: {
+      type: String,
+      required: true,
     },
     instructions: {
       type: String,
       required: true,
       maxlength: 1200,
-      description: 'Step-by-step cooking instructions',
     },
     recipeImg: {
       type: String,
-      description: 'URL to the image of the dish',
     },
-    ingredients: [
-      {
-        ingredient: {
-          type: Schema.Types.ObjectId,
-          ref: 'Ingredient',
-          required: true,
-          description: 'Reference to an ingredient',
+    ingredients: {
+      type: [
+        {
+          ingredient: {
+            type: Schema.Types.ObjectId,
+            ref: 'Ingredient',
+            required: true,
+          },
+          measure: {
+            type: String,
+            required: true,
+            minlength: 2,
+            maxlength: 16,
+          },
         },
-        measure: {
-          type: String,
-          required: true,
-          minlength: 2,
-          maxlength: 16,
-          description: 'Quantity and unit of measurement',
+      ],
+      required: true,
+      validate: {
+        validator: function (value) {
+          return value.length >= 2 && value.length <= 16;
         },
+        message: 'Recipe must contain between 2 and 16 ingredients.',
       },
-    ],
-    ownerId: {
+    },
+    owner: {
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: true,
-      description: 'ID of the user who created the recipe',
     },
-    favorites: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        description: 'Users who added recipe to favorites',
-      },
-    ],
   },
   {
     timestamps: true,
