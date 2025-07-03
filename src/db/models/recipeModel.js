@@ -26,14 +26,9 @@ const recipeSchema = new Schema(
       max: 10000,
     },
     category: {
-      type: Schema.Types.ObjectId,
-      ref: 'Category',
+      type: String,
       required: true,
     },
-    // area: {
-    //   type: String,
-    //   description: 'Geographic origin of the recipe',
-    // },
     instructions: {
       type: String,
       required: true,
