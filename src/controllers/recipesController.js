@@ -42,38 +42,49 @@ export const deleteOwnRecipeController = async (req, res) => {
   res.status(204).send();
 };
 
-export const createRecipeController = async (req, res, next) => {
-  try {
-    const photo = req.file;
-    let photoUrl;
+export const createRecipeController = async (req, res) => {
+  const photo = req.file;
+  let photoUrl;
 
-    if (photo) {
-      const useCloudinary = getEnvVar('ENABLE_CLOUDINARY') === 'true';
-      photoUrl = useCloudinary
-        ? await saveFileToCloudinary(photo)
-        : await saveFileToUploadDir(photo);
-    }
-
-    const { name, description, cookiesTime, cals, category, instruction } =
-      req.body;
-    const ingredients = JSON.parse(req.body.ingredients);
-
-    const recipe = await createRecipe({
-      name,
-      description,
-      cookiesTime,
-      cals,
-      category,
-      instruction,
-      recipeImg: photoUrl,
-      ingredients,
-      ownerId: req.user._id,
-    });
-
-    res.status(201).json(recipe);
-  } catch (error) {
-    next(error);
+  // Обробка зображення
+  if (photo) {
+    const useCloudinary = getEnvVar('ENABLE_CLOUDINARY') === 'true';
+    photoUrl = useCloudinary
+      ? await saveFileToCloudinary(photo)
+      : await saveFileToUploadDir(photo);
   }
+
+  const { title, description, time, cals, category, instructions } =
+    req.body;
+
+  // Безпечне парсення ingredients
+  let ingredients;
+  try {
+    ingredients = JSON.parse(req.body.ingredients);
+  } catch {
+    throw createHttpError(
+      400,
+      'Invalid JSON format in "ingredients" field',
+    );
+  }
+
+  const newRecipe = await createRecipe({
+    title,
+    description,
+    time,
+    cals,
+    category,
+    instructions,
+    thumb: photoUrl,
+    ingredients,
+    owner: req.user._id,
+  });
+
+  res.status(201).json({
+    status: 201,
+    message: 'Successfully created new recipe',
+    data: newRecipe,
+  });
 };
 
 export const getOwnRecipesController = async (req, res) => {
