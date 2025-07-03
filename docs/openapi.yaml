@@ -22,6 +22,9 @@ servers:
     description: Продакшн-сервер на Render
 
 paths:
+  /api/recepies/{id}:
+    get:
+      $ref: ../swagger/paths/recepies/getById.yaml
   /api/auth/register:
     post:
       $ref: ../swagger/paths/auth/register.yaml
@@ -29,6 +32,18 @@ paths:
   /api/auth/login:
     post:
       $ref: ../swagger/paths/auth/login.yaml
+
+  /api/recipes/addFavorite/{recipeId}:
+    post:
+      $ref: ../swagger/paths/recipes/addFavorite.yaml
+
+  /api/recipes/favoriteRecipes:
+    get:
+      $ref: ../swagger/paths/recipes/favoriteRecipes.yaml
+      
+  /api/recipes/own/{recipeId}:
+    delete:
+      $ref: ../swagger/paths/recipes/deleteOwnRecipe.yaml
 
   /api/categories:
     get:
