@@ -40,6 +40,7 @@ paths:
   /api/recipes/favoriteRecipes:
     get:
       $ref: ../swagger/paths/recipes/favoriteRecipes.yaml
+      
   /api/recipes/own/{recipeId}:
     delete:
       $ref: ../swagger/paths/recipes/deleteOwnRecipe.yaml
