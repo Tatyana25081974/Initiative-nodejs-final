@@ -1,51 +1,63 @@
-import { json, Router } from 'express';
+import { Router } from 'express';
+
+import { authenticate } from '../middlewares/authenticate.js';
+import { isValidId } from '../middlewares/isValidID.js';
+import { upload } from '../middlewares/multer.js';
+
+import { validateBody } from '../middlewares/validateBody.js';
+
+import { parseIngredientsMiddleware } from '../middlewares/parseIngredientsMiddleware.js';
+import { createRecipeSchema } from '../validations/recipeValidation.js';
 
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import {
   getRecipesController,
   getRecipeByIdController,
-  deleteRecipeController,
+  deleteOwnRecipeController,
   createRecipeController,
-  getMineRecipesController,
   getFavoriteRecipesController,
   postAddFavoriteController,
   postDeleteFavoriteController,
+  getOwnRecipesController,
 } from '../controllers/recipesController.js';
 
-import { validateBody } from '../middlewares/validateBody.js';
-import { createRecipeSchema } from '../validations/recipeValidation.js';
-
-import { isValidId } from '../middlewares/isValidID.js';
-
-// import { upload } from '../middlewares/multer.js';
-
-import { authenticate } from '../middlewares/authenticate.js';
-
 const router = Router();
-const jsonParser = json();
 
 router.get('/', ctrlWrapper(getRecipesController));
 
-router.get('/:recipeId', isValidId, ctrlWrapper(getRecipeByIdController));
+router.get(
+  '/id/:recipeId',
+  isValidId,
+  ctrlWrapper(getRecipeByIdController),
+);
 
 router.delete(
-  '/:recipeId',
+  '/id/:recipeId',
   authenticate,
   isValidId,
-  ctrlWrapper(deleteRecipeController),
+  ctrlWrapper(deleteOwnRecipeController),
 );
 
 router.post(
   '/',
   authenticate,
-  jsonParser,
+  upload.single('thumb'),
+  parseIngredientsMiddleware,
   validateBody(createRecipeSchema),
   ctrlWrapper(createRecipeController),
 );
 
-router.get('/mineRecipes', ctrlWrapper(getMineRecipesController));
+router.get(
+  '/ownRecipes',
+  authenticate,
+  ctrlWrapper(getOwnRecipesController),
+);
 
-router.get('/favoriteRecipes', ctrlWrapper(getFavoriteRecipesController));
+router.get(
+  '/favoriteRecipes',
+  authenticate,
+  ctrlWrapper(getFavoriteRecipesController),
+);
 
 router.post(
   '/addFavorite/:recipeId',
