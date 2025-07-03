@@ -27,22 +27,22 @@ paths:
       $ref: ../swagger/paths/recepies/getById.yaml
   /api/auth/register:
     post:
-      $ref: './paths/auth/register.yaml'
+      $ref: ../swagger/paths/auth/register.yaml
 
   /api/auth/login:
     post:
-      $ref: './paths/auth/login.yaml'
+      $ref: ../swagger/paths/auth/login.yaml
 
   /api/recipes/addFavorite/{recipeId}:
     post:
-      $ref: './paths/recipes/addFavorite.yaml'
+      $ref: ../swagger/paths/recipes/addFavorite.yaml
 
   /api/recipes/favoriteRecipes:
     get:
-      $ref: './paths/recipes/favoriteRecipes.yaml'
+      $ref: ../swagger/paths/recipes/favoriteRecipes.yaml
   /api/recipes/own/{recipeId}:
     delete:
-      $ref: './paths/recipes/deleteOwnRecipe.yaml'
+      $ref: ../swagger/paths/recipes/deleteOwnRecipe.yaml
 
   /api/categories:
     get:
