@@ -16,7 +16,7 @@ const userSchema = new Schema(
       required: true,
     },
     favorites: {
-      type: [{ type: Schema.Types.ObjectId, ref: 'recipes' }],
+      type: [{ type: Schema.Types.ObjectId, ref: 'Recipe' }],
       default: [],
     },
   },
@@ -32,4 +32,4 @@ userSchema.methods.toJSON = function () {
   return obj;
 };
 
-export const UsersCollection = model('users', userSchema);
+export const UsersCollection = model('User', userSchema);
