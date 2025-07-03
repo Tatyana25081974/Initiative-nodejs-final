@@ -2,55 +2,68 @@ import { Schema, model } from 'mongoose';
 
 const recipeSchema = new Schema(
   {
-    title: {
+    name: {
       type: String,
       required: true,
+      maxlength: 64,
+      trim: true,
+      description: 'Title of the recipe',
+    },
+    decr: {
+      type: String,
+      maxlength: 200,
+      required: true,
+    },
+    cookiesTime: {
+      type: Number,
+      required: true,
+      min: 1,
+      max: 360,
+    },
+    cals: {
+      type: Number,
+      min: 1,
+      max: 10000,
     },
     category: {
       type: String,
       required: true,
     },
-    area: {
-      type: String,
-      default: null,
-    },
     instructions: {
       type: String,
       required: true,
+      maxlength: 1200,
     },
-    description: {
+    recipeImg: {
       type: String,
+    },
+    ingredients: {
+      type: [
+        {
+          ingredient: {
+            type: Schema.Types.ObjectId,
+            ref: 'Ingredient',
+            required: true,
+          },
+          measure: {
+            type: String,
+            required: true,
+          },
+        },
+      ],
       required: true,
-    },
-    thumb: {
-      type: String,
-      default: null,
-    },
-    time: {
-      type: String,
-      required: true,
+      validate: {
+        validator: function (value) {
+          return value.length >= 2 && value.length <= 16;
+        },
+        message: 'Recipe must contain between 2 and 16 ingredients.',
+      },
     },
     owner: {
       type: Schema.Types.ObjectId,
-      ref: 'users',
+      ref: 'User',
+      required: true,
     },
-    cals: {
-      type: Number,
-      default: null,
-    },
-    ingredients: [
-      {
-        id: {
-          type: Schema.Types.ObjectId,
-          ref: 'ingredients',
-          required: true,
-        },
-        measure: {
-          type: String,
-          required: true,
-        },
-      },
-    ],
   },
   {
     timestamps: true,
