@@ -31,7 +31,7 @@ responses:
               example: Successfully found recipe with id 6839dc66812ffad184130baf!
             data:
               type: object
-              $ref: ../../components/schemas/recepies.yaml
+              $ref: ../../components/schemas/recipes.yaml
   '400':
     $ref: ../../components/responses/recipes/recipesError400.yaml
   '404':

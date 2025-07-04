@@ -62,7 +62,7 @@ responses:
                 data:
                   type: array
                   items:
-                    $ref: '../../components/schemas/recepies.yaml'
+                    $ref: ../../components/schemas/recipes.yaml
                 page:
                   type: integer
                   example: 1

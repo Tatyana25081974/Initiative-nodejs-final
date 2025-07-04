@@ -1,0 +1,81 @@
+type: object
+
+required: #Обов'язкові поля
+  - _id
+  - title
+  - category
+  - description
+  - cookingTime
+  - ownerId
+  - ingredients
+
+properties:
+  _id:
+    description: The ID of the recipes
+    type: string
+    example: 65ca67e7ae7f10c88b598384
+
+  title:
+    description: The name of the recipes
+    type: string
+    example: 'Pasta Carbonara'
+
+  category:
+    description: The category of the recipes
+    type: string
+    example: 'Pasta'
+  area:
+    description: The area of the recipes
+    type: string
+    example: 'Italian'
+
+  description:
+    description: The description of the recipes
+    type: string
+    example: 'A classic Italian pasta dish'
+
+  cookingTime:
+    description: The cooking time of the recipes
+    type: number
+    example: 30
+
+  calories:
+    description: The calories of the recipes
+    type: number
+    example: 500
+
+  instructions:
+    description: The instructions of the recipes
+    type: string
+    example: 'Cook the pasta according to the package instructions.'
+
+  recipeImg:
+    description: The image of the recipes
+    type: string
+    format: url
+    example: 'https://res.cloudinary.com/uqwgdu/image/upload/image.png'
+
+  ownerId:
+    description: The ID of the user who owns the recipes
+    type: string
+    example: 65ca67e7ae7f10c88b598384
+
+  ingredients:
+    description: The ingredients of the recipes
+    type: array
+    items:
+      type: object
+      required:
+        - id
+        - measure
+      properties:
+        id:
+          type: string
+          example: '640c2dd963a319ea671e377f'
+        measure:
+          type: string
+          example: '500g'
+  favorites:
+    type: array
+    items:
+      type: string
