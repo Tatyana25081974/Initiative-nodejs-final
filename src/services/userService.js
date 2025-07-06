@@ -1,4 +1,4 @@
 export const getCurrentUser = (user) => {
-    const { name, email, createdAt } = user;
-    return { name, email, createdAt };
-  };
+  const { name, email, favorites, createdAt } = user;
+  return { name, email, favorites, createdAt };
+};
