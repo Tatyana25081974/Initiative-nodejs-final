@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortParams.js';
 import { parseFilterParams } from '../utils/parseFilterParams.js';
@@ -17,14 +18,21 @@ import {
 
 import { getEnvVar } from '../utils/getEnvVar.js';
 
+=======
+import { createRecipe } from '../services/recipesService.js';
+>>>>>>> Stashed changes
 import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
 
+<<<<<<< Updated upstream
 export const getRecipesController = async (req, res) => {
   const { page, perPage } = parsePaginationParams(req.query);
 
   const { sortBy, sortOrder } = parseSortParams(req.query);
   const filter = parseFilterParams(req.query);
+=======
+export const getRecipesController = () => {};
+>>>>>>> Stashed changes
 
   const recipes = await getRecipes({
     page,

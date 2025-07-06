@@ -9,12 +9,46 @@ const recipeSchema = new Schema(
       trim: true,
       description: 'Title of the recipe',
     },
+<<<<<<< Updated upstream
+=======
+    category: {
+      type: String,
+      required: true,
+      enum: [
+        'Seafood',
+        'Lamb',
+        'Starter',
+        'Chicken',
+        'Beef',
+        'Dessert',
+        'Vegan',
+        'Pork',
+        'Vegetarian',
+        'Miscellaneous',
+        'Pasta',
+        'Breakfast',
+        'Side',
+        'Goat',
+        'Soup',
+      ],
+      description: 'Category of the recipe',
+    },
+    area: {
+      type: String,
+      description: 'Geographic origin of the recipe',
+      default: null,
+    },
+>>>>>>> Stashed changes
     description: {
       type: String,
       maxlength: 200,
       required: true,
     },
+<<<<<<< Updated upstream
     time: {
+=======
+    cookiesTime: {
+>>>>>>> Stashed changes
       type: Number,
       required: true,
       min: 1,
