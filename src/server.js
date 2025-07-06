@@ -21,7 +21,12 @@ const PORT = Number(getEnvVar('PORT', '3000'));
 export const setupServer = () => {
   const app = express();
 
-  app.use(cors()); // Дозволяємо CORS
+  app.use(
+    cors({
+      origin: 'http://localhost:5173', // або ваш фронтовий домен
+      credentials: true,
+    }),
+  );
 
   app.use(morgan('dev')); // Логування запитів
 
