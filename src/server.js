@@ -23,7 +23,12 @@ export const setupServer = () => {
 
   app.use(
     cors({
-      origin: 'http://localhost:5173', // або ваш фронтовий домен
+      origin: [
+        'http://localhost:3000',
+        'http://localhost:5173',
+        'http://localhost:5174',
+        'https://initiative-react-final-jxn2.vercel.app/',
+      ], // або ваш фронтовий домен
       credentials: true,
     }),
   );
