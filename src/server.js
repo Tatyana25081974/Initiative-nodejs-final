@@ -28,10 +28,15 @@ export const setupServer = () => {
         'http://localhost:5173',
         'http://localhost:5174',
         'https://initiative-react-final-jxn2.vercel.app/',
+        'https://initiative-react-final-jxn2.vercel.app',
+        'https://initiative-react-final.vercel.app/',
+        'https://initiative-react-final.vercel.app',
       ], // або ваш фронтовий домен
       credentials: true,
     }),
   );
+
+  // app.use(cors({ origin: true, credentials: true }));
 
   app.use(morgan('dev')); // Логування запитів
 
