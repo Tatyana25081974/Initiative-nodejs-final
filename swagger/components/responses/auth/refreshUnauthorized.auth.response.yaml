@@ -1,0 +1,12 @@
+description: Refresh unauthorized
+content:
+  application/json:
+    schema:
+      $ref: ../../schemas/auth/errors/refreshUnauthorized.error.yaml
+    examples:
+      SessionNotFoud:
+        $ref: ./examples/refreshUnauthorized.auth.example.yaml
+      RefreshTokenIsInvalid:
+        $ref: examples/refreshInValidToken.auth.example.yaml
+      SessioTokenExpired:
+        $ref: examples/refreshSessionTokenExpired.auth.example.yaml

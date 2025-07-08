@@ -1,0 +1,8 @@
+description: Logins a user
+content:
+  application/json:
+    schema:
+      $ref: ../../schemas/auth/success/login.success.yaml
+    examples:
+      login:
+        $ref: ./examples/login.auth.example.yaml

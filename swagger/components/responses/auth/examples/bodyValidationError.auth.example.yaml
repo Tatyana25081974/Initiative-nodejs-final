@@ -1,0 +1,10 @@
+value:
+  status: 400
+  message: Validation error
+  details:
+    - field: 'name'
+      message: '\"name\" length must be at least 3 characters long'
+    - field: email
+      message: '\"email\" must be a valid email'
+    - field: 'password'
+      message: '\"password\" length must be at least 8 characters long'

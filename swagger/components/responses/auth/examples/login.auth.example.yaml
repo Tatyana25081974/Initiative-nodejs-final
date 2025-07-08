@@ -1,0 +1,5 @@
+value:
+  status: 200
+  message: Successfully logged in an user!
+  data:
+    accessToken: racd0uTrgB6BkzKWckPmMqtXMXSroXcEz/IswTQp

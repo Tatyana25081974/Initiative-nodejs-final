@@ -1,0 +1,12 @@
+value:
+  status: 201
+  message: 'Successfully registered user!'
+  data:
+    accessToken: 'd4uIujgRqt2XUDojVFNO4t0BavdHuJQRd5ZA/37J'
+    user:
+      name: 'Nick Fury'
+      email: 'nickfury@mail.com'
+      _id: 6853f991e983d0f76f8a4e22
+      favorites: []
+      createdAt: '2025-06-19T11:50:41.851Z'
+      updatedAt: '2025-06-19T11:50:41.851Z'

@@ -1,0 +1,9 @@
+description: Creates a new user
+content:
+  application/json:
+    schema:
+      $ref: ../../schemas/auth/success/register.success.yaml
+    examples:
+      register:
+        summary: Creates new user
+        $ref: ./examples/register.auth.example.yaml

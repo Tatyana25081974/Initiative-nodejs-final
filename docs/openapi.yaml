@@ -118,18 +118,18 @@ paths:
   #   get:
   #     $ref: '../swagger/paths/recipes/{id}/deleteFavorite.yaml'
 
-  # /api/auth/register:
-  #   post:
-  #     $ref: '../swagger/paths/auth/postRegister.yaml'
-  # /api/auth/login:
-  #   post:
-  #     $ref: '../swagger/paths/auth/postLogin.yaml'
-  # /api/auth/logout:
-  #   post:
-  #     $ref: '../swagger/paths/auth/postLogout.yaml'
-  # /api/auth/refresh:
-  #   post:
-  #     $ref: '../swagger/paths/auth/postRefresh.yaml'
+  /api/auth/register:
+    post:
+      $ref: '../swagger/paths/auth/postRegister.yaml'
+  /api/auth/login:
+    post:
+      $ref: '../swagger/paths/auth/postLogin.yaml'
+  /api/auth/logout:
+    post:
+      $ref: '../swagger/paths/auth/postLogout.yaml'
+  /api/auth/refresh:
+    post:
+      $ref: '../swagger/paths/auth/postRefresh.yaml'
 
   # /api/users:
   #   get:
