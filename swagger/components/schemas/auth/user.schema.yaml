@@ -1,0 +1,28 @@
+type: object
+required:
+  - _id
+  - name
+  - email
+  - favorites
+  - createdAt
+  - updatedAt
+properties:
+  _id:
+    description: "User's ObjectId."
+    type: string
+  name:
+    description: "User's name. Should be min 3 and max 16 characters long"
+    type: string
+  email:
+    description: "User's email. Should be a valid email and max 128 characters long"
+    type: string
+  favorites:
+    description: "User's favorite recipes."
+    type: array
+    default: []
+  createdAt:
+    description: 'User created at'
+    type: string
+  updatedAt:
+    description: 'User updated at'
+    type: string

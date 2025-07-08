@@ -1,0 +1,7 @@
+in: query
+name: search
+schema:
+  type: string
+example: Cake
+
+required: false

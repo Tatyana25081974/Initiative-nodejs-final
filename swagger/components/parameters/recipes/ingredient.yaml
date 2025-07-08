@@ -1,0 +1,7 @@
+in: query
+name: ingredient
+schema:
+  type: string
+example: Tomatoes
+
+required: false

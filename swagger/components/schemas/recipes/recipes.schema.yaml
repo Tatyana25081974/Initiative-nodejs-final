@@ -1,0 +1,71 @@
+type: object
+required:
+  - _id
+  - title
+  - category
+  - owner
+  # - area
+  # - cals
+  - instructions
+  - description
+  # - thumb
+  - time
+  - ingredients
+  - createdAt
+  - updatedAt
+properties:
+  _id:
+    description: "Recipe's ObjectId"
+    type: string
+  title:
+    description: "Recipe's title. Should be max 64 characters long."
+    type: string
+  category:
+    description: "Recipe's category. Should be max 200 characters long."
+    type: string
+  owner:
+    description: 'Recipe origin area.'
+    type: string
+  area:
+    description: "Recipe's owner id. ObjectId refered to user _id."
+    type: string
+  instructions:
+    description: "Recipe's instructions. Should be max 1200 characters long."
+    type: string
+  description:
+    description: "Recipe's instructions. Should be max 200 characters long."
+    type: string
+  thumb:
+    description: "Link to recipe's photo."
+    type: string
+  time:
+    description: 'Time to prepare recipe. Min 1 or max 360 minutes long to prepare.'
+    type: number
+  cals:
+    description: "Recipe's calories. Min 1 and max 10000 calories."
+    type: number
+  ingredients:
+    description: "Ingredients's to prepare recipe. Recipe should have min 2 or max 16 ingredients"
+    type: array
+    items:
+      type: object
+      required:
+        - _id
+        - id
+        - measure
+      properties:
+        _id:
+          description: 'Ingredient ObjectId in recipe object. ObjectId refered to user _id.'
+          type: string
+        id:
+          description: 'Ingredient ObjectId. ObjectId refered to ingredient _id in ingredients array.'
+          type: string
+        measure:
+          description: 'Measure of ingredient.'
+          type: string
+  createdAt:
+    description: 'Photo created at'
+    type: string
+  updatedAt:
+    description: 'Photo updated at'
+    type: string

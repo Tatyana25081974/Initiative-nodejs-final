@@ -52,8 +52,8 @@ const recipeSchema = new Schema(
           measure: {
             type: String,
             required: true,
-            minlength: 2,
-            maxlength: 16,
+            // minlength: 2,
+            // maxlength: 16,
           },
         },
       ],

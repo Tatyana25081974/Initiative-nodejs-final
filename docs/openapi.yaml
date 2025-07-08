@@ -1,3 +1,64 @@
+# openapi: 3.1.0
+# info:
+#   version: 1.0.0
+#   title: Tasteorama APP
+#   license:
+#     name: Apache 2.0
+#     url: http://www.apache.org/licenses/LICENSE-2.0.html
+#   description: API for managing user recipes — creating, viewing, updating, and deleting.
+
+# tags:
+#   - name: Tasteorama
+#     description: Operations with recipes.
+#   - name: Auth
+#     description: Auth operations.
+#   - name: Categories
+#     description: Categories operations
+
+# servers:
+#   - url: http://127.0.0.1:3000
+#     description: Локальний сервер для розробки
+#   - url: https://nodejs-hw-mongodb-iy1l.onrender.com
+#     description: Продакшн-сервер на Render
+
+# paths:
+#   /api/recipes:
+#     get:
+#       $ref: ../swagger/paths/recepies/get-recipes.yaml
+
+#   /api/recepies/{id}:
+#     get:
+#       $ref: ../swagger/paths/recepies/getById.yaml
+#   /api/auth/register:
+#     post:
+#       $ref: ../swagger/paths/auth/register.yaml
+
+#   /api/auth/login:
+#     post:
+#       $ref: ../swagger/paths/auth/login.yaml
+
+#   /api/recipes/addFavorite/{recipeId}:
+#     post:
+#       $ref: ../swagger/paths/recipes/addFavorite.yaml
+
+#   # /api/recipes/favoriteRecipes:
+#   #   get:
+#   #     $ref: ../swagger/paths/recipes/favoriteRecipes.yaml
+
+#   /api/recipes/own/{recipeId}:
+#     delete:
+#       $ref: ../swagger/paths/recipes/deleteOwnRecipe.yaml
+
+#   /api/categories:
+#     get:
+#       $ref: ../swagger/paths/categories/get.yaml
+
+# components:
+#   securitySchemes:
+#     bearerAuth:
+#       type: http
+#       scheme: bearer
+
 openapi: 3.1.0
 info:
   version: 1.0.0
@@ -8,50 +69,79 @@ info:
   description: API for managing user recipes — creating, viewing, updating, and deleting.
 
 tags:
-  - name: Tasteorama
-    description: Operations with recipes.
+  - name: Recipes
+    description: Recipes operations.
   - name: Auth
     description: Auth operations.
+  - name: User
+    description: User operation.
+  - name: Ingredients
+    description: Ingredients operation.
   - name: Categories
-    description: Categories operations
+    description: Categories operation.
 
 servers:
-  - url: http://127.0.0.1:3000
-    description: Локальний сервер для розробки
-  - url: https://nodejs-hw-mongodb-iy1l.onrender.com
+  # - url: http://localhost:3000
+  #   description: Локальний сервер для розробки
+  - url: https://initiative-nodejs-final.onrender.com
     description: Продакшн-сервер на Render
 
 paths:
   /api/recipes:
     get:
-      $ref: ../swagger/paths/recepies/get-recipes.yaml
-
-  /api/recepies/{id}:
-    get:
-      $ref: ../swagger/paths/recepies/getById.yaml
-  /api/auth/register:
+      $ref: ../swagger/paths/recipes/getRecipes.yaml
     post:
-      $ref: ../swagger/paths/auth/register.yaml
+      $ref: '../swagger/paths/recipes/postRecipe.yaml'
 
-  /api/auth/login:
-    post:
-      $ref: ../swagger/paths/auth/login.yaml
+  # /api/recipes/id/{id}:
+  #   get:
+  #     $ref: '../swagger/paths/recipes/{id}/getRecipes.yaml'
 
-  /api/recipes/addFavorite/{recipeId}:
-    post:
-      $ref: ../swagger/paths/recipes/addFavorite.yaml
+  #  // put:
+  #  //   $ref: '../swagger/paths/recipes/{id}/put.yaml'
+  #  // patch:
+  #  //   $ref: '../swagger/paths/recipes/{id}/patch.yaml'
+  #  // delete:
+  #  //   $ref: '../swagger/paths/recipes/{id}/delete.yaml'
 
+  # /api/recipes/ownRecipes:
+  #   get:
+  #     $ref: '../swagger/paths/recipes/getOwnRecipes.yaml'
   # /api/recipes/favoriteRecipes:
   #   get:
-  #     $ref: ../swagger/paths/recipes/favoriteRecipes.yaml
+  #     $ref: '../swagger/paths/recipes/getFavoriteRecipes.yaml'
 
-  /api/recipes/own/{recipeId}:
-    delete:
-      $ref: ../swagger/paths/recipes/deleteOwnRecipe.yaml
+  # /api/recipes/addFavorite/{id}:
+  #   get:
+  #     $ref: '../swagger/paths/recipes/{id}/addFavorite.yaml'
+  # /api/recipes/deleteFavorite/{id}:
+  #   get:
+  #     $ref: '../swagger/paths/recipes/{id}/deleteFavorite.yaml'
 
-  /api/categories:
-    get:
-      $ref: ../swagger/paths/categories/get.yaml
+  # /api/auth/register:
+  #   post:
+  #     $ref: '../swagger/paths/auth/postRegister.yaml'
+  # /api/auth/login:
+  #   post:
+  #     $ref: '../swagger/paths/auth/postLogin.yaml'
+  # /api/auth/logout:
+  #   post:
+  #     $ref: '../swagger/paths/auth/postLogout.yaml'
+  # /api/auth/refresh:
+  #   post:
+  #     $ref: '../swagger/paths/auth/postRefresh.yaml'
+
+  # /api/users:
+  #   get:
+  #     $ref: '../swagger/paths/users/getUser.yaml'
+
+  # /api/ingredients:
+  #   post:
+  #     $ref: '../swagger/paths/ingredients/getIngredients.yaml'
+
+  # /api/categories:
+  #   post:
+  #     $ref: '../swagger/paths/categories/getCategories.yaml'
 
 components:
   securitySchemes:
