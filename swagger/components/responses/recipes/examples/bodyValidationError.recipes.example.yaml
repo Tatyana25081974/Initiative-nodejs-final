@@ -1,0 +1,18 @@
+value:
+  status: 400
+  message: Validation error
+  details:
+    - field: 'title'
+      message: 'Title must be at most 64 characters'
+    - field: 'description'
+      message: 'Description must be at most 200 characters'
+    - field: 'time'
+      message: 'Time must be no more than 360 minutes'
+    - field: 'cals'
+      message: 'Calories must be no more than 10000'
+    - field: 'category'
+      message: 'Category must be one of: Seafood, Lamb, Starter, Chicken, Beef, Dessert, Vegan, Pork, Vegetarian, Miscellaneous, Pasta, Breakfast, Side, Goat, Soup'
+    - field: 'ingredients'
+      message: 'At least 2 ingredients required'
+    - field: 'instructions'
+      message: 'Instructions must be at most 1200 characters'

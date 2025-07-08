@@ -1,0 +1,6 @@
+in: path
+name: recipeId
+required: true
+schema:
+  type: string
+  example: '6462a8f74c3d0ddd28897fc4'

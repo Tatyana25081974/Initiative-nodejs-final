@@ -1,0 +1,9 @@
+description: Creates a recipe
+content:
+  application/json:
+    schema:
+      $ref: ../../schemas/recipes/success/postRecipe.success.yaml
+    examples:
+      createRecipe:
+        summary: Create a recipe
+        $ref: ./examples/postRecipe.recipes.example.yaml

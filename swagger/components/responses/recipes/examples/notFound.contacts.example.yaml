@@ -1,0 +1,5 @@
+value:
+  status: 404
+  message: NotFoundError
+  data:
+    message: Recipe not found!

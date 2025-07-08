@@ -1,0 +1,30 @@
+type: object
+required:
+  - status
+  - message
+  # - data
+  # - details
+properties:
+  status:
+    type: integer
+  message:
+    type: string
+  data:
+    type: object
+    required:
+      - message
+    properties:
+      message:
+        type: string
+  details:
+    type: array
+    items:
+      type: object
+      required:
+        - field
+        - message
+      properties:
+        field:
+          type: string
+        message:
+          type: string

@@ -1,0 +1,13 @@
+type: object
+required:
+  - status
+  - message
+  - data
+properties:
+  status:
+    type: integer
+  message:
+    type: string
+  data:
+    type: object
+    $ref: ../recipe.schema.yaml

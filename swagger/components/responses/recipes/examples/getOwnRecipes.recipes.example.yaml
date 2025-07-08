@@ -1,6 +1,6 @@
 value:
   status: 200
-  message: Successfully found recipes!
+  message: Successfully found own recipes
   data:
     data:
       - _id: '6462a8f74c3d0ddd28897fc4'

@@ -1,21 +1,21 @@
 tags:
   - Recipes
-summary: Create Recipes
-operationId: createRecipes
-description: 'Create a Recipes with payload'
+summary: Create Recipe
+operationId: createRecipe
+description: 'Create a Recipe with payload'
 security:
   - bearerAuth: []
 requestBody:
-  description: Payload required to create a Recipes, including name, phoneNumber, RecipesType, and optional photo
+  description: Payload required to create a recipe, including title, category, instructions, description, time(to prepare), ingredients and optional cals(calories), thumb(photo)
   required: true
   content:
     multipart/form-data:
       schema:
-        $ref: ../../components/schemas/contacts/requestBody/postContact.requestBody.yaml
+        $ref: ../../components/schemas/recipes/requestBody/postRecipe.requestBody.yaml
 responses:
   '201':
-    $ref: ../../components/responses/contacts/postContact.contacts.response.yaml
+    $ref: ../../components/responses/recipes/postRecipe.recipes.response.yaml
   '400':
-    $ref: ../../components/responses/contacts/bodyValidationError.contacts.response.yaml
+    $ref: ../../components/responses/recipes/bodyValidationError.recipes.response.yaml
   '401':
-    $ref: ../../components/responses/contacts/unauthorized.contacts.response.yaml
+    $ref: ../../components/responses/recipes/unauthorized.recipes.response.yaml
