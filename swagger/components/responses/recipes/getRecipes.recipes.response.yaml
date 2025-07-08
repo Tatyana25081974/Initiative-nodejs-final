@@ -1,0 +1,9 @@
+description: Get recipes
+content:
+  application/json:
+    schema:
+      $ref: ../../schemas/recipes/success/getRecipes.success.yaml
+    examples:
+      getRecipes:
+        summary: Get recipes
+        $ref: ./examples/getRecipes.recipes.example.yaml

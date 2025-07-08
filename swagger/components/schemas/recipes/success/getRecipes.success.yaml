@@ -1,0 +1,37 @@
+type: object
+required:
+  - status
+  - message
+  - data
+properties:
+  status:
+    type: integer
+  message:
+    type: string
+  data:
+    type: object
+    required:
+      - data
+      - page
+      - perPage
+      - totalItems
+      - totalPages
+      - hasNextPage
+      - hasPreviousPage
+    properties:
+      data:
+        type: array
+        items:
+          $ref: ../recipes.schema.yaml
+      page:
+        type: number
+      perPage:
+        type: number
+      totalItems:
+        type: number
+      totalPages:
+        type: number
+      hasNextPage:
+        type: boolean
+      hasPreviousPage:
+        type: boolean
