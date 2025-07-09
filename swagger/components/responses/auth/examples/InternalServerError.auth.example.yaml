@@ -1,0 +1,4 @@
+value:
+  status: 500
+  message: 'Something went wrong'
+  error: "Expected ',' or '}' after property value in JSON at position 49 (line 3 column 18)"

@@ -1,0 +1,8 @@
+description: Not found error
+content:
+  application/json:
+    schema:
+      $ref: ../../schemas/auth/errors/notFoundError.error.yaml
+    examples:
+      notFoundError:
+        $ref: ./examples/notFoundError.auth.example.yaml

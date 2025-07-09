@@ -1,0 +1,5 @@
+value:
+  status: 200
+  message: Successfully refreshed a session!
+  data:
+    accessToken: 6W/wNXRplRcPbvX+Y+E3ZNynHif+t6gTHiR2K3Hg

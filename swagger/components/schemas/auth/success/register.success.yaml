@@ -1,0 +1,20 @@
+type: object
+required:
+  - status
+  - message
+  - data
+properties:
+  status:
+    type: integer
+  message:
+    type: string
+  data:
+    type: object
+    required:
+      - accessToken
+      - user
+    properties:
+      accessToken:
+        type: string
+      user:
+        $ref: ../user.schema.yaml

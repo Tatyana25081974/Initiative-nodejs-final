@@ -1,0 +1,8 @@
+description: Validation error
+content:
+  application/json:
+    schema:
+      $ref: ../../schemas/auth/errors/bodyValidationError.auth.error.yaml
+    examples:
+      bodyValidationError:
+        $ref: ./examples/bodyValidationError.auth.example.yaml
