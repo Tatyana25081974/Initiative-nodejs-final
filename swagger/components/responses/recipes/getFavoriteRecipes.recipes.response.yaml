@@ -1,0 +1,9 @@
+description: Get favorite recipes
+content:
+  application/json:
+    schema:
+      $ref: ../../schemas/recipes/success/getRecipes.success.yaml
+    examples:
+      getFavoriteRecipes:
+        summary: Get favorite recipes
+        $ref: ./examples/getFavoriteRecipes.recipes.example.yaml

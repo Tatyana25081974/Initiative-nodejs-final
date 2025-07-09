@@ -1,0 +1,9 @@
+description: Not found error
+content:
+  application/json:
+    schema:
+      $ref: ../../schemas/recipes/errors/notFound.error.yaml
+    examples:
+      notFoundError:
+        summary: Contact not found
+        $ref: ./examples/notFound.contacts.example.yaml

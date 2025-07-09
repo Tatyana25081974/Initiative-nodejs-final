@@ -93,9 +93,9 @@ paths:
     post:
       $ref: '../swagger/paths/recipes/postRecipe.yaml'
 
-  # /api/recipes/id/{id}:
-  #   get:
-  #     $ref: '../swagger/paths/recipes/{id}/getRecipes.yaml'
+  /api/recipes/id/{recipeId}:
+    get:
+      $ref: '../swagger/paths/recipes/{id}/getRecipe.yaml'
 
   #  // put:
   #  //   $ref: '../swagger/paths/recipes/{id}/put.yaml'
@@ -104,17 +104,17 @@ paths:
   #  // delete:
   #  //   $ref: '../swagger/paths/recipes/{id}/delete.yaml'
 
-  # /api/recipes/ownRecipes:
-  #   get:
-  #     $ref: '../swagger/paths/recipes/getOwnRecipes.yaml'
-  # /api/recipes/favoriteRecipes:
-  #   get:
-  #     $ref: '../swagger/paths/recipes/getFavoriteRecipes.yaml'
+  /api/recipes/ownRecipes:
+    get:
+      $ref: '../swagger/paths/recipes/getOwnRecipes.yaml'
+  /api/recipes/favoriteRecipes:
+    get:
+      $ref: '../swagger/paths/recipes/getFavoriteRecipes.yaml'
 
-  # /api/recipes/addFavorite/{id}:
+  # /api/recipes/addFavorite/{recipeId}:
   #   get:
   #     $ref: '../swagger/paths/recipes/{id}/addFavorite.yaml'
-  # /api/recipes/deleteFavorite/{id}:
+  # /api/recipes/deleteFavorite/{recipeId}:
   #   get:
   #     $ref: '../swagger/paths/recipes/{id}/deleteFavorite.yaml'
 

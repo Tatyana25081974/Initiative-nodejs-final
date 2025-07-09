@@ -1,0 +1,9 @@
+description: Bad request error - body validation error
+content:
+  application/json:
+    schema:
+      $ref: ../../schemas/recipes/errors/badRequest.error.yaml
+    examples:
+      bodyValidationError:
+        summary: Body validation error
+        $ref: ./examples/bodyValidationError.recipes.example.yaml

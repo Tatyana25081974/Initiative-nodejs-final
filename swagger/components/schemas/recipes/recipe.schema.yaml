@@ -19,33 +19,60 @@ properties:
     type: string
   title:
     description: "Recipe's title. Should be max 64 characters long."
+    maxLength: 64
     type: string
   category:
-    description: "Recipe's category. Should be max 200 characters long."
+    description: "Recipe's category."
     type: string
+    enum:
+      [
+        'Seafood',
+        'Lamb',
+        'Starter',
+        'Chicken',
+        'Beef',
+        'Dessert',
+        'Vegan',
+        'Pork',
+        'Vegetarian',
+        'Miscellaneous',
+        'Pasta',
+        'Breakfast',
+        'Side',
+        'Goat',
+        'Soup',
+      ]
   owner:
-    description: 'Recipe origin area.'
+    description: "Recipe's owner id. ObjectId refered to user _id."
     type: string
   area:
-    description: "Recipe's owner id. ObjectId refered to user _id."
+    description: 'Recipe origin area.'
     type: string
   instructions:
     description: "Recipe's instructions. Should be max 1200 characters long."
+    maxLength: 1200
     type: string
   description:
     description: "Recipe's instructions. Should be max 200 characters long."
+    maxLength: 200
     type: string
   thumb:
     description: "Link to recipe's photo."
     type: string
   time:
     description: 'Time to prepare recipe. Min 1 or max 360 minutes long to prepare.'
+    minimum: 1
+    maximum: 360
     type: number
   cals:
     description: "Recipe's calories. Min 1 and max 10000 calories."
+    minimum: 1
+    maximum: 10000
     type: number
   ingredients:
     description: "Ingredients's to prepare recipe. Recipe should have min 2 or max 16 ingredients"
+    minItems: 2
+    maxItems: 16
     type: array
     items:
       type: object
@@ -62,6 +89,7 @@ properties:
           type: string
         measure:
           description: 'Measure of ingredient.'
+          maxLength: 16
           type: string
   createdAt:
     description: 'Photo created at'

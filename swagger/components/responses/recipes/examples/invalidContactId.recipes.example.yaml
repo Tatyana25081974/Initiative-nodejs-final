@@ -1,0 +1,5 @@
+value:
+  status: 400
+  message: BadRequestError
+  data:
+    message: "Requested recipe id: '6462a8f74c3d0ddd28897fc4s' is not a mongoose ObjectId"

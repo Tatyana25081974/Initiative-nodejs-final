@@ -1,0 +1,9 @@
+description: Get own recipes
+content:
+  application/json:
+    schema:
+      $ref: ../../schemas/recipes/success/getRecipes.success.yaml
+    examples:
+      getOwnRecipes:
+        summary: Get own recipes
+        $ref: ./examples/getOwnRecipes.recipes.example.yaml

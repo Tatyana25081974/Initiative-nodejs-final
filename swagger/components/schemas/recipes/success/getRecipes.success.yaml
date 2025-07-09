@@ -22,7 +22,7 @@ properties:
       data:
         type: array
         items:
-          $ref: ../recipes.schema.yaml
+          $ref: ../recipe.schema.yaml
       page:
         type: number
       perPage:

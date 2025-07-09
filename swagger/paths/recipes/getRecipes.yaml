@@ -3,8 +3,7 @@ tags:
 summary: Get list of recipes
 operationId: getRecipes
 description: 'Get list of recipes with this endpoint'
-security:
-  - bearerAuth: []
+security: []
 parameters:
   - $ref: ../../components/parameters/recipes/page.yaml
   # - $ref: ../../components/parameters/recipes/perPage.yaml
@@ -15,5 +14,3 @@ parameters:
 responses:
   '200':
     $ref: ../../components/responses/recipes/getRecipes.recipes.response.yaml
-  '401':
-    $ref: ../../components/responses/recipes/unauthorized.recipes.response.yaml

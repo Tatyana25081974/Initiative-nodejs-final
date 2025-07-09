@@ -1,0 +1,19 @@
+tags:
+  - Recipes
+summary: Get list of own recipes
+operationId: getOwnRecipes
+description: 'Get list of own recipes'
+security:
+  - bearerAuth: []
+# parameters:
+#   - $ref: ../../components/parameters/recipes/page.yaml
+#   # - $ref: ../../components/parameters/recipes/perPage.yaml
+#   - $ref: ../../components/parameters/recipes/ingredient.yaml
+#   - $ref: ../../components/parameters/recipes/category.yaml
+#   # - $ref: ../../components/parameters/recipes/area.yaml
+#   - $ref: ../../components/parameters/recipes/search.yaml
+responses:
+  '200':
+    $ref: ../../components/responses/recipes/getOwnRecipes.recipes.response.yaml
+  '401':
+    $ref: ../../components/responses/recipes/unauthorized.recipes.response.yaml

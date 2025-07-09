@@ -1,0 +1,9 @@
+description: Bad request error - invalid recipe id
+content:
+  application/json:
+    schema:
+      $ref: ../../schemas/recipes/errors/badRequest.error.yaml
+    examples:
+      invalidContactId:
+        summary: Invalid contact id
+        $ref: ./examples/invalidContactId.recipes.example.yaml
