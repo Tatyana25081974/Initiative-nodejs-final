@@ -1,0 +1,118 @@
+type: object
+required:
+  - title
+  - category
+  # - area
+  # - cals
+  - instructions
+  - description
+  # - thumb
+  - time
+  - ingredients
+properties:
+  title:
+    description: "Recipe's title. Should be max 64 characters long."
+    maxLength: 64
+    type: string
+  category:
+    description: "Recipe's category."
+    type: string
+    enum:
+      [
+        'Seafood',
+        'Lamb',
+        'Starter',
+        'Chicken',
+        'Beef',
+        'Dessert',
+        'Vegan',
+        'Pork',
+        'Vegetarian',
+        'Miscellaneous',
+        'Pasta',
+        'Breakfast',
+        'Side',
+        'Goat',
+        'Soup',
+      ]
+  # area:
+  #   description: "Recipe origin area."
+  #   type: string
+  instructions:
+    description: "Recipe's instructions. Should be max 1200 characters long."
+    maxLength: 1200
+    type: string
+  description:
+    description: "Recipe's instructions. Should be max 200 characters long."
+    maxLength: 200
+    type: string
+  thumb:
+    description: 'Recipe photo'
+    # type: string
+    format: binary
+  time:
+    description: 'Time to prepare recipe. Min 1 or max 360 minutes long to prepare.'
+    minimum: 1
+    maximum: 360
+    type: number
+  cals:
+    description: "Recipe's calories. Min 1 and max 10000 calories."
+    minimum: 1
+    maximum: 10000
+    type: number
+  ingredients:
+    description: "Ingredients's to prepare recipe. Recipe should have min 2 or max 16 ingredients"
+    minItems: 2
+    maxItems: 16
+    type: array
+    items:
+      type: object
+      required:
+        - _id
+        - id
+        - measure
+      properties:
+        _id:
+          description: 'Ingredient ObjectId in recipe object. ObjectId refered to user _id.'
+          type: string
+        id:
+          description: 'Ingredient ObjectId. ObjectId refered to ingredient _id in ingredients array.'
+          type: string
+        measure:
+          description: 'Measure of ingredient.'
+          maxLength: 16
+          type: string
+example:
+  title: 'Tandoori chicken'
+  category: 'Chicken'
+  # area: 'Indian'
+  cals: 325
+  instructions: 'Mix the lemon juice with the paprika and red onions in a large shallow dish. Slash each chicken thigh three times, then turn them in the juice and set aside for 10 mins. Mix all of the marinade ingredients together and pour over the chicken. Give everything a good mix, then cover and chill for at least 1 hr. This can be done up to a day in advance. Heat the grill. Lift the chicken pieces onto a rack over a baking tray. Brush over a little oil and grill for 8 mins on each side or until lightly charred and completely cooked through.'
+  description: 'A popular Indian dish of chicken marinated in yogurt and spices, then roasted in a tandoor oven.'
+  # thumb: 'https://ftp.goit.study/img/so-yummy/preview/Tandoori%20chicken.jpg'
+  time: 80
+  ingredients:
+    - id: '640c2dd963a319ea671e3714'
+      measure: '2 Juice'
+    - id: '640c2dd963a319ea671e3733'
+      measure: '4 tsp'
+    - id: '640c2dd963a319ea671e374e'
+      measure: '2 finely chopped'
+    - id: '640c2dd963a319ea671e3697'
+      measure: '16 skinnless'
+    - id: '640c2dd963a319ea671e3789'
+      measure: 'For brushing'
+    - id: '640c2dd963a319ea671e36f0'
+      measure: '300ml'
+    - id: '640c2dd963a319ea671e36e8'
+      measure: 'large piece'
+    - id: '640c2dd963a319ea671e36e4'
+      measure: '4'
+    - id: '640c2dd963a319ea671e36e2'
+      measure: '¾ tsp'
+    - id: '640c2dd963a319ea671e36f7'
+      measure: '¾ tsp'
+    - id: '640c2dd963a319ea671e369c'
+      measure: '½ tsp'
+    - id: '640c2dd963a319ea671e3782'
+      measure: '¼ tsp'

@@ -126,7 +126,7 @@ export const getFavoriteRecipesController = async (req, res) => {
   const recipes = await getFavoriteRecipes(_id);
   res.status(200).json({
     status: 200,
-    message: 'Successfully fetched favorite recipes',
+    message: 'Successfully found favorite recipes',
     data: recipes,
   });
 };

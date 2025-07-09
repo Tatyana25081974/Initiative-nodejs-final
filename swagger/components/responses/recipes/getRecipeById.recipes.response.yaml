@@ -1,0 +1,9 @@
+description: Successfully found recipe by ID
+content:
+  application/json:
+    schema:
+      $ref: ../../schemas/recipes/success/getRecipeById.success.yaml
+    examples:
+      success:
+        summary: Found recipe by ID
+        $ref: ./examples/getRecipeById.recipes.example.yaml
