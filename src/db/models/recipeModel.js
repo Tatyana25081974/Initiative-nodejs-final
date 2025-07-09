@@ -54,7 +54,6 @@ const recipeSchema = new Schema(
             required: true,
             // minlength: 2,
             // maxlength: 16,
-            maxlength: 16,
           },
         },
       ],

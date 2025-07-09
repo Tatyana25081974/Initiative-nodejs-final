@@ -112,23 +112,73 @@ export const createRecipeController = async (req, res) => {
 };
 
 export const getOwnRecipesController = async (req, res) => {
+  const { page, perPage } = parsePaginationParams(req.query);
+
+  const { sortBy, sortOrder } = parseSortParams(req.query);
+  const filter = parseFilterParams(req.query);
+
   const ownerId = req.user._id;
-  const recipes = await getOwnRecipes(ownerId);
+
+  // const recipes = await getOwnRecipes(ownerId);
+  const recipes = await getOwnRecipes({
+    page,
+    perPage,
+    sortBy,
+    sortOrder,
+    filter,
+    ownerId,
+  });
+
+  if (!recipes) {
+    res.status(404).json({ status: 404, message: 'Not found!' });
+    return;
+  }
   res.status(200).json({
     status: 200,
-    message: 'Successfully found own recipes',
+    message: 'Successfully found own recipes!',
     data: recipes,
   });
+
+  // res.status(200).json({
+  //   status: 200,
+  //   message: 'Successfully found own recipes',
+  //   data: recipes,
+  // });
 };
 
 export const getFavoriteRecipesController = async (req, res) => {
+  const { page, perPage } = parsePaginationParams(req.query);
+
+  const { sortBy, sortOrder } = parseSortParams(req.query);
+  const filter = parseFilterParams(req.query);
+
   const { _id } = req.user;
-  const recipes = await getFavoriteRecipes(_id);
+
+  const recipes = await getFavoriteRecipes({
+    page,
+    perPage,
+    sortBy,
+    sortOrder,
+    filter,
+    userId: _id,
+  });
+
+  if (!recipes) {
+    res.status(404).json({ status: 404, message: 'Not found!' });
+    return;
+  }
   res.status(200).json({
     status: 200,
-    message: 'Successfully found favorite recipes',
+    message: 'Successfully found recipes!',
     data: recipes,
   });
+
+  // const recipes = await getFavoriteRecipes(_id);
+  // res.status(200).json({
+  //   status: 200,
+  //   message: 'Successfully found favorite recipes',
+  //   data: recipes,
+  // });
 };
 
 export const postAddFavoriteController = async (req, res) => {
