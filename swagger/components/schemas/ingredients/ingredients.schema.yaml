@@ -1,0 +1,20 @@
+type: object
+required:
+  - _id
+  - name
+  - desc
+  - img
+properties:
+  _id:
+    description: 'Ingredients ObjectId'
+    type: string
+  name:
+    description: 'Ingredients name'
+    type: string
+  desc:
+    description: 'Ingredients description'
+    type: string
+  img:
+    description: 'Ingredients image'
+    type: string
+    format: url

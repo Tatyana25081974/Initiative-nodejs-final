@@ -1,0 +1,11 @@
+tags:
+  - Ingredients
+summary: Get list of ingredients
+operationId: Ingredients
+description: 'Get list of ingredients with this endpoint'
+security: []
+responses:
+  '200':
+    $ref: ../../components/responses/ingredients/getIngredients.ingredients.response.yaml
+  '404':
+    $ref: ../../components/responses/ingredients/notFound.ingredients.response.yaml

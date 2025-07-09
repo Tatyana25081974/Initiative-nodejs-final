@@ -1,0 +1,14 @@
+type: object
+required:
+  - status
+  - message
+  - data
+properties:
+  status:
+    type: integer
+  message:
+    type: string
+  data:
+    type: array
+    items:
+      $ref: ../categories.schema.yaml

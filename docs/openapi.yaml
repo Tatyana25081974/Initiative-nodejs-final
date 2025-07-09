@@ -131,17 +131,17 @@ paths:
   #   post:
   #     $ref: '../swagger/paths/auth/postRefresh.yaml'
 
-  # /api/users:
-  #   get:
-  #     $ref: '../swagger/paths/users/getUser.yaml'
+  /api/users:
+    get:
+      $ref: '../swagger/paths/users/getUser.yaml'
 
-  # /api/ingredients:
-  #   post:
-  #     $ref: '../swagger/paths/ingredients/getIngredients.yaml'
+  /api/ingredients:
+    get:
+      $ref: '../swagger/paths/ingredients/getIngredients.yaml'
 
-  # /api/categories:
-  #   post:
-  #     $ref: '../swagger/paths/categories/getCategories.yaml'
+  /api/categories:
+    get:
+      $ref: '../swagger/paths/categories/getCategories.yaml'
 
 components:
   securitySchemes:

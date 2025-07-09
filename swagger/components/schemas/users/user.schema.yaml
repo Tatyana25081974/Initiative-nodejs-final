@@ -1,0 +1,19 @@
+type: object
+required:
+  - name
+  - email
+  - favorites
+  - createdAt
+properties:
+  name:
+    description: 'User name'
+    type: string
+  email:
+    description: 'User email'
+    type: string
+  favorites:
+    description: 'User favorites recipes'
+    type: array
+  createdAt:
+    description: 'User time create account'
+    type: string

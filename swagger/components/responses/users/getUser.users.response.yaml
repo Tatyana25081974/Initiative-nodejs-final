@@ -1,0 +1,9 @@
+description: Get user
+content:
+  application/json:
+    schema:
+      $ref: ../../schemas/users/success/getUser.success.yaml
+    examples:
+      getRecipes:
+        summary: Get user
+        $ref: examples/getUser.users.example.yaml

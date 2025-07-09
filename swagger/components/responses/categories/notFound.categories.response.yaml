@@ -1,0 +1,9 @@
+description: Not found error
+content:
+  application/json:
+    schema:
+      $ref: ../../schemas/categories/errors/NotFound.error.yaml
+    examples:
+      notFoundError:
+        summary: Categories not found
+        $ref: ./examples/notFound.categories.example.yaml

@@ -1,0 +1,9 @@
+description: Get categories
+content:
+  application/json:
+    schema:
+      $ref: ../../schemas/categories/success/getCategories.success.yaml
+    examples:
+      getRecipes:
+        summary: Get categories
+        $ref: examples/getCategories.categories.example.yaml
