@@ -1,0 +1,9 @@
+description: Successfully add recipe to favorite by ID
+content:
+  application/json:
+    schema:
+      $ref: ../../schemas/recipes/success/postAddFavorite.success.yaml
+    examples:
+      success:
+        summary: Add recipe to favorite by ID
+        $ref: ./examples/postAddFavorite.recipes.example.yaml

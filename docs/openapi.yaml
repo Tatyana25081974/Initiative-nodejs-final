@@ -111,9 +111,9 @@ paths:
     get:
       $ref: '../swagger/paths/recipes/getFavoriteRecipes.yaml'
 
-  # /api/recipes/addFavorite/{recipeId}:
-  #   get:
-  #     $ref: '../swagger/paths/recipes/{id}/addFavorite.yaml'
+  /api/recipes/addFavorite/{recipeId}:
+    get:
+      $ref: '../swagger/paths/recipes/{id}/addFavorite.yaml'
   # /api/recipes/deleteFavorite/{recipeId}:
   #   get:
   #     $ref: '../swagger/paths/recipes/{id}/deleteFavorite.yaml'
