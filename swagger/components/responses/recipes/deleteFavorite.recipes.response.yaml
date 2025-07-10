@@ -1,0 +1,9 @@
+description: Successfully deleted recipe from user favorite list
+content:
+  application/json:
+    schema:
+      $ref: ../../schemas/recipes/success/deleteFavorite.success.yaml
+    examples:
+      success:
+        summary: Successfully deleted recipe from user favorite list
+        $ref: ./examples/deleteFavorite.recipes.example.yaml

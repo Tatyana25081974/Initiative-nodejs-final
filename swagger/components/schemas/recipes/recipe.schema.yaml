@@ -89,7 +89,6 @@ properties:
           type: string
         measure:
           description: 'Measure of ingredient.'
-          maxLength: 16
           type: string
   createdAt:
     description: 'Photo created at'
