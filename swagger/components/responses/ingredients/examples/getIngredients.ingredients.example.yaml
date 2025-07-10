@@ -1,0 +1,16 @@
+value:
+  status: 200
+  message: Successfully found ingredients
+  data:
+    - _id: '6462a6cd4c3d0ddd28897f8e'
+      name: 'Ackee'
+      desc: 'A fruit that is native to West Africa, but is also grown in the Caribbean, and is often used in traditional Jamaican dishes such as ackee and saltfish.'
+      img: 'https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png'
+    - _id: '6462a6cd4c3d0ddd28897f95'
+      name: 'Allspice'
+      desc: 'A spice made from the dried berries of the Pimenta dioica plant, with a flavor profile that is a combination of cinnamon, nutmeg, and cloves, commonly used in Caribbean and Latin American cuisine.'
+      img: 'https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e3860.png'
+    - _id: '640c2dd963a319ea671e37f9'
+      name: 'Baguette'
+      desc: 'A long, thin loaf of French bread that has a crisp crust and a soft, chewy interior, and is often used for sandwiches and as an accompaniment to meals.'
+      img: 'https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e37f9.png'

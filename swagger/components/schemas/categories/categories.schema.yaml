@@ -1,0 +1,11 @@
+type: object
+required:
+  - _id
+  - name
+properties:
+  _id:
+    description: 'Categories ObjectId'
+    type: string
+  name:
+    description: 'Categories name'
+    type: string

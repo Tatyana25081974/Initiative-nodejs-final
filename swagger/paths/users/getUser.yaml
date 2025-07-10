@@ -1,0 +1,12 @@
+tags:
+  - User
+summary: Get current user
+operationId: getUser
+description: Get current user
+security:
+  - bearerAuth: []
+responses:
+  '200':
+    $ref: ../../components/responses/users/getUser.users.response.yaml
+  '401':
+    $ref: ../../components/responses/users/getUserUnauthorized.users.response.yaml
