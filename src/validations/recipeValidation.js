@@ -69,13 +69,13 @@ export const createRecipeSchema = Joi.object({
             'any.invalid': 'Invalid ingredient ID',
             'any.required': 'Ingredient ID is required',
           }),
-        measure: Joi.string().min(2).max(16).required().messages({
+        measure: Joi.string().required().messages({
           'string.base': 'Measure must be a string',
           'string.min': 'Measure must be at least 2 characters',
           'string.max': 'Measure must be no more than 16 characters',
           'any.required': 'Measure is required',
         }),
-      })
+      }),
     )
     .min(2)
     .max(16)
