@@ -9,4 +9,4 @@ properties:
   message:
     type: string
   data:
-    $ref: ../user.schema.yaml
+    $ref: ../curentUser.schema.yaml

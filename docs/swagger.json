@@ -1,1 +1,2878 @@
-{}
+{
+  "openapi": "3.1.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Tasteorama APP",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "description": "API for managing user recipes — creating, viewing, updating, and deleting."
+  },
+  "servers": [
+    {
+      "url": "https://initiative-nodejs-final.onrender.com",
+      "description": "Продакшн-сервер на Render"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Recipes",
+      "description": "Recipes operations."
+    },
+    {
+      "name": "Auth",
+      "description": "Auth operations."
+    },
+    {
+      "name": "User",
+      "description": "User operation."
+    },
+    {
+      "name": "Ingredients",
+      "description": "Ingredients operation."
+    },
+    {
+      "name": "Categories",
+      "description": "Categories operation."
+    }
+  ],
+  "paths": {
+    "/api/recipes": {
+      "get": {
+        "tags": [
+          "Recipes"
+        ],
+        "summary": "Get list of recipes",
+        "operationId": "getRecipes",
+        "description": "Get list of recipes with this endpoint",
+        "security": [],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/ingredient"
+          },
+          {
+            "$ref": "#/components/parameters/category"
+          },
+          {
+            "$ref": "#/components/parameters/search"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/getRecipes.recipes.response"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Recipes"
+        ],
+        "summary": "Create Recipe",
+        "operationId": "createRecipe",
+        "description": "Create a Recipe with payload",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Payload required to create a recipe, including title, category, instructions, description, time(to prepare), ingredients and optional cals(calories), thumb(photo)",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/postRecipe.requestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/postRecipe.recipes.response"
+          },
+          "400": {
+            "$ref": "#/components/responses/bodyValidationError.recipes.response"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized.recipes.response"
+          }
+        }
+      }
+    },
+    "/api/recipes/id/{recipeId}": {
+      "get": {
+        "tags": [
+          "Recipes"
+        ],
+        "summary": "Get recipe by id",
+        "operationId": "getRecipeById",
+        "description": "Get recipe by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/getRecipeById.recipes.response"
+          },
+          "400": {
+            "$ref": "#/components/responses/invalidRecipeId.recipes.response"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized.recipes.response"
+          }
+        }
+      }
+    },
+    "/api/recipes/ownRecipes": {
+      "get": {
+        "tags": [
+          "Recipes"
+        ],
+        "summary": "Get list of own recipes",
+        "operationId": "getOwnRecipes",
+        "description": "Get list of own recipes",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/ingredient"
+          },
+          {
+            "$ref": "#/components/parameters/category"
+          },
+          {
+            "$ref": "#/components/parameters/search"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/getOwnRecipes.recipes.response"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized.recipes.response"
+          }
+        }
+      }
+    },
+    "/api/recipes/favoriteRecipes": {
+      "get": {
+        "tags": [
+          "Recipes"
+        ],
+        "summary": "Get list of favorite recipes",
+        "operationId": "getFavoriteRecipes",
+        "description": "Get list of favorite recipes",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/getFavoriteRecipes.recipes.response"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized.recipes.response"
+          }
+        }
+      }
+    },
+    "/api/recipes/addFavorite/{recipeId}": {
+      "post": {
+        "tags": [
+          "addFavorite"
+        ],
+        "summary": "post add recipe to favorite by id",
+        "operationId": "addFavorite",
+        "description": "add favorite recipe by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/postAddFavorite.recipes.response"
+          },
+          "400": {
+            "$ref": "#/components/responses/invalidRecipeId.recipes.response"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized.recipes.response"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound.recipes.response"
+          }
+        }
+      }
+    },
+    "/api/recipes/deleteFavorite/{recipeId}": {
+      "post": {
+        "tags": [
+          "Recipes"
+        ],
+        "summary": "Delete recipe from favorites",
+        "operationId": "deleteFavorite",
+        "description": "Delete recipe from favorites",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/deleteFavorite.recipes.response"
+          },
+          "400": {
+            "$ref": "#/components/responses/invalidRecipeId.recipes.response"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized.recipes.response"
+          }
+        }
+      }
+    },
+    "/api/auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Register user",
+        "operationId": "createUser",
+        "description": "Create a new user",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/register.requestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/register.auth.response"
+          },
+          "400": {
+            "$ref": "#/components/responses/bodyValidationError.auth.response"
+          },
+          "409": {
+            "$ref": "#/components/responses/emailInUse.auth.response"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError.auth.response"
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Login user",
+        "operationId": "loginUser",
+        "description": "Login a user",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/login.requestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/login.auth.response"
+          },
+          "400": {
+            "$ref": "#/components/responses/bodyValidationError.auth.response"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized.auth.response"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFoundError.auth.response"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError.auth.response"
+          }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Logout user",
+        "operationId": "logoutUser",
+        "description": "Logout a user",
+        "security": [],
+        "responses": {
+          "204": {
+            "description": "Logs out user"
+          }
+        }
+      }
+    },
+    "/api/auth/refresh": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Refresh user",
+        "operationId": "refreshUser",
+        "description": "Refresh a user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/refresh.auth.response"
+          },
+          "401": {
+            "$ref": "#/components/responses/refreshUnauthorized.auth.response"
+          }
+        }
+      }
+    },
+    "/api/users": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get current user",
+        "operationId": "getUser",
+        "description": "Get current user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/getUser.users.response"
+          },
+          "401": {
+            "$ref": "#/components/responses/getUserUnauthorized.users.response"
+          }
+        }
+      }
+    },
+    "/api/ingredients": {
+      "get": {
+        "tags": [
+          "Ingredients"
+        ],
+        "summary": "Get list of ingredients",
+        "operationId": "Ingredients",
+        "description": "Get list of ingredients with this endpoint",
+        "security": [],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/getIngredients.ingredients.response"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound.ingredients.response"
+          }
+        }
+      }
+    },
+    "/api/categories": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Get list of categories",
+        "operationId": "Categories",
+        "description": "Get list of categories with this endpoint",
+        "security": [],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/getCategories.categories.response"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound.categories.response"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "parameters": {
+      "page": {
+        "in": "query",
+        "name": "page",
+        "schema": {
+          "type": "integer"
+        },
+        "example": 1,
+        "required": false
+      },
+      "ingredient": {
+        "in": "query",
+        "name": "ingredient",
+        "schema": {
+          "type": "string"
+        },
+        "example": "Tomatoes",
+        "required": false
+      },
+      "category": {
+        "in": "query",
+        "name": "category",
+        "schema": {
+          "type": "string"
+        },
+        "example": "Dessert",
+        "required": false
+      },
+      "search": {
+        "in": "query",
+        "name": "search",
+        "schema": {
+          "type": "string"
+        },
+        "example": "Cake",
+        "required": false
+      },
+      "id": {
+        "in": "path",
+        "name": "recipeId",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "6462a8f74c3d0ddd28897fc4"
+        }
+      }
+    },
+    "schemas": {
+      "recipe.schema": {
+        "type": "object",
+        "required": [
+          "_id",
+          "title",
+          "category",
+          "owner",
+          "instructions",
+          "description",
+          "time",
+          "ingredients",
+          "createdAt",
+          "updatedAt"
+        ],
+        "properties": {
+          "_id": {
+            "description": "Recipe's ObjectId",
+            "type": "string"
+          },
+          "title": {
+            "description": "Recipe's title. Should be max 64 characters long.",
+            "maxLength": 64,
+            "type": "string"
+          },
+          "category": {
+            "description": "Recipe's category.",
+            "type": "string",
+            "enum": [
+              "Seafood",
+              "Lamb",
+              "Starter",
+              "Chicken",
+              "Beef",
+              "Dessert",
+              "Vegan",
+              "Pork",
+              "Vegetarian",
+              "Miscellaneous",
+              "Pasta",
+              "Breakfast",
+              "Side",
+              "Goat",
+              "Soup"
+            ]
+          },
+          "owner": {
+            "description": "Recipe's owner id. ObjectId refered to user _id.",
+            "type": "string"
+          },
+          "area": {
+            "description": "Recipe origin area.",
+            "type": "string"
+          },
+          "instructions": {
+            "description": "Recipe's instructions. Should be max 1200 characters long.",
+            "maxLength": 1200,
+            "type": "string"
+          },
+          "description": {
+            "description": "Recipe's instructions. Should be max 200 characters long.",
+            "maxLength": 200,
+            "type": "string"
+          },
+          "thumb": {
+            "description": "Link to recipe's photo.",
+            "type": "string"
+          },
+          "time": {
+            "description": "Time to prepare recipe. Min 1 or max 360 minutes long to prepare.",
+            "minimum": 1,
+            "maximum": 360,
+            "type": "number"
+          },
+          "cals": {
+            "description": "Recipe's calories. Min 1 and max 10000 calories.",
+            "minimum": 1,
+            "maximum": 10000,
+            "type": "number"
+          },
+          "ingredients": {
+            "description": "Ingredients's to prepare recipe. Recipe should have min 2 or max 16 ingredients",
+            "minItems": 2,
+            "maxItems": 16,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "_id",
+                "id",
+                "measure"
+              ],
+              "properties": {
+                "_id": {
+                  "description": "Ingredient ObjectId in recipe object. ObjectId refered to user _id.",
+                  "type": "string"
+                },
+                "id": {
+                  "description": "Ingredient ObjectId. ObjectId refered to ingredient _id in ingredients array.",
+                  "type": "string"
+                },
+                "measure": {
+                  "description": "Measure of ingredient.",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "createdAt": {
+            "description": "Photo created at",
+            "type": "string"
+          },
+          "updatedAt": {
+            "description": "Photo updated at",
+            "type": "string"
+          }
+        }
+      },
+      "getRecipes.success": {
+        "type": "object",
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "data",
+              "page",
+              "perPage",
+              "totalItems",
+              "totalPages",
+              "hasNextPage",
+              "hasPreviousPage"
+            ],
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/recipe.schema"
+                }
+              },
+              "page": {
+                "type": "number"
+              },
+              "perPage": {
+                "type": "number"
+              },
+              "totalItems": {
+                "type": "number"
+              },
+              "totalPages": {
+                "type": "number"
+              },
+              "hasNextPage": {
+                "type": "boolean"
+              },
+              "hasPreviousPage": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      },
+      "postRecipe.requestBody": {
+        "type": "object",
+        "required": [
+          "title",
+          "category",
+          "instructions",
+          "description",
+          "time",
+          "ingredients"
+        ],
+        "properties": {
+          "title": {
+            "description": "Recipe's title. Should be max 64 characters long.",
+            "maxLength": 64,
+            "type": "string"
+          },
+          "category": {
+            "description": "Recipe's category.",
+            "type": "string",
+            "enum": [
+              "Seafood",
+              "Lamb",
+              "Starter",
+              "Chicken",
+              "Beef",
+              "Dessert",
+              "Vegan",
+              "Pork",
+              "Vegetarian",
+              "Miscellaneous",
+              "Pasta",
+              "Breakfast",
+              "Side",
+              "Goat",
+              "Soup"
+            ]
+          },
+          "instructions": {
+            "description": "Recipe's instructions. Should be max 1200 characters long.",
+            "maxLength": 1200,
+            "type": "string"
+          },
+          "description": {
+            "description": "Recipe's instructions. Should be max 200 characters long.",
+            "maxLength": 200,
+            "type": "string"
+          },
+          "thumb": {
+            "description": "Recipe photo",
+            "format": "binary"
+          },
+          "time": {
+            "description": "Time to prepare recipe. Min 1 or max 360 minutes long to prepare.",
+            "minimum": 1,
+            "maximum": 360,
+            "type": "number"
+          },
+          "cals": {
+            "description": "Recipe's calories. Min 1 and max 10000 calories.",
+            "minimum": 1,
+            "maximum": 10000,
+            "type": "number"
+          },
+          "ingredients": {
+            "description": "Ingredients's to prepare recipe. Recipe should have min 2 or max 16 ingredients",
+            "minItems": 2,
+            "maxItems": 16,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "_id",
+                "id",
+                "measure"
+              ],
+              "properties": {
+                "_id": {
+                  "description": "Ingredient ObjectId in recipe object. ObjectId refered to user _id.",
+                  "type": "string"
+                },
+                "id": {
+                  "description": "Ingredient ObjectId. ObjectId refered to ingredient _id in ingredients array.",
+                  "type": "string"
+                },
+                "measure": {
+                  "description": "Measure of ingredient.",
+                  "maxLength": 16,
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "example": {
+          "title": "Tandoori chicken",
+          "category": "Chicken",
+          "cals": 325,
+          "instructions": "Mix the lemon juice with the paprika and red onions in a large shallow dish. Slash each chicken thigh three times, then turn them in the juice and set aside for 10 mins. Mix all of the marinade ingredients together and pour over the chicken. Give everything a good mix, then cover and chill for at least 1 hr. This can be done up to a day in advance. Heat the grill. Lift the chicken pieces onto a rack over a baking tray. Brush over a little oil and grill for 8 mins on each side or until lightly charred and completely cooked through.",
+          "description": "A popular Indian dish of chicken marinated in yogurt and spices, then roasted in a tandoor oven.",
+          "time": 80,
+          "ingredients": [
+            {
+              "id": "640c2dd963a319ea671e3714",
+              "measure": "2 Juice"
+            },
+            {
+              "id": "640c2dd963a319ea671e3733",
+              "measure": "4 tsp"
+            },
+            {
+              "id": "640c2dd963a319ea671e374e",
+              "measure": "2 finely chopped"
+            },
+            {
+              "id": "640c2dd963a319ea671e3697",
+              "measure": "16 skinnless"
+            },
+            {
+              "id": "640c2dd963a319ea671e3789",
+              "measure": "For brushing"
+            },
+            {
+              "id": "640c2dd963a319ea671e36f0",
+              "measure": "300ml"
+            },
+            {
+              "id": "640c2dd963a319ea671e36e8",
+              "measure": "large piece"
+            },
+            {
+              "id": "640c2dd963a319ea671e36e4",
+              "measure": "4"
+            },
+            {
+              "id": "640c2dd963a319ea671e36e2",
+              "measure": "¾ tsp"
+            },
+            {
+              "id": "640c2dd963a319ea671e36f7",
+              "measure": "¾ tsp"
+            },
+            {
+              "id": "640c2dd963a319ea671e369c",
+              "measure": "½ tsp"
+            },
+            {
+              "id": "640c2dd963a319ea671e3782",
+              "measure": "¼ tsp"
+            }
+          ]
+        }
+      },
+      "postRecipe.success": {
+        "type": "object",
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "$ref": "#/components/schemas/recipe.schema"
+          }
+        }
+      },
+      "badRequest.error": {
+        "type": "object",
+        "required": [
+          "status",
+          "message"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "message"
+            ],
+            "properties": {
+              "message": {
+                "type": "string"
+              }
+            }
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "field",
+                "message"
+              ],
+              "properties": {
+                "field": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "unauthorized.error": {
+        "type": "object",
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "message"
+            ],
+            "properties": {
+              "message": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "getRecipeById.success": {
+        "type": "object",
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "$ref": "#/components/schemas/recipe.schema"
+          }
+        }
+      },
+      "postAddFavorite.success": {
+        "type": "object",
+        "required": [
+          "status",
+          "message"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "notFound.error": {
+        "type": "object",
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "message"
+            ],
+            "properties": {
+              "message": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "deleteFavorite.success": {
+        "type": "object",
+        "required": [
+          "status",
+          "message"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "register.requestBody": {
+        "type": "object",
+        "required": [
+          "name",
+          "email",
+          "password"
+        ],
+        "properties": {
+          "name": {
+            "description": "User's name. Should be min 3 and max 20 characters long",
+            "type": "string"
+          },
+          "email": {
+            "description": "User's email. Should be a valid email",
+            "type": "string"
+          },
+          "password": {
+            "description": "User's password.",
+            "type": "string"
+          }
+        },
+        "example": {
+          "name": "Nick Fury",
+          "email": "nickfury@mail.com",
+          "password": "qwerty-1234"
+        }
+      },
+      "user.schema": {
+        "type": "object",
+        "required": [
+          "_id",
+          "name",
+          "email",
+          "favorites",
+          "createdAt",
+          "updatedAt"
+        ],
+        "properties": {
+          "_id": {
+            "description": "User's ObjectId.",
+            "type": "string"
+          },
+          "name": {
+            "description": "User's name. Should be min 3 and max 16 characters long",
+            "type": "string"
+          },
+          "email": {
+            "description": "User's email. Should be a valid email and max 128 characters long",
+            "type": "string"
+          },
+          "favorites": {
+            "description": "User's favorite recipes.",
+            "type": "array",
+            "default": []
+          },
+          "createdAt": {
+            "description": "User created at",
+            "type": "string"
+          },
+          "updatedAt": {
+            "description": "User updated at",
+            "type": "string"
+          }
+        }
+      },
+      "register.success": {
+        "type": "object",
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "accessToken",
+              "user"
+            ],
+            "properties": {
+              "accessToken": {
+                "type": "string"
+              },
+              "user": {
+                "$ref": "#/components/schemas/user.schema"
+              }
+            }
+          }
+        }
+      },
+      "bodyValidationError.auth.error": {
+        "type": "object",
+        "required": [
+          "status",
+          "message",
+          "details"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "field",
+                "message"
+              ],
+              "properties": {
+                "field": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "conflict.error": {
+        "type": "object",
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "message"
+            ],
+            "properties": {
+              "message": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "InternalServerError.error": {
+        "type": "object",
+        "required": [
+          "message",
+          "error"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "login.requestBody": {
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "properties": {
+          "email": {
+            "description": "User's email. Should be a valid email",
+            "type": "string"
+          },
+          "password": {
+            "description": "User's password.",
+            "type": "string"
+          }
+        },
+        "example": {
+          "email": "nickfury@mail.com",
+          "password": "qwerty-1234"
+        }
+      },
+      "login.success": {
+        "type": "object",
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "accessToken"
+            ],
+            "properties": {
+              "accessToken": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "notFoundError.error": {
+        "type": "object",
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "message"
+            ],
+            "properties": {
+              "message": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "refresh.success": {
+        "type": "object",
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "accessToken"
+            ],
+            "properties": {
+              "accessToken": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "refreshUnauthorized.error": {
+        "type": "object",
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "accessToken"
+            ],
+            "properties": {
+              "accessToken": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "curentUser.schema": {
+        "type": "object",
+        "required": [
+          "name",
+          "email",
+          "favorites",
+          "createdAt"
+        ],
+        "properties": {
+          "name": {
+            "description": "User name",
+            "type": "string"
+          },
+          "email": {
+            "description": "User email",
+            "type": "string"
+          },
+          "favorites": {
+            "description": "User favorites recipes",
+            "type": "array"
+          },
+          "createdAt": {
+            "description": "User time create account",
+            "type": "string"
+          }
+        }
+      },
+      "getUser.success": {
+        "type": "object",
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/curentUser.schema"
+          }
+        }
+      },
+      "ingredients.schema": {
+        "type": "object",
+        "required": [
+          "_id",
+          "name",
+          "desc",
+          "img"
+        ],
+        "properties": {
+          "_id": {
+            "description": "Ingredients ObjectId",
+            "type": "string"
+          },
+          "name": {
+            "description": "Ingredients name",
+            "type": "string"
+          },
+          "desc": {
+            "description": "Ingredients description",
+            "type": "string"
+          },
+          "img": {
+            "description": "Ingredients image",
+            "type": "string",
+            "format": "url"
+          }
+        }
+      },
+      "getIngredients.success": {
+        "type": "object",
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ingredients.schema"
+            }
+          }
+        }
+      },
+      "NotFound.error": {
+        "type": "object",
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "message"
+            ],
+            "properties": {
+              "message": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "categories.schema": {
+        "type": "object",
+        "required": [
+          "_id",
+          "name"
+        ],
+        "properties": {
+          "_id": {
+            "description": "Categories ObjectId",
+            "type": "string"
+          },
+          "name": {
+            "description": "Categories name",
+            "type": "string"
+          }
+        }
+      },
+      "getCategories.success": {
+        "type": "object",
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/categories.schema"
+            }
+          }
+        }
+      }
+    },
+    "examples": {
+      "getRecipes.recipes.example": {
+        "value": {
+          "status": 200,
+          "message": "Successfully found recipes!",
+          "data": {
+            "data": [
+              {
+                "_id": "6462a8f74c3d0ddd28897fc4",
+                "title": "Tandoori chicken",
+                "category": "Chicken",
+                "owner": "64c8d958249fae54bae90bb9",
+                "area": "Indian",
+                "cals": 325,
+                "instructions": "Mix the lemon juice with the paprika and red onions in a large shallow dish. Slash each chicken thigh three times, then turn them in the juice and set aside for 10 mins. Mix all of the marinade ingredients together and pour over the chicken. Give everything a good mix, then cover and chill for at least 1 hr. This can be done up to a day in advance. Heat the grill. Lift the chicken pieces onto a rack over a baking tray. Brush over a little oil and grill for 8 mins on each side or until lightly charred and completely cooked through.",
+                "description": "A popular Indian dish of chicken marinated in yogurt and spices, then roasted in a tandoor oven.",
+                "thumb": "https://ftp.goit.study/img/so-yummy/preview/Tandoori%20chicken.jpg",
+                "time": 80,
+                "ingredients": [
+                  {
+                    "_id": "686bd2e716a1994061da644b",
+                    "id": "640c2dd963a319ea671e3714",
+                    "measure": "2 Juice"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da644c",
+                    "id": "640c2dd963a319ea671e3733",
+                    "measure": "4 tsp"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da644d",
+                    "id": "640c2dd963a319ea671e374e",
+                    "measure": "2 finely chopped"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da644e",
+                    "id": "640c2dd963a319ea671e3697",
+                    "measure": "16 skinnless"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da644f",
+                    "id": "640c2dd963a319ea671e3789",
+                    "measure": "For brushing"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6450",
+                    "id": "640c2dd963a319ea671e36f0",
+                    "measure": "300ml"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6451",
+                    "id": "640c2dd963a319ea671e36e8",
+                    "measure": "large piece"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6452",
+                    "id": "640c2dd963a319ea671e36e4",
+                    "measure": "4"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6453",
+                    "id": "640c2dd963a319ea671e36e2",
+                    "measure": "¾ tsp"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6454",
+                    "id": "640c2dd963a319ea671e36f7",
+                    "measure": "¾ tsp"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6455",
+                    "id": "640c2dd963a319ea671e369c",
+                    "measure": "½ tsp"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6456",
+                    "id": "640c2dd963a319ea671e3782",
+                    "measure": "¼ tsp"
+                  }
+                ],
+                "createdAt": "2023-03-11T19:25:33.241Z",
+                "updatedAt": "2023-10-01T17:30:46.188Z"
+              },
+              {
+                "_id": "6462a8f74c3d0ddd28897fc5",
+                "title": "Toad In The Hole",
+                "category": "Pork",
+                "owner": "64c8d958249fae54bae90bb9",
+                "area": "British",
+                "instructions": "Preheat the oven to 200°C/fan180°C/gas 6. fry sausages in a non-stick pan until browned. Drizzle vegetable oil in a 30cm x 25cm x 6cm deep roasting tray and heat in the oven for 5 minutes. Put the plain flour in a bowl, crack in the medium free-range eggs, then stir in the grated horseradish. Gradually beat in the semi-skimmed milk. Season. Put the sausages into the hot roasting tray and pour over the batter. Top with cherry tomatoes on the vine and cook for 30 minutes until puffed and golden.",
+                "description": "Sausages in Yorkshire pudding batter.",
+                "thumb": "https://ftp.goit.study/img/so-yummy/preview/Toad%20In%20The%20Hole.jpg",
+                "time": 40,
+                "ingredients": [
+                  {
+                    "_id": "686bd2e716a1994061da6457",
+                    "id": "640c2dd963a319ea671e3760",
+                    "measure": "8"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6458",
+                    "id": "640c2dd963a319ea671e3789",
+                    "measure": "3 tbsp"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da645a",
+                    "id": "640c2dd963a319ea671e36ca",
+                    "measure": "2 medium"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da645b",
+                    "id": "640c2dd963a319ea671e36fe",
+                    "measure": "1 tbsp grated"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da645c",
+                    "id": "640c2dd963a319ea671e371f",
+                    "measure": "225ml"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da645d",
+                    "id": "640c2dd963a319ea671e3691",
+                    "measure": "200g"
+                  }
+                ],
+                "createdAt": "2023-03-11T19:25:33.241Z",
+                "updatedAt": "2023-10-03T17:44:58.649Z"
+              },
+              {
+                "_id": "6462a8f74c3d0ddd28897fc6",
+                "title": "New York cheesecake",
+                "category": "Dessert",
+                "owner": "64c8d958249fae54bae90bb9",
+                "cals": 450,
+                "instructions": "Position an oven shelf in the middle of the oven. Preheat the oven to fan 160C/conventional 180C/gas 4. Line the base of a 23cm springform cake tin with parchment paper. For the crust, melt the butter in a medium pan. Stir in the biscuit crumbs and sugar so the mixture is evenly moistened. Press the mixture into the bottom of the pan and bake for 10 minutes. Cool on a wire rack while preparing the filling. For the filling, increase the oven temperature to fan 200C/conventional 240C/gas 9. In a table top mixer fitted with the paddle attachment, beat the soft cheese at medium-low speed until creamy, about 2 minutes. With the mixer on low, gradually add the sugar, then the flour and a pinch of salt, scraping down the sides of the bowl and the paddle twice. Swap the paddle attachment for the whisk. Continue by adding the vanilla, lemon zest and juice. Whisk in the eggs and yolk, one at a time, scraping the bowl and whisk at least twice. Stir the 284ml carton of soured cream until smooth, then measure 200ml/7fl oz (just over 3⁄4 of the carton). Continue on low speed as you add the measured soured cream (reserve the rest). Whisk to blend, but don't over-beat. The batter should be smooth, light and somewhat airy. Brush the sides of the springform tin with melted butter and put on a baking sheet. Pour in the filling - if there are any lumps, sink them using a knife - the top should be as smooth as possible. Bake for 10 minutes. Reduce oven temperature to fan 90C/conventional 110C/gas 1⁄4 and bake for 25 minutes more. If you gently shake the tin, the filling should have a slight wobble. Turn off the oven and open the oven door for a cheesecake that's creamy in the centre, or leave it closed if you prefer a drier texture. Let cool in the oven for 2 hours. The cheesecake may get a slight crack on top as it cools. Combine the reserved soured cream with the 142ml carton, the sugar and lemon juice for the topping. Spread over the cheesecake right to the edges. Cover loosely with foil and refrigerate for at least 8 hours or overnight. Run a round-bladed knife around the sides of the tin to loosen any stuck edges. Unlock the side, slide the cheesecake off the bottom of the tin onto a plate, then slide the parchment paper out from underneath.",
+                "description": "A classic dessert made with cream cheese and a graham cracker crust, creamy and indulgent.",
+                "thumb": "https://ftp.goit.study/img/so-yummy/preview/New%20York%20cheesecake.jpg",
+                "time": 195,
+                "ingredients": [
+                  {
+                    "_id": "686bd2e716a1994061da645e",
+                    "id": "640c2dd963a319ea671e367e",
+                    "measure": "85g"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da645f",
+                    "id": "640c2dd963a319ea671e376b",
+                    "measure": "140g"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6460",
+                    "id": "640c2dd963a319ea671e3774",
+                    "measure": "1tbsp"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6461",
+                    "id": "640c2dd963a319ea671e379c",
+                    "measure": "900g"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6462",
+                    "id": "640c2dd963a319ea671e3687",
+                    "measure": "250g"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6463",
+                    "id": "640c2dd963a319ea671e3743",
+                    "measure": "3 tbs"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6465",
+                    "id": "640c2dd963a319ea671e36ca",
+                    "measure": "3 Large"
+                  }
+                ],
+                "createdAt": "2023-03-11T19:25:33.242Z",
+                "updatedAt": "2023-04-14T20:02:28.085Z"
+              }
+            ],
+            "page": 1,
+            "perPage": 12,
+            "totalItems": 320,
+            "totalPages": 27,
+            "hasNextPage": true,
+            "hasPreviousPage": false
+          }
+        }
+      },
+      "postRecipe.recipes.example": {
+        "value": {
+          "status": 201,
+          "message": "Successfully created a contact!",
+          "data": {
+            "_id": "6462a8f74c3d0ddd28897fc4",
+            "title": "Tandoori chicken",
+            "category": "Chicken",
+            "owner": "64c8d958249fae54bae90bb9",
+            "area": "Indian",
+            "cals": 325,
+            "instructions": "Mix the lemon juice with the paprika and red onions in a large shallow dish. Slash each chicken thigh three times, then turn them in the juice and set aside for 10 mins. Mix all of the marinade ingredients together and pour over the chicken. Give everything a good mix, then cover and chill for at least 1 hr. This can be done up to a day in advance. Heat the grill. Lift the chicken pieces onto a rack over a baking tray. Brush over a little oil and grill for 8 mins on each side or until lightly charred and completely cooked through.",
+            "description": "A popular Indian dish of chicken marinated in yogurt and spices, then roasted in a tandoor oven.",
+            "thumb": "https://ftp.goit.study/img/so-yummy/preview/Tandoori%20chicken.jpg",
+            "time": 80,
+            "ingredients": [
+              {
+                "_id": "686bd2e716a1994061da644b",
+                "id": "640c2dd963a319ea671e3714",
+                "measure": "2 Juice"
+              },
+              {
+                "_id": "686bd2e716a1994061da644c",
+                "id": "640c2dd963a319ea671e3733",
+                "measure": "4 tsp"
+              },
+              {
+                "_id": "686bd2e716a1994061da644d",
+                "id": "640c2dd963a319ea671e374e",
+                "measure": "2 finely chopped"
+              },
+              {
+                "_id": "686bd2e716a1994061da644e",
+                "id": "640c2dd963a319ea671e3697",
+                "measure": "16 skinnless"
+              },
+              {
+                "_id": "686bd2e716a1994061da644f",
+                "id": "640c2dd963a319ea671e3789",
+                "measure": "For brushing"
+              },
+              {
+                "_id": "686bd2e716a1994061da6450",
+                "id": "640c2dd963a319ea671e36f0",
+                "measure": "300ml"
+              },
+              {
+                "_id": "686bd2e716a1994061da6451",
+                "id": "640c2dd963a319ea671e36e8",
+                "measure": "large piece"
+              },
+              {
+                "_id": "686bd2e716a1994061da6452",
+                "id": "640c2dd963a319ea671e36e4",
+                "measure": "4"
+              },
+              {
+                "_id": "686bd2e716a1994061da6453",
+                "id": "640c2dd963a319ea671e36e2",
+                "measure": "¾ tsp"
+              },
+              {
+                "_id": "686bd2e716a1994061da6454",
+                "id": "640c2dd963a319ea671e36f7",
+                "measure": "¾ tsp"
+              },
+              {
+                "_id": "686bd2e716a1994061da6455",
+                "id": "640c2dd963a319ea671e369c",
+                "measure": "½ tsp"
+              },
+              {
+                "_id": "686bd2e716a1994061da6456",
+                "id": "640c2dd963a319ea671e3782",
+                "measure": "¼ tsp"
+              }
+            ],
+            "createdAt": "2023-03-11T19:25:33.241Z",
+            "updatedAt": "2023-10-01T17:30:46.188Z"
+          }
+        }
+      },
+      "bodyValidationError.recipes.example": {
+        "value": {
+          "status": 400,
+          "message": "Validation error",
+          "details": [
+            {
+              "field": "title",
+              "message": "Title must be at most 64 characters"
+            },
+            {
+              "field": "description",
+              "message": "Description must be at most 200 characters"
+            },
+            {
+              "field": "time",
+              "message": "Time must be no more than 360 minutes"
+            },
+            {
+              "field": "cals",
+              "message": "Calories must be no more than 10000"
+            },
+            {
+              "field": "category",
+              "message": "Category must be one of: Seafood, Lamb, Starter, Chicken, Beef, Dessert, Vegan, Pork, Vegetarian, Miscellaneous, Pasta, Breakfast, Side, Goat, Soup"
+            },
+            {
+              "field": "ingredients",
+              "message": "At least 2 ingredients required"
+            },
+            {
+              "field": "instructions",
+              "message": "Instructions must be at most 1200 characters"
+            }
+          ]
+        }
+      },
+      "accessTokenExpired.recipes.example": {
+        "value": {
+          "status": 401,
+          "message": "UnauthorizedError",
+          "data": {
+            "message": "Access token expired"
+          }
+        }
+      },
+      "sessionNotFound.recipes.example": {
+        "value": {
+          "status": 401,
+          "message": "UnauthorizedError",
+          "data": {
+            "message": "Session not found"
+          }
+        }
+      },
+      "getRecipeById.recipes.example": {
+        "value": {
+          "status": 200,
+          "message": "Successfully found contact with id 684f6ec9a81f97b9fa6c65f1!",
+          "data": {
+            "_id": "6462a8f74c3d0ddd28897fc4",
+            "title": "Tandoori chicken",
+            "category": "Chicken",
+            "owner": "64c8d958249fae54bae90bb9",
+            "area": "Indian",
+            "cals": 325,
+            "instructions": "Mix the lemon juice with the paprika and red onions in a large shallow dish. Slash each chicken thigh three times, then turn them in the juice and set aside for 10 mins. Mix all of the marinade ingredients together and pour over the chicken. Give everything a good mix, then cover and chill for at least 1 hr. This can be done up to a day in advance. Heat the grill. Lift the chicken pieces onto a rack over a baking tray. Brush over a little oil and grill for 8 mins on each side or until lightly charred and completely cooked through.",
+            "description": "A popular Indian dish of chicken marinated in yogurt and spices, then roasted in a tandoor oven.",
+            "thumb": "https://ftp.goit.study/img/so-yummy/preview/Tandoori%20chicken.jpg",
+            "time": 80,
+            "ingredients": [
+              {
+                "_id": "686bd2e716a1994061da644b",
+                "id": "640c2dd963a319ea671e3714",
+                "measure": "2 Juice"
+              },
+              {
+                "_id": "686bd2e716a1994061da644c",
+                "id": "640c2dd963a319ea671e3733",
+                "measure": "4 tsp"
+              },
+              {
+                "_id": "686bd2e716a1994061da644d",
+                "id": "640c2dd963a319ea671e374e",
+                "measure": "2 finely chopped"
+              },
+              {
+                "_id": "686bd2e716a1994061da644e",
+                "id": "640c2dd963a319ea671e3697",
+                "measure": "16 skinnless"
+              },
+              {
+                "_id": "686bd2e716a1994061da644f",
+                "id": "640c2dd963a319ea671e3789",
+                "measure": "For brushing"
+              },
+              {
+                "_id": "686bd2e716a1994061da6450",
+                "id": "640c2dd963a319ea671e36f0",
+                "measure": "300ml"
+              },
+              {
+                "_id": "686bd2e716a1994061da6451",
+                "id": "640c2dd963a319ea671e36e8",
+                "measure": "large piece"
+              },
+              {
+                "_id": "686bd2e716a1994061da6452",
+                "id": "640c2dd963a319ea671e36e4",
+                "measure": "4"
+              },
+              {
+                "_id": "686bd2e716a1994061da6453",
+                "id": "640c2dd963a319ea671e36e2",
+                "measure": "¾ tsp"
+              },
+              {
+                "_id": "686bd2e716a1994061da6454",
+                "id": "640c2dd963a319ea671e36f7",
+                "measure": "¾ tsp"
+              },
+              {
+                "_id": "686bd2e716a1994061da6455",
+                "id": "640c2dd963a319ea671e369c",
+                "measure": "½ tsp"
+              },
+              {
+                "_id": "686bd2e716a1994061da6456",
+                "id": "640c2dd963a319ea671e3782",
+                "measure": "¼ tsp"
+              }
+            ],
+            "createdAt": "2023-03-11T19:25:33.241Z",
+            "updatedAt": "2023-10-01T17:30:46.188Z"
+          }
+        }
+      },
+      "invalidContactId.recipes.example": {
+        "value": {
+          "status": 400,
+          "message": "BadRequestError",
+          "data": {
+            "message": "Requested recipe id: '6462a8f74c3d0ddd28897fc4s' is not a mongoose ObjectId"
+          }
+        }
+      },
+      "getOwnRecipes.recipes.example": {
+        "value": {
+          "status": 200,
+          "message": "Successfully found own recipes",
+          "data": {
+            "data": [
+              {
+                "_id": "6462a8f74c3d0ddd28897fc4",
+                "title": "Tandoori chicken",
+                "category": "Chicken",
+                "owner": "64c8d958249fae54bae90bb9",
+                "area": "Indian",
+                "cals": 325,
+                "instructions": "Mix the lemon juice with the paprika and red onions in a large shallow dish. Slash each chicken thigh three times, then turn them in the juice and set aside for 10 mins. Mix all of the marinade ingredients together and pour over the chicken. Give everything a good mix, then cover and chill for at least 1 hr. This can be done up to a day in advance. Heat the grill. Lift the chicken pieces onto a rack over a baking tray. Brush over a little oil and grill for 8 mins on each side or until lightly charred and completely cooked through.",
+                "description": "A popular Indian dish of chicken marinated in yogurt and spices, then roasted in a tandoor oven.",
+                "thumb": "https://ftp.goit.study/img/so-yummy/preview/Tandoori%20chicken.jpg",
+                "time": 80,
+                "ingredients": [
+                  {
+                    "_id": "686bd2e716a1994061da644b",
+                    "id": "640c2dd963a319ea671e3714",
+                    "measure": "2 Juice"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da644c",
+                    "id": "640c2dd963a319ea671e3733",
+                    "measure": "4 tsp"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da644d",
+                    "id": "640c2dd963a319ea671e374e",
+                    "measure": "2 finely chopped"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da644e",
+                    "id": "640c2dd963a319ea671e3697",
+                    "measure": "16 skinnless"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da644f",
+                    "id": "640c2dd963a319ea671e3789",
+                    "measure": "For brushing"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6450",
+                    "id": "640c2dd963a319ea671e36f0",
+                    "measure": "300ml"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6451",
+                    "id": "640c2dd963a319ea671e36e8",
+                    "measure": "large piece"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6452",
+                    "id": "640c2dd963a319ea671e36e4",
+                    "measure": "4"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6453",
+                    "id": "640c2dd963a319ea671e36e2",
+                    "measure": "¾ tsp"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6454",
+                    "id": "640c2dd963a319ea671e36f7",
+                    "measure": "¾ tsp"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6455",
+                    "id": "640c2dd963a319ea671e369c",
+                    "measure": "½ tsp"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6456",
+                    "id": "640c2dd963a319ea671e3782",
+                    "measure": "¼ tsp"
+                  }
+                ],
+                "createdAt": "2023-03-11T19:25:33.241Z",
+                "updatedAt": "2023-10-01T17:30:46.188Z"
+              },
+              {
+                "_id": "6462a8f74c3d0ddd28897fc5",
+                "title": "Toad In The Hole",
+                "category": "Pork",
+                "owner": "64c8d958249fae54bae90bb9",
+                "area": "British",
+                "instructions": "Preheat the oven to 200°C/fan180°C/gas 6. fry sausages in a non-stick pan until browned. Drizzle vegetable oil in a 30cm x 25cm x 6cm deep roasting tray and heat in the oven for 5 minutes. Put the plain flour in a bowl, crack in the medium free-range eggs, then stir in the grated horseradish. Gradually beat in the semi-skimmed milk. Season. Put the sausages into the hot roasting tray and pour over the batter. Top with cherry tomatoes on the vine and cook for 30 minutes until puffed and golden.",
+                "description": "Sausages in Yorkshire pudding batter.",
+                "thumb": "https://ftp.goit.study/img/so-yummy/preview/Toad%20In%20The%20Hole.jpg",
+                "time": 40,
+                "ingredients": [
+                  {
+                    "_id": "686bd2e716a1994061da6457",
+                    "id": "640c2dd963a319ea671e3760",
+                    "measure": "8"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6458",
+                    "id": "640c2dd963a319ea671e3789",
+                    "measure": "3 tbsp"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da645a",
+                    "id": "640c2dd963a319ea671e36ca",
+                    "measure": "2 medium"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da645b",
+                    "id": "640c2dd963a319ea671e36fe",
+                    "measure": "1 tbsp grated"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da645c",
+                    "id": "640c2dd963a319ea671e371f",
+                    "measure": "225ml"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da645d",
+                    "id": "640c2dd963a319ea671e3691",
+                    "measure": "200g"
+                  }
+                ],
+                "createdAt": "2023-03-11T19:25:33.241Z",
+                "updatedAt": "2023-10-03T17:44:58.649Z"
+              },
+              {
+                "_id": "6462a8f74c3d0ddd28897fc6",
+                "title": "New York cheesecake",
+                "category": "Dessert",
+                "owner": "64c8d958249fae54bae90bb9",
+                "cals": 450,
+                "instructions": "Position an oven shelf in the middle of the oven. Preheat the oven to fan 160C/conventional 180C/gas 4. Line the base of a 23cm springform cake tin with parchment paper. For the crust, melt the butter in a medium pan. Stir in the biscuit crumbs and sugar so the mixture is evenly moistened. Press the mixture into the bottom of the pan and bake for 10 minutes. Cool on a wire rack while preparing the filling. For the filling, increase the oven temperature to fan 200C/conventional 240C/gas 9. In a table top mixer fitted with the paddle attachment, beat the soft cheese at medium-low speed until creamy, about 2 minutes. With the mixer on low, gradually add the sugar, then the flour and a pinch of salt, scraping down the sides of the bowl and the paddle twice. Swap the paddle attachment for the whisk. Continue by adding the vanilla, lemon zest and juice. Whisk in the eggs and yolk, one at a time, scraping the bowl and whisk at least twice. Stir the 284ml carton of soured cream until smooth, then measure 200ml/7fl oz (just over 3⁄4 of the carton). Continue on low speed as you add the measured soured cream (reserve the rest). Whisk to blend, but don't over-beat. The batter should be smooth, light and somewhat airy. Brush the sides of the springform tin with melted butter and put on a baking sheet. Pour in the filling - if there are any lumps, sink them using a knife - the top should be as smooth as possible. Bake for 10 minutes. Reduce oven temperature to fan 90C/conventional 110C/gas 1⁄4 and bake for 25 minutes more. If you gently shake the tin, the filling should have a slight wobble. Turn off the oven and open the oven door for a cheesecake that's creamy in the centre, or leave it closed if you prefer a drier texture. Let cool in the oven for 2 hours. The cheesecake may get a slight crack on top as it cools. Combine the reserved soured cream with the 142ml carton, the sugar and lemon juice for the topping. Spread over the cheesecake right to the edges. Cover loosely with foil and refrigerate for at least 8 hours or overnight. Run a round-bladed knife around the sides of the tin to loosen any stuck edges. Unlock the side, slide the cheesecake off the bottom of the tin onto a plate, then slide the parchment paper out from underneath.",
+                "description": "A classic dessert made with cream cheese and a graham cracker crust, creamy and indulgent.",
+                "thumb": "https://ftp.goit.study/img/so-yummy/preview/New%20York%20cheesecake.jpg",
+                "time": 195,
+                "ingredients": [
+                  {
+                    "_id": "686bd2e716a1994061da645e",
+                    "id": "640c2dd963a319ea671e367e",
+                    "measure": "85g"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da645f",
+                    "id": "640c2dd963a319ea671e376b",
+                    "measure": "140g"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6460",
+                    "id": "640c2dd963a319ea671e3774",
+                    "measure": "1tbsp"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6461",
+                    "id": "640c2dd963a319ea671e379c",
+                    "measure": "900g"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6462",
+                    "id": "640c2dd963a319ea671e3687",
+                    "measure": "250g"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6463",
+                    "id": "640c2dd963a319ea671e3743",
+                    "measure": "3 tbs"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6465",
+                    "id": "640c2dd963a319ea671e36ca",
+                    "measure": "3 Large"
+                  }
+                ],
+                "createdAt": "2023-03-11T19:25:33.242Z",
+                "updatedAt": "2023-04-14T20:02:28.085Z"
+              }
+            ],
+            "page": 1,
+            "perPage": 12,
+            "totalItems": 320,
+            "totalPages": 27,
+            "hasNextPage": true,
+            "hasPreviousPage": false
+          }
+        }
+      },
+      "getFavoriteRecipes.recipes.example": {
+        "value": {
+          "status": 200,
+          "message": "Successfully found favorite recipes",
+          "data": {
+            "data": [
+              {
+                "_id": "6462a8f74c3d0ddd28897fc4",
+                "title": "Tandoori chicken",
+                "category": "Chicken",
+                "owner": "64c8d958249fae54bae90bb9",
+                "area": "Indian",
+                "cals": 325,
+                "instructions": "Mix the lemon juice with the paprika and red onions in a large shallow dish. Slash each chicken thigh three times, then turn them in the juice and set aside for 10 mins. Mix all of the marinade ingredients together and pour over the chicken. Give everything a good mix, then cover and chill for at least 1 hr. This can be done up to a day in advance. Heat the grill. Lift the chicken pieces onto a rack over a baking tray. Brush over a little oil and grill for 8 mins on each side or until lightly charred and completely cooked through.",
+                "description": "A popular Indian dish of chicken marinated in yogurt and spices, then roasted in a tandoor oven.",
+                "thumb": "https://ftp.goit.study/img/so-yummy/preview/Tandoori%20chicken.jpg",
+                "time": 80,
+                "ingredients": [
+                  {
+                    "_id": "686bd2e716a1994061da644b",
+                    "id": "640c2dd963a319ea671e3714",
+                    "measure": "2 Juice"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da644c",
+                    "id": "640c2dd963a319ea671e3733",
+                    "measure": "4 tsp"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da644d",
+                    "id": "640c2dd963a319ea671e374e",
+                    "measure": "2 finely chopped"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da644e",
+                    "id": "640c2dd963a319ea671e3697",
+                    "measure": "16 skinnless"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da644f",
+                    "id": "640c2dd963a319ea671e3789",
+                    "measure": "For brushing"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6450",
+                    "id": "640c2dd963a319ea671e36f0",
+                    "measure": "300ml"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6451",
+                    "id": "640c2dd963a319ea671e36e8",
+                    "measure": "large piece"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6452",
+                    "id": "640c2dd963a319ea671e36e4",
+                    "measure": "4"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6453",
+                    "id": "640c2dd963a319ea671e36e2",
+                    "measure": "¾ tsp"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6454",
+                    "id": "640c2dd963a319ea671e36f7",
+                    "measure": "¾ tsp"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6455",
+                    "id": "640c2dd963a319ea671e369c",
+                    "measure": "½ tsp"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6456",
+                    "id": "640c2dd963a319ea671e3782",
+                    "measure": "¼ tsp"
+                  }
+                ],
+                "createdAt": "2023-03-11T19:25:33.241Z",
+                "updatedAt": "2023-10-01T17:30:46.188Z"
+              },
+              {
+                "_id": "6462a8f74c3d0ddd28897fc5",
+                "title": "Toad In The Hole",
+                "category": "Pork",
+                "owner": "64c8d958249fae54bae90bb9",
+                "area": "British",
+                "instructions": "Preheat the oven to 200°C/fan180°C/gas 6. fry sausages in a non-stick pan until browned. Drizzle vegetable oil in a 30cm x 25cm x 6cm deep roasting tray and heat in the oven for 5 minutes. Put the plain flour in a bowl, crack in the medium free-range eggs, then stir in the grated horseradish. Gradually beat in the semi-skimmed milk. Season. Put the sausages into the hot roasting tray and pour over the batter. Top with cherry tomatoes on the vine and cook for 30 minutes until puffed and golden.",
+                "description": "Sausages in Yorkshire pudding batter.",
+                "thumb": "https://ftp.goit.study/img/so-yummy/preview/Toad%20In%20The%20Hole.jpg",
+                "time": 40,
+                "ingredients": [
+                  {
+                    "_id": "686bd2e716a1994061da6457",
+                    "id": "640c2dd963a319ea671e3760",
+                    "measure": "8"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6458",
+                    "id": "640c2dd963a319ea671e3789",
+                    "measure": "3 tbsp"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da645a",
+                    "id": "640c2dd963a319ea671e36ca",
+                    "measure": "2 medium"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da645b",
+                    "id": "640c2dd963a319ea671e36fe",
+                    "measure": "1 tbsp grated"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da645c",
+                    "id": "640c2dd963a319ea671e371f",
+                    "measure": "225ml"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da645d",
+                    "id": "640c2dd963a319ea671e3691",
+                    "measure": "200g"
+                  }
+                ],
+                "createdAt": "2023-03-11T19:25:33.241Z",
+                "updatedAt": "2023-10-03T17:44:58.649Z"
+              },
+              {
+                "_id": "6462a8f74c3d0ddd28897fc6",
+                "title": "New York cheesecake",
+                "category": "Dessert",
+                "owner": "64c8d958249fae54bae90bb9",
+                "cals": 450,
+                "instructions": "Position an oven shelf in the middle of the oven. Preheat the oven to fan 160C/conventional 180C/gas 4. Line the base of a 23cm springform cake tin with parchment paper. For the crust, melt the butter in a medium pan. Stir in the biscuit crumbs and sugar so the mixture is evenly moistened. Press the mixture into the bottom of the pan and bake for 10 minutes. Cool on a wire rack while preparing the filling. For the filling, increase the oven temperature to fan 200C/conventional 240C/gas 9. In a table top mixer fitted with the paddle attachment, beat the soft cheese at medium-low speed until creamy, about 2 minutes. With the mixer on low, gradually add the sugar, then the flour and a pinch of salt, scraping down the sides of the bowl and the paddle twice. Swap the paddle attachment for the whisk. Continue by adding the vanilla, lemon zest and juice. Whisk in the eggs and yolk, one at a time, scraping the bowl and whisk at least twice. Stir the 284ml carton of soured cream until smooth, then measure 200ml/7fl oz (just over 3⁄4 of the carton). Continue on low speed as you add the measured soured cream (reserve the rest). Whisk to blend, but don't over-beat. The batter should be smooth, light and somewhat airy. Brush the sides of the springform tin with melted butter and put on a baking sheet. Pour in the filling - if there are any lumps, sink them using a knife - the top should be as smooth as possible. Bake for 10 minutes. Reduce oven temperature to fan 90C/conventional 110C/gas 1⁄4 and bake for 25 minutes more. If you gently shake the tin, the filling should have a slight wobble. Turn off the oven and open the oven door for a cheesecake that's creamy in the centre, or leave it closed if you prefer a drier texture. Let cool in the oven for 2 hours. The cheesecake may get a slight crack on top as it cools. Combine the reserved soured cream with the 142ml carton, the sugar and lemon juice for the topping. Spread over the cheesecake right to the edges. Cover loosely with foil and refrigerate for at least 8 hours or overnight. Run a round-bladed knife around the sides of the tin to loosen any stuck edges. Unlock the side, slide the cheesecake off the bottom of the tin onto a plate, then slide the parchment paper out from underneath.",
+                "description": "A classic dessert made with cream cheese and a graham cracker crust, creamy and indulgent.",
+                "thumb": "https://ftp.goit.study/img/so-yummy/preview/New%20York%20cheesecake.jpg",
+                "time": 195,
+                "ingredients": [
+                  {
+                    "_id": "686bd2e716a1994061da645e",
+                    "id": "640c2dd963a319ea671e367e",
+                    "measure": "85g"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da645f",
+                    "id": "640c2dd963a319ea671e376b",
+                    "measure": "140g"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6460",
+                    "id": "640c2dd963a319ea671e3774",
+                    "measure": "1tbsp"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6461",
+                    "id": "640c2dd963a319ea671e379c",
+                    "measure": "900g"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6462",
+                    "id": "640c2dd963a319ea671e3687",
+                    "measure": "250g"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6463",
+                    "id": "640c2dd963a319ea671e3743",
+                    "measure": "3 tbs"
+                  },
+                  {
+                    "_id": "686bd2e716a1994061da6465",
+                    "id": "640c2dd963a319ea671e36ca",
+                    "measure": "3 Large"
+                  }
+                ],
+                "createdAt": "2023-03-11T19:25:33.242Z",
+                "updatedAt": "2023-04-14T20:02:28.085Z"
+              }
+            ],
+            "page": 1,
+            "perPage": 12,
+            "totalItems": 320,
+            "totalPages": 27,
+            "hasNextPage": true,
+            "hasPreviousPage": false
+          }
+        }
+      },
+      "postAddFavorite.recipes.example": {
+        "value": {
+          "status": 200,
+          "message": "Recipe added to favorites!"
+        }
+      },
+      "notFound.contacts.example": {
+        "value": {
+          "status": 404,
+          "message": "NotFoundError",
+          "data": {
+            "message": "Recipe not found!"
+          }
+        }
+      },
+      "deleteFavorite.recipes.example": {
+        "value": {
+          "status": 200,
+          "message": "Recipe removed from favorites"
+        }
+      },
+      "register.auth.example": {
+        "value": {
+          "status": 201,
+          "message": "Successfully registered user!",
+          "data": {
+            "accessToken": "d4uIujgRqt2XUDojVFNO4t0BavdHuJQRd5ZA/37J",
+            "user": {
+              "name": "Nick Fury",
+              "email": "nickfury@mail.com",
+              "_id": "6853f991e983d0f76f8a4e22",
+              "favorites": [],
+              "createdAt": "2025-06-19T11:50:41.851Z",
+              "updatedAt": "2025-06-19T11:50:41.851Z"
+            }
+          }
+        }
+      },
+      "bodyValidationError.auth.example": {
+        "value": {
+          "status": 400,
+          "message": "Validation error",
+          "details": [
+            {
+              "field": "name",
+              "message": "\\\"name\\\" length must be at least 3 characters long"
+            },
+            {
+              "field": "email",
+              "message": "\\\"email\\\" must be a valid email"
+            },
+            {
+              "field": "password",
+              "message": "\\\"password\\\" length must be at least 8 characters long"
+            }
+          ]
+        }
+      },
+      "emailInUse.auth.example": {
+        "value": {
+          "status": 409,
+          "message": "ConflictError",
+          "data": {
+            "message": "Email in use"
+          }
+        }
+      },
+      "InternalServerError.auth.example": {
+        "value": {
+          "status": 500,
+          "message": "Something went wrong",
+          "error": "Expected ',' or '}' after property value in JSON at position 49 (line 3 column 18)"
+        }
+      },
+      "login.auth.example": {
+        "value": {
+          "status": 200,
+          "message": "Successfully logged in an user!",
+          "data": {
+            "accessToken": "racd0uTrgB6BkzKWckPmMqtXMXSroXcEz/IswTQp"
+          }
+        }
+      },
+      "unauthorized.auth.example": {
+        "value": {
+          "status": 401,
+          "message": "UnauthorizedError",
+          "data": {
+            "message": "Unauthorized"
+          }
+        }
+      },
+      "notFoundError.auth.example": {
+        "value": {
+          "status": 404,
+          "message": "NotFoundError",
+          "data": {
+            "message": "User not found"
+          }
+        }
+      },
+      "refresh.auth.example": {
+        "value": {
+          "status": 200,
+          "message": "Successfully refreshed a session!",
+          "data": {
+            "accessToken": "6W/wNXRplRcPbvX+Y+E3ZNynHif+t6gTHiR2K3Hg"
+          }
+        }
+      },
+      "refreshUnauthorized.auth.example": {
+        "value": {
+          "status": 401,
+          "message": "UnauthorizedError",
+          "data": {
+            "message": "Session not found"
+          }
+        }
+      },
+      "refreshInValidToken.auth.example": {
+        "value": {
+          "status": 401,
+          "message": "UnauthorizedError",
+          "data": {
+            "message": "Refresh token is invalid"
+          }
+        }
+      },
+      "refreshSessionTokenExpired.auth.example": {
+        "value": {
+          "status": 401,
+          "message": "UnauthorizedError",
+          "data": {
+            "message": "Session token expired"
+          }
+        }
+      },
+      "getUser.users.example": {
+        "value": {
+          "status": 200,
+          "message": "Successfully found current user data!",
+          "data": {
+            "name": "Nick Fury",
+            "email": "nickfury@mail.com",
+            "favorites": [
+              "686ce2250f3c8bb6619c2c42",
+              "686ce2250f3c8bb6619c2c43"
+            ],
+            "createdAt": "2025-06-19T11:50:41.851Z"
+          }
+        }
+      },
+      "getIngredients.ingredients.example": {
+        "value": {
+          "status": 200,
+          "message": "Successfully found ingredients",
+          "data": [
+            {
+              "_id": "6462a6cd4c3d0ddd28897f8e",
+              "name": "Ackee",
+              "desc": "A fruit that is native to West Africa, but is also grown in the Caribbean, and is often used in traditional Jamaican dishes such as ackee and saltfish.",
+              "img": "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png"
+            },
+            {
+              "_id": "6462a6cd4c3d0ddd28897f95",
+              "name": "Allspice",
+              "desc": "A spice made from the dried berries of the Pimenta dioica plant, with a flavor profile that is a combination of cinnamon, nutmeg, and cloves, commonly used in Caribbean and Latin American cuisine.",
+              "img": "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e3860.png"
+            },
+            {
+              "_id": "640c2dd963a319ea671e37f9",
+              "name": "Baguette",
+              "desc": "A long, thin loaf of French bread that has a crisp crust and a soft, chewy interior, and is often used for sandwiches and as an accompaniment to meals.",
+              "img": "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e37f9.png"
+            }
+          ]
+        }
+      },
+      "notFound.ingredients.example": {
+        "value": {
+          "status": 404,
+          "message": "NotFoundError",
+          "data": {
+            "message": "Ingredients not found!"
+          }
+        }
+      },
+      "getCategories.categories.example": {
+        "value": {
+          "status": 200,
+          "message": "Successfully found categories",
+          "data": [
+            {
+              "_id": "6462a6cd4c3d0ddd28897f8e",
+              "name": "Beef"
+            },
+            {
+              "_id": "6462a6cd4c3d0ddd28897f95",
+              "name": "Breakfast"
+            },
+            {
+              "_id": "6462a6cd4c3d0ddd28897f8d",
+              "name": "Chicken"
+            }
+          ]
+        }
+      },
+      "notFound.categories.example": {
+        "value": {
+          "status": 404,
+          "message": "NotFoundError",
+          "data": {
+            "message": "Categories not found!"
+          }
+        }
+      }
+    },
+    "responses": {
+      "getRecipes.recipes.response": {
+        "description": "Get recipes",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/getRecipes.success"
+            },
+            "examples": {
+              "getRecipes": {
+                "summary": "Get recipes",
+                "$ref": "#/components/examples/getRecipes.recipes.example"
+              }
+            }
+          }
+        }
+      },
+      "postRecipe.recipes.response": {
+        "description": "Creates a recipe",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/postRecipe.success"
+            },
+            "examples": {
+              "createRecipe": {
+                "summary": "Create a recipe",
+                "$ref": "#/components/examples/postRecipe.recipes.example"
+              }
+            }
+          }
+        }
+      },
+      "bodyValidationError.recipes.response": {
+        "description": "Bad request error - body validation error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/badRequest.error"
+            },
+            "examples": {
+              "bodyValidationError": {
+                "summary": "Body validation error",
+                "$ref": "#/components/examples/bodyValidationError.recipes.example"
+              }
+            }
+          }
+        }
+      },
+      "unauthorized.recipes.response": {
+        "description": "Unauthorized access - access token expired or session not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/unauthorized.error"
+            },
+            "examples": {
+              "accessTokenExpired": {
+                "summary": "Access token expired",
+                "$ref": "#/components/examples/accessTokenExpired.recipes.example"
+              },
+              "sessionNotFound": {
+                "summary": "Session not found",
+                "$ref": "#/components/examples/sessionNotFound.recipes.example"
+              }
+            }
+          }
+        }
+      },
+      "getRecipeById.recipes.response": {
+        "description": "Successfully found recipe by ID",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/getRecipeById.success"
+            },
+            "examples": {
+              "success": {
+                "summary": "Found recipe by ID",
+                "$ref": "#/components/examples/getRecipeById.recipes.example"
+              }
+            }
+          }
+        }
+      },
+      "invalidRecipeId.recipes.response": {
+        "description": "Bad request error - invalid recipe id",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/badRequest.error"
+            },
+            "examples": {
+              "invalidContactId": {
+                "summary": "Invalid contact id",
+                "$ref": "#/components/examples/invalidContactId.recipes.example"
+              }
+            }
+          }
+        }
+      },
+      "getOwnRecipes.recipes.response": {
+        "description": "Get own recipes",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/getRecipes.success"
+            },
+            "examples": {
+              "getOwnRecipes": {
+                "summary": "Get own recipes",
+                "$ref": "#/components/examples/getOwnRecipes.recipes.example"
+              }
+            }
+          }
+        }
+      },
+      "getFavoriteRecipes.recipes.response": {
+        "description": "Get favorite recipes",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/getRecipes.success"
+            },
+            "examples": {
+              "getFavoriteRecipes": {
+                "summary": "Get favorite recipes",
+                "$ref": "#/components/examples/getFavoriteRecipes.recipes.example"
+              }
+            }
+          }
+        }
+      },
+      "postAddFavorite.recipes.response": {
+        "description": "Successfully add recipe to favorite by ID",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/postAddFavorite.success"
+            },
+            "examples": {
+              "success": {
+                "summary": "Add recipe to favorite by ID",
+                "$ref": "#/components/examples/postAddFavorite.recipes.example"
+              }
+            }
+          }
+        }
+      },
+      "notFound.recipes.response": {
+        "description": "Not found error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/notFound.error"
+            },
+            "examples": {
+              "notFoundError": {
+                "summary": "Contact not found",
+                "$ref": "#/components/examples/notFound.contacts.example"
+              }
+            }
+          }
+        }
+      },
+      "deleteFavorite.recipes.response": {
+        "description": "Successfully deleted recipe from user favorite list",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/deleteFavorite.success"
+            },
+            "examples": {
+              "success": {
+                "summary": "Successfully deleted recipe from user favorite list",
+                "$ref": "#/components/examples/deleteFavorite.recipes.example"
+              }
+            }
+          }
+        }
+      },
+      "register.auth.response": {
+        "description": "Creates a new user",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/register.success"
+            },
+            "examples": {
+              "register": {
+                "summary": "Creates new user",
+                "$ref": "#/components/examples/register.auth.example"
+              }
+            }
+          }
+        }
+      },
+      "bodyValidationError.auth.response": {
+        "description": "Validation error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/bodyValidationError.auth.error"
+            },
+            "examples": {
+              "bodyValidationError": {
+                "$ref": "#/components/examples/bodyValidationError.auth.example"
+              }
+            }
+          }
+        }
+      },
+      "emailInUse.auth.response": {
+        "description": "Conflict error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/conflict.error"
+            },
+            "examples": {
+              "emailInUse": {
+                "$ref": "#/components/examples/emailInUse.auth.example"
+              }
+            }
+          }
+        }
+      },
+      "InternalServerError.auth.response": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/InternalServerError.error"
+            },
+            "examples": {
+              "refresh": {
+                "$ref": "#/components/examples/InternalServerError.auth.example"
+              }
+            }
+          }
+        }
+      },
+      "login.auth.response": {
+        "description": "Logins a user",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/login.success"
+            },
+            "examples": {
+              "login": {
+                "$ref": "#/components/examples/login.auth.example"
+              }
+            }
+          }
+        }
+      },
+      "unauthorized.auth.response": {
+        "description": "Unauthorized error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/unauthorized.error"
+            },
+            "examples": {
+              "bodyValidationError": {
+                "$ref": "#/components/examples/unauthorized.auth.example"
+              }
+            }
+          }
+        }
+      },
+      "notFoundError.auth.response": {
+        "description": "Not found error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/notFoundError.error"
+            },
+            "examples": {
+              "notFoundError": {
+                "$ref": "#/components/examples/notFoundError.auth.example"
+              }
+            }
+          }
+        }
+      },
+      "refresh.auth.response": {
+        "description": "Refresh a user",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/refresh.success"
+            },
+            "examples": {
+              "refresh": {
+                "$ref": "#/components/examples/refresh.auth.example"
+              }
+            }
+          }
+        }
+      },
+      "refreshUnauthorized.auth.response": {
+        "description": "Refresh unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/refreshUnauthorized.error"
+            },
+            "examples": {
+              "SessionNotFoud": {
+                "$ref": "#/components/examples/refreshUnauthorized.auth.example"
+              },
+              "RefreshTokenIsInvalid": {
+                "$ref": "#/components/examples/refreshInValidToken.auth.example"
+              },
+              "SessioTokenExpired": {
+                "$ref": "#/components/examples/refreshSessionTokenExpired.auth.example"
+              }
+            }
+          }
+        }
+      },
+      "getUser.users.response": {
+        "description": "Get user",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/getUser.success"
+            },
+            "examples": {
+              "getRecipes": {
+                "summary": "Get user",
+                "$ref": "#/components/examples/getUser.users.example"
+              }
+            }
+          }
+        }
+      },
+      "getUserUnauthorized.users.response": {
+        "description": "Unauthorized access - access token expired or session not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/unauthorized.error"
+            },
+            "examples": {
+              "accessTokenExpired": {
+                "summary": "Access token expired",
+                "$ref": "#/components/examples/accessTokenExpired.recipes.example"
+              },
+              "sessionNotFound": {
+                "summary": "Session not found",
+                "$ref": "#/components/examples/sessionNotFound.recipes.example"
+              }
+            }
+          }
+        }
+      },
+      "getIngredients.ingredients.response": {
+        "description": "Get ingredients",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/getIngredients.success"
+            },
+            "examples": {
+              "getRecipes": {
+                "summary": "Get ingredients",
+                "$ref": "#/components/examples/getIngredients.ingredients.example"
+              }
+            }
+          }
+        }
+      },
+      "notFound.ingredients.response": {
+        "description": "Not found error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/NotFound.error"
+            },
+            "examples": {
+              "notFoundError": {
+                "summary": "Ingredients not found",
+                "$ref": "#/components/examples/notFound.ingredients.example"
+              }
+            }
+          }
+        }
+      },
+      "getCategories.categories.response": {
+        "description": "Get categories",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/getCategories.success"
+            },
+            "examples": {
+              "getRecipes": {
+                "summary": "Get categories",
+                "$ref": "#/components/examples/getCategories.categories.example"
+              }
+            }
+          }
+        }
+      },
+      "notFound.categories.response": {
+        "description": "Not found error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/NotFound.error"
+            },
+            "examples": {
+              "notFoundError": {
+                "summary": "Categories not found",
+                "$ref": "#/components/examples/notFound.categories.example"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
