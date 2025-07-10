@@ -1,0 +1,8 @@
+description: Refresh a user
+content:
+  application/json:
+    schema:
+      $ref: ../../schemas/auth/success/refresh.success.yaml
+    examples:
+      refresh:
+        $ref: ./examples/refresh.auth.example.yaml

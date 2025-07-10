@@ -1,0 +1,9 @@
+description: Get ingredients
+content:
+  application/json:
+    schema:
+      $ref: ../../schemas/ingredients/success/getIngredients.success.yaml
+    examples:
+      getRecipes:
+        summary: Get ingredients
+        $ref: examples/getIngredients.ingredients.example.yaml

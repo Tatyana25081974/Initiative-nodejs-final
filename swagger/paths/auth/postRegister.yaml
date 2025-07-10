@@ -1,0 +1,20 @@
+tags:
+  - Auth
+summary: Register user
+operationId: createUser
+description: Create a new user
+security: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        $ref: ../../components/schemas/auth/requestBody/register.requestBody.yaml
+responses:
+  '201':
+    $ref: ../../components/responses/auth/register.auth.response.yaml
+  '400':
+    $ref: ../../components/responses/auth/bodyValidationError.auth.response.yaml
+  '409':
+    $ref: ../../components/responses/auth/emailInUse.auth.response.yaml
+  '500':
+    $ref: ../../components/responses/auth/InternalServerError.auth.response.yaml

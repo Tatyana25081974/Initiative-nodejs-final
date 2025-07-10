@@ -1,0 +1,5 @@
+value:
+  status: 409
+  message: ConflictError
+  data:
+    message: Email in use

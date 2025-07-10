@@ -1,0 +1,8 @@
+description: Unauthorized error
+content:
+  application/json:
+    schema:
+      $ref: ../../schemas/auth/errors/unauthorized.error.yaml
+    examples:
+      bodyValidationError:
+        $ref: ./examples/unauthorized.auth.example.yaml

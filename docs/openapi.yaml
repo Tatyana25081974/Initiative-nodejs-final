@@ -50,37 +50,38 @@ paths:
     get:
       $ref: '../swagger/paths/recipes/getFavoriteRecipes.yaml'
 
-  # /api/recipes/addFavorite/{recipeId}:
-  #   get:
-  #     $ref: '../swagger/paths/recipes/{id}/addFavorite.yaml'
+  /api/recipes/addFavorite/{recipeId}:
+    post:
+      $ref: '../swagger/paths/recipes/{id}/addFavorite.yaml'
+  
   /api/recipes/deleteFavorite/{recipeId}:
     post:
       $ref: '../swagger/paths/recipes/{id}/deleteFavorite.yaml'
 
-  # /api/auth/register:
-  #   post:
-  #     $ref: '../swagger/paths/auth/postRegister.yaml'
-  # /api/auth/login:
-  #   post:
-  #     $ref: '../swagger/paths/auth/postLogin.yaml'
-  # /api/auth/logout:
-  #   post:
-  #     $ref: '../swagger/paths/auth/postLogout.yaml'
-  # /api/auth/refresh:
-  #   post:
-  #     $ref: '../swagger/paths/auth/postRefresh.yaml'
+  /api/auth/register:
+    post:
+      $ref: '../swagger/paths/auth/postRegister.yaml'
+  /api/auth/login:
+    post:
+      $ref: '../swagger/paths/auth/postLogin.yaml'
+  /api/auth/logout:
+    post:
+      $ref: '../swagger/paths/auth/postLogout.yaml'
+  /api/auth/refresh:
+    post:
+      $ref: '../swagger/paths/auth/postRefresh.yaml'
 
-  # /api/users:
-  #   get:
-  #     $ref: '../swagger/paths/users/getUser.yaml'
+  /api/users:
+    get:
+      $ref: '../swagger/paths/users/getUser.yaml'
 
-  # /api/ingredients:
-  #   post:
-  #     $ref: '../swagger/paths/ingredients/getIngredients.yaml'
+  /api/ingredients:
+    get:
+      $ref: '../swagger/paths/ingredients/getIngredients.yaml'
 
-  # /api/categories:
-  #   post:
-  #     $ref: '../swagger/paths/categories/getCategories.yaml'
+  /api/categories:
+    get:
+      $ref: '../swagger/paths/categories/getCategories.yaml'
 
 components:
   securitySchemes:

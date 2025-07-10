@@ -1,0 +1,19 @@
+type: object
+required:
+  - name
+  - email
+  - password
+properties:
+  name:
+    description: User's name. Should be min 3 and max 20 characters long
+    type: 'string'
+  email:
+    description: User's email. Should be a valid email
+    type: 'string'
+  password:
+    description: User's password.
+    type: 'string'
+example:
+  name: Nick Fury
+  email: nickfury@mail.com
+  password: qwerty-1234

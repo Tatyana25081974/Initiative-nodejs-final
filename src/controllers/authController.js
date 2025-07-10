@@ -6,15 +6,27 @@ import {
   refreshUsersSession,
 } from '../services/authService.js';
 
+// const setupSession = (res, session) => {
+//   res.cookie('refreshToken', session.refreshToken, {
+//     httpOnly: true,
+//     expires: new Date(Date.now() + ONE_DAY),
+//   });
+//   res.cookie('sessionId', session._id, {
+//     httpOnly: true,
+//     expires: new Date(Date.now() + ONE_DAY),
+//   });
+// };
+
 const setupSession = (res, session) => {
-  res.cookie('refreshToken', session.refreshToken, {
+  const options = {
     httpOnly: true,
+    secure: true,
+    sameSite: 'none',
     expires: new Date(Date.now() + ONE_DAY),
-  });
-  res.cookie('sessionId', session._id, {
-    httpOnly: true,
-    expires: new Date(Date.now() + ONE_DAY),
-  });
+  };
+
+  res.cookie('refreshToken', session.refreshToken, options);
+  res.cookie('sessionId', session._id, options);
 };
 
 // ✅ Реєстрація

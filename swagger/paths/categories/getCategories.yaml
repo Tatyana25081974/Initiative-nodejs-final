@@ -1,0 +1,11 @@
+tags:
+  - Categories
+summary: Get list of categories
+operationId: Categories
+description: 'Get list of categories with this endpoint'
+security: []
+responses:
+  '200':
+    $ref: ../../components/responses/categories/getCategories.categories.response.yaml
+  '404':
+    $ref: ../../components/responses/categories/notFound.categories.response.yaml

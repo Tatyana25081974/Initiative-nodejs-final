@@ -1,0 +1,12 @@
+tags:
+  - Auth
+summary: Refresh user
+operationId: refreshUser
+description: Refresh a user
+security:
+  - bearerAuth: []
+responses:
+  '200':
+    $ref: ../../components/responses/auth/refresh.auth.response.yaml
+  '401':
+    $ref: ../../components/responses/auth/refreshUnauthorized.auth.response.yaml

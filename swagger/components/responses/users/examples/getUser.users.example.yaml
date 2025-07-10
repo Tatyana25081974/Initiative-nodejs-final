@@ -1,0 +1,8 @@
+value:
+  status: 200
+  message: 'Successfully found current user data!'
+  data:
+    name: 'Nick Fury'
+    email: 'nickfury@mail.com'
+    favorites: ['686ce2250f3c8bb6619c2c42', '686ce2250f3c8bb6619c2c43']
+    createdAt: '2025-06-19T11:50:41.851Z'

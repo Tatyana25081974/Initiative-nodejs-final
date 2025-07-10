@@ -1,16 +1,18 @@
 tags:
-  - Recipes
-summary: Get recipe by id
-operationId: getRecipeById
-description: 'Get recipe by id'
+  - addFavorite
+summary: post add recipe to favorite by id
+operationId: addFavorite
+description: 'add favorite recipe by id'
 security:
   - bearerAuth: []
 parameters:
   - $ref: ../../../components/parameters/recipes/id.yaml
 responses:
   '200':
-    $ref: ../../../components/responses/recipes/getRecipeById.recipes.response.yaml
+    $ref: ../../../components/responses/recipes/postAddFavorite.recipes.response.yaml
   '400':
     $ref: ../../../components/responses/recipes/invalidRecipeId.recipes.response.yaml
   '401':
     $ref: ../../../components/responses/recipes/unauthorized.recipes.response.yaml
+  '404':
+    $ref: ../../../components/responses/recipes/notFound.recipes.response.yaml
