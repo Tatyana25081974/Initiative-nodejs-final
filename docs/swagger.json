@@ -197,11 +197,11 @@
     "/api/recipes/addFavorite/{recipeId}": {
       "post": {
         "tags": [
-          "addFavorite"
+          "Recipes"
         ],
-        "summary": "post add recipe to favorite by id",
+        "summary": "Add recipe to favorites",
         "operationId": "addFavorite",
-        "description": "add favorite recipe by id",
+        "description": "Add recipe to favorites",
         "security": [
           {
             "bearerAuth": []
